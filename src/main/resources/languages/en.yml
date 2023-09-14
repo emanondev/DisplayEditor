@@ -1,0 +1,220 @@
+player-only: '&4[&cDisplayEditor&4] &cCommand for Players only'
+no-item-on-hand: '&4[&cDisplayEditor&4] &cYou need to hold an item in hand'
+lack-permission: '&4[&cDisplayEditor&4] &cYou lack of permission %permission%'
+lack-permission-generic: '&4[&cDisplayEditor&4] &cYou don''t have permission to use this command'
+itemtag:
+  help-header: '&9&lDisplayEditor - Help'
+  create:
+    description:
+      - '&b&lCreate a New Display Entity'
+      - ''
+      - '&eitem [type] &b- create an item display of selected type'
+      - '  &bor of the item in your hand'
+      - '&eblock [type] &b- create a block display of selected type'
+      - '  &bor of the item in your hand'
+      - '&etext [line] &b- create a text display'
+    params: '{item/block/text}'
+    wrong-item-type: '&4[&cDisplayEditor&4] &cType must be an item'
+    wrong-block-type: '&4[&cDisplayEditor&4] &cType must be a block'
+    success-block: '&9[&fDisplayEditor&9] &aBlock Display created and selected'
+    success-item: '&9[&fDisplayEditor&9] &aItem Display created and selected'
+    success-text: '&9[&fDisplayEditor&9] &aText Display created and selected'
+  delete:
+    description:
+      - '&b&lDelete Selected Display Entity'
+      - ''
+      - '&cPermanently delete'
+    params: ''
+    success: '&9[&fDisplayEditor&9] &aDeleted selected entity'
+    none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
+  select:
+    description:
+      - '&b&lSelect Display Entity'
+      - ''
+      - '&bSelect closest display entity'
+      - '&e[radius] &b- radius around you to search'
+      - '  &b8 by default'
+    params: '[radius]'
+    invalid-radius: '&4[&cDisplayEditor&4] &cInvalid Radius, must be a positive number'
+    none-found: '&4[&cDisplayEditor&4] &cNo Display was found around you'
+    success: '&9[&fDisplayEditor&9] &aSelected entity'
+  deselect:
+    description:
+      - '&b&lDeselect Display Entity'
+      - ""
+    params: ''
+    success: '&9[&fDisplayEditor&9] &aDeselected entity'
+    none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
+  editormode:
+    description:
+      - '&b&lSwitch to EditorMode'
+      - ''
+      - '&e[mode] &b- editor mode by default toggle'
+    params: '[mode]'
+    success-enabled: '&9[&fDisplayEditor&9] &aEnabled EditorMode'
+    success-disabled: '&9[&fDisplayEditor&9] &aDisabled EditorMode'
+    wrong-type: '&4[&cDisplayEditor&4] &cInvalid EditorMode'
+  settext:
+    description:
+      - '&b&lSet Text for TextDisplays'
+      - ''
+      - '&e[text] &b- Text to set'
+    params: '[text]'
+    wrong-type: '&4[&cDisplayEditor&4] &cSelected display is not a Text Display'
+    none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
+    success: '&9[&fDisplayEditor&9] &aText Updated'
+editor:
+  all:
+    page:
+      - "&6Change Page"
+      - "&bLeft/Right &9➤ &bChange Editor page"
+      - ""
+      - "&bYou can also change page by pressing F"
+    exit:
+      - "&6Exit EditorMode"
+    select:
+      - "&6Select Nearest Display"
+      - "&bAny &9➤ &bSelect nearest Display"
+  position:
+    x:
+      - "&6Move X coordinate"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.05"
+      - "&bShift+Right &9➤ &bIncrease by 0.05"
+    y:
+      - "&6Move Y coordinate"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.05"
+      - "&bShift+Right &9➤ &bIncrease by 0.05"
+    z:
+      - "&6Move Z coordinate"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.05"
+      - "&bShift+Right &9➤ &bIncrease by 0.05"
+    teleport:
+      - "&6Teleport to your location"
+      - "&bRight &9➤ &bteleport to your feets"
+      - "&bLeft &9➤ &bteleport to your eyes"
+    reset:
+      - "&6Round location"
+      - "&bAny &9➤ &bRound XYZ location to an int value"
+  rotation:
+    x:
+      - "&6Rotate on X axis"
+      - "&bLeft &9➤ &bDecrease by 22.5°"
+      - "&bRight &9➤ &bIncrease by 22.5°"
+      - "&bShift+Left &9➤ &bDecrease by ~2.8°"
+      - "&bShift+Right &9➤ &bIncrease by ~2.8°"
+    y:
+      - "&6Rotate on Y axis"
+      - "&bLeft &9➤ &bDecrease by 22.5°"
+      - "&bRight &9➤ &bIncrease by 22.5°"
+      - "&bShift+Left &9➤ &bDecrease by ~2.8°"
+      - "&bShift+Right &9➤ &bIncrease by ~2.8°"
+    z:
+      - "&6Rotate on Z axis"
+      - "&bLeft &9➤ &bDecrease by 22.5°"
+      - "&bRight &9➤ &bIncrease by 22.5°"
+      - "&bShift+Left &9➤ &bDecrease by ~2.8°"
+      - "&bShift+Right &9➤ &bIncrease by ~2.8°"
+    mode:
+      - "&6Change rotation Mode (Current: &e%value%&6)"
+      - "&bRight/Left &9➤ &bChange Mode"
+      - ""
+      - "&7It's a Client side rotation"
+    reset:
+      - "&6Reset rotation"
+      - "&bAny &9➤ &bSet rotation on X, Y, Z axis as 0°"
+  scale:
+    all:
+      - "&6Scale X, Y, Z"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.025"
+      - "&bShift+Right &9➤ &bIncrease by 0.025"
+    x:
+      - "&6Scale X"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.025"
+      - "&bShift+Right &9➤ &bIncrease by 0.025"
+    y:
+      - "&6Scale Y"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.025"
+      - "&bShift+Right &9➤ &bIncrease by 0.025"
+    z:
+      - "&6Scale Z"
+      - "&bLeft &9➤ &bDecrease by 0.5"
+      - "&bRight &9➤ &bIncrease by 0.5"
+      - "&bShift+Left &9➤ &bDecrease by 0.025"
+      - "&bShift+Right &9➤ &bIncrease by 0.025"
+    reset:
+      - "&6Reset scale"
+      - "&bAny &9➤ &bSet scale to 1"
+  shadow:
+    skylight:
+      - "&6Sets SkyLight"
+      - "&bRight &9➤ &bIncrease Light"
+      - "&bLeft &9➤ &bDecrease Light"
+      - "&bShift+Right/left &9➤ &bReset to natural"
+    blocklight:
+      - "&6Sets SkyLight"
+      - "&bRight &9➤ &bIncrease Light"
+      - "&bLeft &9➤ &bDecrease Light"
+      - "&bShift+Right/left &9➤ &bReset to natural"
+    see_distance:
+      - "&6Change See distance (Current: &e%value%&6)"
+      - "&bLeft &9➤ &bDecrease by 4"
+      - "&bRight &9➤ &bIncrease by 4"
+      - "&bShift+Left &9➤ &bDecrease by 1"
+      - "&bShift+Right &9➤ &bIncrease by 1"
+  entity_specific:
+    text_background_red:
+      - "&6Change the amount of Red on Background (Current: &e%value%&6)"
+      - "&bLeft &9➤ &bDecrease by 16"
+      - "&bRight &9➤ &bIncrease by 16"
+      - "&bShift+Left &9➤ &bDecrease by 1"
+      - "&bShift+Right &9➤ &bIncrease by 1"
+    text_background_green:
+      - "&6Change the amount of Green on Background (Current: &e%value%&6)"
+      - "&bLeft &9➤ &bDecrease by 16"
+      - "&bRight &9➤ &bIncrease by 16"
+      - "&bShift+Left &9➤ &bDecrease by 1"
+      - "&bShift+Right &9➤ &bIncrease by 1"
+    text_background_blue:
+      - "&6Change the amount of Blue on Background (Current: &e%value%&6)"
+      - "&bLeft &9➤ &bDecrease by 16"
+      - "&bRight &9➤ &bIncrease by 16"
+      - "&bShift+Left &9➤ &bDecrease by 1"
+      - "&bShift+Right &9➤ &bIncrease by 1"
+    text_background_alpha:
+      - "&6Change the Opacity of Background (Current: &e%value%&6)"
+      - "&bLeft &9➤ &bDecrease by 16"
+      - "&bRight &9➤ &bIncrease by 16"
+      - "&bShift+Left &9➤ &bDecrease by 1"
+      - "&bShift+Right &9➤ &bIncrease by 1"
+    text_alignment:
+      - "&6Change Text Alignment (Current: &e%value%&6)"
+      - "&bLeft/Right &9➤ &bchange value"
+    item_view:
+      - "&6Change Item view (Current: &e%value%&6)"
+      - "&bLeft/Right &9➤ &bChange value"
+    item_glow:
+      - "&6Toggle Glow"
+      - "&bAny &9➤ &bToggle"
+      - ""
+      - "&7Some items can't be affected by glow status"
+      - "&7(Heads, enchanted books, ...)"
+    dataeditor_soon:
+      - "&6Block Data (Coming soon)"
+  copy_paste:
+    select:
+      - "&6Select Nearest Display"
+      - "&bAny &9➤ &bSelect nearest Display"
+    copypaste_soon:
+      - "&6Copy and Paste (Coming soon)"

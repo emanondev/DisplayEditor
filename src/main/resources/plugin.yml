@@ -1,0 +1,48 @@
+name: ${project.name}
+main: ${groupId}.${project.name}
+version: "${project.version}"
+author: emanon
+api-version: 1.19
+folia-supported: true
+softdepend: [ Vault,SuperVanish,PremiumVanish,PlaceHolderAPI ]
+
+commands:
+  displayeditor:
+    description: allows to edit item in hand
+    usage: /displayeditor
+    aliases: [ de ]
+  displayeditorinfo:
+    description: display info of displayeditor
+    usage: /displayeditorinfo
+  displayeditorreload:
+    description: reload configurations
+    usage: /displayeditorreload
+
+permissions:
+  displayeditor.admin:
+    default: op
+    description: Gives full access to the plugin
+    children:
+      displayeditor.displayeditorreload: true
+      displayeditor.displayeditorinfo: true
+      displayeditor.bypass.*: true
+  displayeditor.creativeuser:
+    default: op
+    description: Gives full access to the plugin
+    children:
+      displayeditor.displayeditor.*: true
+      displayeditor.itemstorage.*: true
+  displayeditor.bypass.*:
+    default: op
+    description: Gives full access to the plugin
+    children:
+      displayeditor.bypass.censure: true
+  displayeditor.bypass.censure:
+    default: op
+    description: Bypass words restrictions when editing items
+  displayeditor.displayeditorinfo:
+    default: op
+    description: Gives full access to command /displayeditorinfo
+  displayeditor.displayeditorreload:
+    default: op
+    description: Gives full access to command /displayeditorreload
