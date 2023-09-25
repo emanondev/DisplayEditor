@@ -37,7 +37,7 @@ public enum EditorMode {
         Display display = SelectionManager.getSelection(player);
 
 
-        inv.setItem(7, setDesc(craftItem(Material.ARROW, ordinal() + 1), player, "editor.all.page"));
+        inv.setItem(7, setDesc(craftItem(Material.SPECTRAL_ARROW, ordinal() + 1), player, "editor.all.page"));
         inv.setItem(8, setDesc(craftItem(Material.BARRIER), player, "editor.all.exit"));
         if (display == null && this!=COPY_PASTE) {
             for (int i =0; i<7;i++)
