@@ -4,6 +4,7 @@ import emanondev.displayeditor.C;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -56,6 +57,8 @@ public class EditorModeListener implements Listener {
     public void event(PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL)
             return;
+        if (event.getHand()!=EquipmentSlot.HAND)
+            return;
         EditorMode mode = SelectionManager.getEditorMode(event.getPlayer());
         if (mode != null) {
             event.setCancelled(true);
@@ -90,6 +93,14 @@ public class EditorModeListener implements Listener {
         }
     }
 
+    private void clickSound(Player player) {
+        clickSound(player, Sound.UI_BUTTON_CLICK, 0.5F, 2F);
+    }
+
+    private void clickSound(Player player, Sound sound, float volume, float pitch) {
+        player.playSound(player.getLocation(), sound, volume, pitch);
+    }
+
 
     private void handleClick(PlayerInteractEvent event, EditorMode editorMode) {
         int slot = event.getPlayer().getInventory().getHeldItemSlot();
@@ -103,10 +114,12 @@ public class EditorModeListener implements Listener {
                 case LEFT_CLICK_AIR:
                 case LEFT_CLICK_BLOCK:
                     SelectionManager.swapEditorMode(event.getPlayer(), -1);
+                    clickSound(event.getPlayer(), Sound.ITEM_BOOK_PAGE_TURN, 1F, 1F);
                     return;
                 case RIGHT_CLICK_AIR:
                 case RIGHT_CLICK_BLOCK:
                     SelectionManager.swapEditorMode(event.getPlayer());
+                    clickSound(event.getPlayer(), Sound.ITEM_BOOK_PAGE_TURN, 1F, 1F);
                     return;
             }
             return;
@@ -318,62 +331,35 @@ public class EditorModeListener implements Listener {
     }
 
     private void scaleHandleClick(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak, EditorMode mode) {
+        float scale = (float) ((isLeftClick ? -1 : 1) * (sneak ? C.SCALE_FINE : C.SCALE_COARSE));
         switch (slot) {
+            case 4:
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    transf.getScale().add(scale, scale, scale);
+                    sel.setTransformation(transf);
+                }, mode);
+                return;
             case 0:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(sneak ? -0.025F : -0.5F, sneak ? -0.025F : -0.5F, sneak ? -0.025F : -0.5F);
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(sneak ? 0.025F : 0.5F, sneak ? 0.025F : 0.5F, sneak ? 0.025F : 0.5F);
-                        sel.setTransformation(transf);
-                    }, mode);
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    transf.getScale().add(scale, 0, 0);
+                    sel.setTransformation(transf);
+                }, mode);
                 return;
             case 1:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(sneak ? -0.025F : -0.5F, 0, 0);
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(sneak ? 0.025F : 0.5F, 0, 0);
-                        sel.setTransformation(transf);
-                    }, mode);
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    transf.getScale().add(0, scale, 0);
+                    sel.setTransformation(transf);
+                }, mode);
                 return;
             case 2:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(0, sneak ? -0.025F : -0.5F, 0);
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(0, sneak ? 0.025F : 0.5F, 0);
-                        sel.setTransformation(transf);
-                    }, mode);
-                return;
-            case 3:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(0, 0, sneak ? -0.025F : -0.5F);
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        transf.getScale().add(0, 0, sneak ? 0.025F : 0.5F);
-                        sel.setTransformation(transf);
-                    }, mode);
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    transf.getScale().add(0, 0, scale);
+                    sel.setTransformation(transf);
+                }, mode);
                 return;
             case 6:
                 edit(sel, player, () -> {
@@ -386,56 +372,33 @@ public class EditorModeListener implements Listener {
     }
 
     private void rotationHandleClick(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak, EditorMode mode) {
+        float rotationDegrees = (float) ((isLeftClick ? -1 : 1) * (Math.PI / 180 * (sneak ? C.ROTATE_FINE : C.ROTATE_COARSE)));
         switch (slot) {
             case 0:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        Quaternionf rot = transf.getRightRotation();
-                        rot.rotateAxis((float) (-Math.PI / (sneak ? 64 : 8)), new Vector3f(1, 0, 0));
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        Quaternionf rot = transf.getRightRotation();
-                        rot.rotateAxis((float) (Math.PI / (sneak ? 64 : 8)), new Vector3f(1, 0, 0));
-                        sel.setTransformation(transf);
-                    }, mode);
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    Quaternionf rot = transf.getRightRotation();
+                    rot.rotateAxis(rotationDegrees, new Vector3f(1, 0, 0));
+                    sel.setTransformation(transf);
+                }, mode);
                 return;
             case 1:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        Quaternionf rot = transf.getRightRotation();
-                        rot.rotateAxis((float) (-Math.PI / (sneak ? 64 : 8)), new Vector3f(0, 1, 0));
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        Quaternionf rot = transf.getRightRotation();
-                        rot.rotateAxis((float) (Math.PI / (sneak ? 64 : 8)), new Vector3f(0, 1, 0));
-                        sel.setTransformation(transf);
-                    }, mode);
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    Quaternionf rot = transf.getRightRotation();
+                    rot.rotateAxis(rotationDegrees, new Vector3f(0, 1, 0));
+                    sel.setTransformation(transf);
+                }, mode);
                 return;
             case 2:
-                if (isLeftClick)
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        Quaternionf rot = transf.getRightRotation();
-                        rot.rotateAxis((float) (-Math.PI / (sneak ? 64 : 8)), new Vector3f(0, 0, 1));
-                        sel.setTransformation(transf);
-                    }, mode);
-                else
-                    edit(sel, player, () -> {
-                        Transformation transf = sel.getTransformation();
-                        Quaternionf rot = transf.getRightRotation();
-                        rot.rotateAxis((float) (Math.PI / (sneak ? 64 : 8)), new Vector3f(0, 0, 1));
-                        sel.setTransformation(transf);
-                    }, mode);
+                edit(sel, player, () -> {
+                    Transformation transf = sel.getTransformation();
+                    Quaternionf rot = transf.getRightRotation();
+                    rot.rotateAxis(rotationDegrees, new Vector3f(0, 0, 1));
+                    sel.setTransformation(transf);
+                }, mode);
                 return;
-            case 3:
+            case 4:
                 if (isLeftClick)
                     edit(sel, player, () -> sel.setBillboard(Display.Billboard.values()[(sel.getBillboard().ordinal()
                             + Display.Billboard.values().length - 1) % Display.Billboard.values().length]), mode);
@@ -455,26 +418,18 @@ public class EditorModeListener implements Listener {
     }
 
     private void positionHandleClick(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak, EditorMode mode) {
+        double move = (isLeftClick ? -1 : 1) * (sneak ? C.MOVE_FINE : C.MOVE_COARSE);
         switch (slot) {
             case 0:
-                if (isLeftClick)
-                    edit(sel, player, () -> sel.teleport(sel.getLocation().add(sneak ? -0.05 : -0.5, 0, 0)), mode);
-                else
-                    edit(sel, player, () -> sel.teleport(sel.getLocation().add(sneak ? 0.05 : 0.5, 0, 0)), mode);
+                edit(sel, player, () -> sel.teleport(sel.getLocation().add(move, 0, 0)), mode);
                 return;
             case 1:
-                if (isLeftClick)
-                    edit(sel, player, () -> sel.teleport(sel.getLocation().add(0, sneak ? -0.05 : -0.5, 0)), mode);
-                else
-                    edit(sel, player, () -> sel.teleport(sel.getLocation().add(0, sneak ? 0.05 : 0.5, 0)), mode);
+                edit(sel, player, () -> sel.teleport(sel.getLocation().add(0, move, 0)), mode);
                 return;
             case 2:
-                if (isLeftClick)
-                    edit(sel, player, () -> sel.teleport(sel.getLocation().add(0, 0, sneak ? -0.05 : -0.5)), mode);
-                else
-                    edit(sel, player, () -> sel.teleport(sel.getLocation().add(0, 0, sneak ? 0.05 : 0.5)), mode);
+                edit(sel, player, () -> sel.teleport(sel.getLocation().add(0, 0, move)), mode);
                 return;
-            case 3:
+            case 4:
                 Location target = isLeftClick ? player.getEyeLocation() : player.getLocation();
                 target.setYaw(sel.getLocation().getYaw());
                 target.setPitch(sel.getLocation().getPitch());
@@ -501,6 +456,7 @@ public class EditorModeListener implements Listener {
             return;
         }
         consumer.run();
+        clickSound(player);
         if (reloadBar)
             mode.setup(player);
     }

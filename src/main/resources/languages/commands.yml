@@ -1,0 +1,13 @@
+displayeditor:
+  create:
+    name: 'create'
+  select:
+    name: 'select'
+  deselect:
+    name: 'deselect'
+  editormode:
+    name: 'editormode'
+  delete:
+    name: 'delete'
+  settext:
+    name: 'settext'

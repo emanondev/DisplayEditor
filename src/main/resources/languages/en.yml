@@ -1,8 +1,9 @@
 player-only: '&4[&cDisplayEditor&4] &cCommand for Players only'
 no-item-on-hand: '&4[&cDisplayEditor&4] &cYou need to hold an item in hand'
 lack-permission: '&4[&cDisplayEditor&4] &cYou lack of permission %permission%'
-lack-permission-generic: '&4[&cDisplayEditor&4] &cYou don''t have permission to use this command'
-itemtag:
+lack-permission-generic: '&4[&cDisplayEditor&4] &cYou don''t have permission to use
+  this command'
+displayeditor:
   help-header: '&9&lDisplayEditor - Help'
   create:
     description:
@@ -41,7 +42,7 @@ itemtag:
   deselect:
     description:
       - '&b&lDeselect Display Entity'
-      - ""
+      - ''
     params: ''
     success: '&9[&fDisplayEditor&9] &aDeselected entity'
     none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
@@ -66,155 +67,157 @@ itemtag:
 editor:
   all:
     page:
-      - "&6Change Page"
-      - "&bLeft/Right &9➤ &bChange Editor page"
-      - ""
-      - "&bYou can also change page by pressing F"
+      - '&6Change Page'
+      - '&bLeft/Right &9➤ &bChange Editor page'
+      - ''
+      - '&bYou can also change page by pressing F'
     exit:
-      - "&6Exit EditorMode"
+      - '&6Exit EditorMode'
     select:
-      - "&6Select Nearest Display"
-      - "&bAny &9➤ &bSelect nearest Display"
+      - '&6Select Nearest Display'
+      - '&bAny &9➤ &bSelect nearest Display'
   position:
     x:
-      - "&6Move X coordinate"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.05"
-      - "&bShift+Right &9➤ &bIncrease by 0.05"
+      - '&6Move X coordinate'
+      - '&bLeft &9➤ &bDecrease by %move_coarse%'
+      - '&bRight &9➤ &bIncrease by %move_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %move_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %move_fine%'
     y:
-      - "&6Move Y coordinate"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.05"
-      - "&bShift+Right &9➤ &bIncrease by 0.05"
+      - '&6Move Y coordinate'
+      - '&bLeft &9➤ &bDecrease by %move_coarse%'
+      - '&bRight &9➤ &bIncrease by %move_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %move_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %move_fine%'
     z:
-      - "&6Move Z coordinate"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.05"
-      - "&bShift+Right &9➤ &bIncrease by 0.05"
+      - '&6Move Z coordinate'
+      - '&bLeft &9➤ &bDecrease by %move_coarse%'
+      - '&bRight &9➤ &bIncrease by %move_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %move_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %move_fine%'
     teleport:
-      - "&6Teleport to your location"
-      - "&bRight &9➤ &bteleport to your feets"
-      - "&bLeft &9➤ &bteleport to your eyes"
+      - '&6Teleport to your location'
+      - '&bRight &9➤ &bteleport to your feets'
+      - '&bLeft &9➤ &bteleport to your eyes'
     reset:
-      - "&6Round location"
-      - "&bAny &9➤ &bRound XYZ location to an int value"
+      - '&6Round location'
+      - '&bAny &9➤ &bRound XYZ location to an int value'
   rotation:
     x:
-      - "&6Rotate on X axis"
-      - "&bLeft &9➤ &bDecrease by 22.5°"
-      - "&bRight &9➤ &bIncrease by 22.5°"
-      - "&bShift+Left &9➤ &bDecrease by ~2.8°"
-      - "&bShift+Right &9➤ &bIncrease by ~2.8°"
+      - '&6Rotate on X axis'
+      - '&bLeft &9➤ &bDecrease by %rotate_coarse%°'
+      - '&bRight &9➤ &bIncrease by %rotate_coarse%°'
+      - '&bShift+Left &9➤ &bDecrease by %rotate_fine%°'
+      - '&bShift+Right &9➤ &bIncrease by %rotate_fine%°'
     y:
-      - "&6Rotate on Y axis"
-      - "&bLeft &9➤ &bDecrease by 22.5°"
-      - "&bRight &9➤ &bIncrease by 22.5°"
-      - "&bShift+Left &9➤ &bDecrease by ~2.8°"
-      - "&bShift+Right &9➤ &bIncrease by ~2.8°"
+      - '&6Rotate on Y axis'
+      - '&bLeft &9➤ &bDecrease by %rotate_coarse%°'
+      - '&bRight &9➤ &bIncrease by %rotate_coarse%°'
+      - '&bShift+Left &9➤ &bDecrease by %rotate_fine%°'
+      - '&bShift+Right &9➤ &bIncrease by %rotate_fine%°'
     z:
-      - "&6Rotate on Z axis"
-      - "&bLeft &9➤ &bDecrease by 22.5°"
-      - "&bRight &9➤ &bIncrease by 22.5°"
-      - "&bShift+Left &9➤ &bDecrease by ~2.8°"
-      - "&bShift+Right &9➤ &bIncrease by ~2.8°"
+      - '&6Rotate on Z axis'
+      - '&bLeft &9➤ &bDecrease by %rotate_coarse%°'
+      - '&bRight &9➤ &bIncrease by %rotate_coarse%°'
+      - '&bShift+Left &9➤ &bDecrease by %rotate_fine%°'
+      - '&bShift+Right &9➤ &bIncrease by %rotate_fine%°'
     mode:
-      - "&6Change rotation Mode (Current: &e%value%&6)"
-      - "&bRight/Left &9➤ &bChange Mode"
-      - ""
-      - "&7It's a Client side rotation"
+      - '&6Change rotation Mode (Current: &e%value%&6)'
+      - '&bRight/Left &9➤ &bChange Mode'
+      - ''
+      - '&7It''s a Client side rotation'
     reset:
-      - "&6Reset rotation"
-      - "&bAny &9➤ &bSet rotation on X, Y, Z axis as 0°"
+      - '&6Reset rotation'
+      - '&bAny &9➤ &bSet rotation on X, Y, Z axis as 0°'
   scale:
     all:
-      - "&6Scale X, Y, Z"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.025"
-      - "&bShift+Right &9➤ &bIncrease by 0.025"
+      - '&6Scale X, Y, Z'
+      - '&bLeft &9➤ &bDecrease by %scale_coarse%'
+      - '&bRight &9➤ &bIncrease by %scale_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     x:
-      - "&6Scale X"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.025"
-      - "&bShift+Right &9➤ &bIncrease by 0.025"
+      - '&6Scale X'
+      - '&bLeft &9➤ &bDecrease by %scale_coarse%'
+      - '&bRight &9➤ &bIncrease by %scale_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     y:
-      - "&6Scale Y"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.025"
-      - "&bShift+Right &9➤ &bIncrease by 0.025"
+      - '&6Scale Y'
+      - '&bLeft &9➤ &bDecrease by %scale_coarse%'
+      - '&bRight &9➤ &bIncrease by %scale_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     z:
-      - "&6Scale Z"
-      - "&bLeft &9➤ &bDecrease by 0.5"
-      - "&bRight &9➤ &bIncrease by 0.5"
-      - "&bShift+Left &9➤ &bDecrease by 0.025"
-      - "&bShift+Right &9➤ &bIncrease by 0.025"
+      - '&6Scale Z'
+      - '&bLeft &9➤ &bDecrease by %scale_coarse%'
+      - '&bRight &9➤ &bIncrease by %scale_coarse%'
+      - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
+      - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     reset:
-      - "&6Reset scale"
-      - "&bAny &9➤ &bSet scale to 1"
+      - '&6Reset scale'
+      - '&bAny &9➤ &bSet scale to 1'
   shadow:
     skylight:
-      - "&6Sets SkyLight"
-      - "&bRight &9➤ &bIncrease Light"
-      - "&bLeft &9➤ &bDecrease Light"
-      - "&bShift+Right/left &9➤ &bReset to natural"
+      - '&6Sets SkyLight'
+      - '&bRight &9➤ &bIncrease Light'
+      - '&bLeft &9➤ &bDecrease Light'
+      - '&bShift+Right/left &9➤ &bReset to natural'
     blocklight:
-      - "&6Sets SkyLight"
-      - "&bRight &9➤ &bIncrease Light"
-      - "&bLeft &9➤ &bDecrease Light"
-      - "&bShift+Right/left &9➤ &bReset to natural"
+      - '&6Sets SkyLight'
+      - '&bRight &9➤ &bIncrease Light'
+      - '&bLeft &9➤ &bDecrease Light'
+      - '&bShift+Right/left &9➤ &bReset to natural'
     see_distance:
-      - "&6Change See distance (Current: &e%value%&6)"
-      - "&bLeft &9➤ &bDecrease by 4"
-      - "&bRight &9➤ &bIncrease by 4"
-      - "&bShift+Left &9➤ &bDecrease by 1"
-      - "&bShift+Right &9➤ &bIncrease by 1"
+      - '&6Change See distance (Current: &e%value%&6)'
+      - '&bLeft &9➤ &bDecrease by 4'
+      - '&bRight &9➤ &bIncrease by 4'
+      - '&bShift+Left &9➤ &bDecrease by 1'
+      - '&bShift+Right &9➤ &bIncrease by 1'
   entity_specific:
     text_background_red:
-      - "&6Change the amount of Red on Background (Current: &e%value%&6)"
-      - "&bLeft &9➤ &bDecrease by 16"
-      - "&bRight &9➤ &bIncrease by 16"
-      - "&bShift+Left &9➤ &bDecrease by 1"
-      - "&bShift+Right &9➤ &bIncrease by 1"
+      - '&6Change the amount of Red on Background (Current: &e%value%&6)'
+      - '&bLeft &9➤ &bDecrease by 16'
+      - '&bRight &9➤ &bIncrease by 16'
+      - '&bShift+Left &9➤ &bDecrease by 1'
+      - '&bShift+Right &9➤ &bIncrease by 1'
     text_background_green:
-      - "&6Change the amount of Green on Background (Current: &e%value%&6)"
-      - "&bLeft &9➤ &bDecrease by 16"
-      - "&bRight &9➤ &bIncrease by 16"
-      - "&bShift+Left &9➤ &bDecrease by 1"
-      - "&bShift+Right &9➤ &bIncrease by 1"
+      - '&6Change the amount of Green on Background (Current: &e%value%&6)'
+      - '&bLeft &9➤ &bDecrease by 16'
+      - '&bRight &9➤ &bIncrease by 16'
+      - '&bShift+Left &9➤ &bDecrease by 1'
+      - '&bShift+Right &9➤ &bIncrease by 1'
     text_background_blue:
-      - "&6Change the amount of Blue on Background (Current: &e%value%&6)"
-      - "&bLeft &9➤ &bDecrease by 16"
-      - "&bRight &9➤ &bIncrease by 16"
-      - "&bShift+Left &9➤ &bDecrease by 1"
-      - "&bShift+Right &9➤ &bIncrease by 1"
+      - '&6Change the amount of Blue on Background (Current: &e%value%&6)'
+      - '&bLeft &9➤ &bDecrease by 16'
+      - '&bRight &9➤ &bIncrease by 16'
+      - '&bShift+Left &9➤ &bDecrease by 1'
+      - '&bShift+Right &9➤ &bIncrease by 1'
     text_background_alpha:
-      - "&6Change the Opacity of Background (Current: &e%value%&6)"
-      - "&bLeft &9➤ &bDecrease by 16"
-      - "&bRight &9➤ &bIncrease by 16"
-      - "&bShift+Left &9➤ &bDecrease by 1"
-      - "&bShift+Right &9➤ &bIncrease by 1"
+      - '&6Change the Opacity of Background (Current: &e%value%&6)'
+      - '&bLeft &9➤ &bDecrease by 16'
+      - '&bRight &9➤ &bIncrease by 16'
+      - '&bShift+Left &9➤ &bDecrease by 1'
+      - '&bShift+Right &9➤ &bIncrease by 1'
     text_alignment:
-      - "&6Change Text Alignment (Current: &e%value%&6)"
-      - "&bLeft/Right &9➤ &bchange value"
+      - '&6Change Text Alignment (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bchange value'
     item_view:
-      - "&6Change Item view (Current: &e%value%&6)"
-      - "&bLeft/Right &9➤ &bChange value"
+      - '&6Change Item view (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
     item_glow:
-      - "&6Toggle Glow"
-      - "&bAny &9➤ &bToggle"
-      - ""
-      - "&7Some items can't be affected by glow status"
-      - "&7(Heads, enchanted books, ...)"
+      - '&6Toggle Glow'
+      - '&bAny &9➤ &bToggle'
+      - ''
+      - '&7Some items can''t be affected by glow status'
+      - '&7(Heads, enchanted books, ...)'
     dataeditor_soon:
-      - "&6Block Data (Coming soon)"
+      - '&6Block Data (Coming soon)'
   copy_paste:
     select:
-      - "&6Select Nearest Display"
-      - "&bAny &9➤ &bSelect nearest Display"
+      - '&6Select Nearest Display'
+      - '&bAny &9➤ &bSelect nearest Display'
     copypaste_soon:
-      - "&6Copy and Paste (Coming soon)"
+      - '&6Copy and Paste (Coming soon)'
+displayeditorreload:
+  success: '&9[&fDisplayEditor&9] &aReloaded'

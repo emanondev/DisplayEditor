@@ -1,5 +1,6 @@
 package emanondev.displayeditor.selection;
 
+import emanondev.displayeditor.C;
 import emanondev.displayeditor.DisplayEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -37,40 +38,43 @@ public enum EditorMode {
         Display display = SelectionManager.getSelection(player);
 
 
-        inv.setItem(7, setDesc(craftItem(Material.SPECTRAL_ARROW, ordinal() + 1), player, "editor.all.page"));
+        inv.setItem(7, setDesc(craftItem(Material.PAPER, ordinal() + 1), player, "editor.all.page"));
         inv.setItem(8, setDesc(craftItem(Material.BARRIER), player, "editor.all.exit"));
-        if (display == null && this!=COPY_PASTE) {
-            for (int i =0; i<7;i++)
+        if (display == null && this != COPY_PASTE) {
+            for (int i = 0; i < 7; i++)
                 inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.all.select"));
             return;
         }
-
+        String[] holders;
         switch (this) {
             case POSITION:
-                inv.setItem(0, setDesc(craftItem(Material.BLUE_CONCRETE), player, "editor.position.x"));
-                inv.setItem(1, setDesc(craftItem(Material.RED_CONCRETE), player, "editor.position.y"));
-                inv.setItem(2, setDesc(craftItem(Material.LIME_CONCRETE), player, "editor.position.z"));
-                inv.setItem(3, setDesc(craftItem(Material.ENDER_PEARL), player, "editor.position.teleport"));
-                inv.setItem(4, null);
+                holders = new String[]{"%move_coarse%", String.valueOf(C.MOVE_COARSE), "%move_fine%", String.valueOf(C.MOVE_FINE)};
+                inv.setItem(0, setDesc(craftItem(Material.LAPIS_LAZULI), player, "editor.position.x", holders));
+                inv.setItem(1, setDesc(craftItem(Material.REDSTONE), player, "editor.position.y", holders));
+                inv.setItem(2, setDesc(craftItem(Material.EMERALD), player, "editor.position.z", holders));
+                inv.setItem(3, null);
+                inv.setItem(4, setDesc(craftItem(Material.ENDER_PEARL), player, "editor.position.teleport"));
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.position.reset"));
                 return;
             case ROTATION:
-                inv.setItem(0, setDesc(craftItem(Material.BLUE_WOOL), player, "editor.rotation.x"));
-                inv.setItem(1, setDesc(craftItem(Material.RED_WOOL), player, "editor.rotation.y"));
-                inv.setItem(2, setDesc(craftItem(Material.LIME_WOOL), player, "editor.rotation.z"));
-                inv.setItem(3, setDesc(craftItem(Material.GLOBE_BANNER_PATTERN), player, "editor.rotation.mode",
+                holders = new String[]{"%rotate_coarse%", String.valueOf(C.ROTATE_COARSE), "%rotate_fine%", String.valueOf(C.ROTATE_FINE)};
+                inv.setItem(0, setDesc(craftItem(Material.MUSIC_DISC_WAIT), player, "editor.rotation.x", holders));
+                inv.setItem(1, setDesc(craftItem(Material.MUSIC_DISC_BLOCKS), player, "editor.rotation.y", holders));
+                inv.setItem(2, setDesc(craftItem(Material.MUSIC_DISC_FAR), player, "editor.rotation.z", holders));
+                inv.setItem(3, null);
+                inv.setItem(4, setDesc(craftItem(Material.MUSIC_DISC_STRAD), player, "editor.rotation.mode",
                         "%value%", display.getBillboard().name().toLowerCase(Locale.ENGLISH)));
-                inv.setItem(4, null);
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.rotation.reset"));
                 return;
             case SCALE:
-                inv.setItem(0, setDesc(craftItem(Material.GRAY_CONCRETE_POWDER), player, "editor.scale.all"));
-                inv.setItem(1, setDesc(craftItem(Material.BLUE_CONCRETE_POWDER), player, "editor.scale.x"));
-                inv.setItem(2, setDesc(craftItem(Material.RED_CONCRETE_POWDER), player, "editor.scale.y"));
-                inv.setItem(3, setDesc(craftItem(Material.LIME_CONCRETE_POWDER), player, "editor.scale.z"));
-                inv.setItem(4, null);
+                holders = new String[]{"%scale_coarse%", String.valueOf(C.SCALE_COARSE), "%scale_fine%", String.valueOf(C.SCALE_FINE)};
+                inv.setItem(0, setDesc(craftItem(Material.BLUE_DYE), player, "editor.scale.x", holders));
+                inv.setItem(1, setDesc(craftItem(Material.RED_DYE), player, "editor.scale.y", holders));
+                inv.setItem(2, setDesc(craftItem(Material.LIME_DYE), player, "editor.scale.z", holders));
+                inv.setItem(3, null);
+                inv.setItem(4, setDesc(craftItem(Material.GRAY_DYE), player, "editor.scale.all", holders));
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.scale.reset"));
                 return;
@@ -93,7 +97,7 @@ public enum EditorMode {
                     itemStack2.setItemMeta(meta2);
                     inv.setItem(1, setDesc(itemStack2, player, "editor.shadow.blocklight"));
                 }
-                inv.setItem(2, setDesc(craftItem(Material.GLASS, Math.min(127,(int) (display.getViewRange() * 64))), player,
+                inv.setItem(2, setDesc(craftItem(Material.ENDER_EYE, Math.max(1, Math.min(127, (int) (display.getViewRange() * 64)))), player,
                         "editor.shadow.see_distance", "%value%", String.valueOf((int) (display.getViewRange() * 64))));
                 inv.setItem(3, null);
                 inv.setItem(4, null);
@@ -105,17 +109,17 @@ public enum EditorMode {
                     TextDisplay textDisplay = (TextDisplay) display;
                     Color backGround = textDisplay.getBackgroundColor();
                     inv.setItem(0, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.RED_STAINED_GLASS_PANE, Math.min(127,backGround.getRed() / 2 + 1)), player,
-                            "editor.entity_specific.text_background_red","%value%",backGround==null?"?":String.valueOf(backGround.getRed())));
+                                    craftItem(Material.RED_STAINED_GLASS_PANE, Math.min(127, backGround.getRed() / 2 + 1)), player,
+                            "editor.entity_specific.text_background_red", "%value%", backGround == null ? "?" : String.valueOf(backGround.getRed())));
                     inv.setItem(1, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.LIME_STAINED_GLASS_PANE, Math.min(127,backGround.getGreen() / 2 + 1)), player,
-                            "editor.entity_specific.text_background_green","%value%",backGround==null?"?":String.valueOf(backGround.getGreen())));
+                                    craftItem(Material.LIME_STAINED_GLASS_PANE, Math.min(127, backGround.getGreen() / 2 + 1)), player,
+                            "editor.entity_specific.text_background_green", "%value%", backGround == null ? "?" : String.valueOf(backGround.getGreen())));
                     inv.setItem(2, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.BLUE_STAINED_GLASS_PANE, Math.min(127,backGround.getBlue() / 2 + 1)), player,
-                            "editor.entity_specific.text_background_blue","%value%",backGround==null?"?":String.valueOf(backGround.getBlue())));
+                                    craftItem(Material.BLUE_STAINED_GLASS_PANE, Math.min(127, backGround.getBlue() / 2 + 1)), player,
+                            "editor.entity_specific.text_background_blue", "%value%", backGround == null ? "?" : String.valueOf(backGround.getBlue())));
                     inv.setItem(3, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.GRAY_STAINED_GLASS_PANE, Math.min(127,backGround.getAlpha() / 2 + 1)), player,
-                            "editor.entity_specific.text_background_alpha","%value%",backGround==null?"?":String.valueOf(backGround.getAlpha())));
+                                    craftItem(Material.GRAY_STAINED_GLASS_PANE, Math.min(127, backGround.getAlpha() / 2 + 1)), player,
+                            "editor.entity_specific.text_background_alpha", "%value%", backGround == null ? "?" : String.valueOf(backGround.getAlpha())));
                     inv.setItem(4, setDesc(craftItem(Material.GLOBE_BANNER_PATTERN), player,
                             "editor.entity_specific.text_alignment", "%value%",
                             textDisplay.getAlignment().name().toLowerCase(Locale.ENGLISH)));
@@ -185,12 +189,12 @@ public enum EditorMode {
         }
     }
 
-    private ItemStack craftItem(Material mat){
-        return craftItem(mat,1);
+    private ItemStack craftItem(Material mat) {
+        return craftItem(mat, 1);
     }
 
     private ItemStack craftItem(Material mat, int amount) {
-        ItemStack item = new ItemStack(mat,amount);
+        ItemStack item = new ItemStack(mat, amount);
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.addItemFlags(ItemFlag.values());
