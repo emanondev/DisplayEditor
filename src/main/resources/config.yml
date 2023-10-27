@@ -1,0 +1,37 @@
+# ItemEdit by Emanon
+# Wiki
+# Discord https://discord.gg/w5HVCDPtRp
+# Donations https://www.paypal.me/FlavioLiponi/
+# Spigot https://www.spigotmc.org/resources/113254/
+#
+# Do not change config-version
+config-version: 1
+language:
+  #Default locale
+  #If you want to add more languages copy language/en.yml, rename it and apply your changes,
+  # plugin will automatically use it after a plugin reload or server restart
+  default: 'en'
+  #When true the plugin will use the client language if a language file exist for that client
+  use_multilanguage: true
+editor:
+  #Maximus distance from the item where you still are able to edit it
+  max_edit_distance: 64.0
+  #When selecting a display the default search radius
+  default_selection_radius: 16.0
+  #Maximus view range of a display which shall be set from the editor
+  max_view_range: 128
+  move:
+    #Movement tool coarse amount (blocks)
+    coarse: 0.5
+    #Movement tool fine amount (blocks)
+    fine: 0.05
+  scale:
+    #Scale tool coarse amount (blocks)
+    coarse: 0.5
+    #Scale tool fine amount (blocks)
+    fine: 0.025
+  rotation:
+    #Movement tool coarse amount (degrees)
+    coarse_degrees: 22.5
+    #Movement tool fine amount (degrees)
+    fine_degrees: 2.5

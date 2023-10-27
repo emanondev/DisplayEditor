@@ -1,16 +1,21 @@
 package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.DisplayEditor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
 public class SelectionManager {
+
+    private static BukkitTask cornerFlash;
 
     private static final HashMap<Player, Display> selections = new HashMap<>();
     /* TODO coming soon
@@ -21,6 +26,7 @@ public class SelectionManager {
     private static final HashMap<Player, EditorMode> editorMode = new HashMap<>();
     private static final HashMap<Player, ItemStack[]> inventoryBackup = new HashMap<>();
     private static final HashMap<Player, ItemStack[]> offhandBackup = new HashMap<>();
+    private static final HashMap<Player, ItemStack[]> equipmentBackup = new HashMap<>();
 
 
     public static void select(@NotNull Player player, @NotNull Display display) {
@@ -67,6 +73,7 @@ public class SelectionManager {
         if (!editorMode.containsKey(player)) {
             inventoryBackup.put(player, player.getInventory().getStorageContents());
             offhandBackup.put(player, player.getInventory().getExtraContents());
+            equipmentBackup.put(player, player.getInventory().getArmorContents());
             player.getInventory().clear();
         }
 
@@ -74,10 +81,32 @@ public class SelectionManager {
             editorMode.remove(player);
             player.getInventory().setStorageContents(inventoryBackup.remove(player));
             player.getInventory().setExtraContents(offhandBackup.remove(player));
+            player.getInventory().setArmorContents(equipmentBackup.remove(player));
         } else {
             editorMode.put(player, mode);
             mode.setup(player);
         }
+
+
+        if (editorMode.isEmpty() && cornerFlash!=null){
+            cornerFlash.cancel();
+            cornerFlash = null;
+        }
+        if (!editorMode.isEmpty() && cornerFlash==null){
+            cornerFlash = new BukkitRunnable(){
+
+                @Override
+                public void run() {
+                    selections.forEach((p,disp)->{
+                        if (p.isValid() && p.isOnline() && disp.isValid() && p.getWorld().equals(disp.getWorld()))
+                            p.spawnParticle(Particle.REDSTONE,disp.getLocation(),
+                                    4,0,0,0,0,
+                                    new Particle.DustOptions(Color.RED,1));
+                    });
+                }
+            }.runTaskTimer(DisplayEditor.get(),2L,2L);
+        }
+
     }
 
     public static @Nullable EditorMode getEditorMode(@NotNull Player player) {

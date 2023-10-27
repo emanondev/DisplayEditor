@@ -36,11 +36,12 @@ public final class DisplayEditor extends APlugin {
     public void enable() {
 
         ConfigurationUpdater.update();
+        C.reload();
         Bukkit.getPluginManager().registerEvents(new GuiHandler(), this);
         Bukkit.getPluginManager().registerEvents(new EditorModeListener(), this);
 
         registerCommand(new DisplayEditorCommand(), Collections.singletonList("de"));
-        registerCommand("displayeditorinfo", new DisplayEditorInfoCommand(), null);
+        new DisplayEditorInfoCommand().register();
         new ReloadCommand(this).register();
 
         registerMetrics(BSTATS_PLUGIN_ID);
@@ -49,6 +50,7 @@ public final class DisplayEditor extends APlugin {
 
     @Override
     public void reload() {
+        C.reload();
         DisplayEditorCommand.get().reload();
     }
 
