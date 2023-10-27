@@ -16,7 +16,7 @@ import java.util.Collections;
 
 public final class DisplayEditor extends APlugin {
     private static DisplayEditor plugin = null;
-    private final static Integer PROJECT_ID = null;
+    private final static Integer PROJECT_ID = 113254;
     private static final int BSTATS_PLUGIN_ID = 19646;
 
     public static @NotNull DisplayEditor get() {
@@ -28,7 +28,7 @@ public final class DisplayEditor extends APlugin {
     }
 
     @Override
-    public @Nullable Integer getProjectId() {
+    public @NotNull Integer getProjectId() {
         return PROJECT_ID;
     }
 
