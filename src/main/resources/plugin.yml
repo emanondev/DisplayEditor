@@ -17,7 +17,6 @@ commands:
   displayeditorreload:
     description: reload configurations
     usage: /displayeditorreload
-
 permissions:
   displayeditor.admin:
     default: op
@@ -31,7 +30,34 @@ permissions:
     description: Gives full access to the plugin
     children:
       displayeditor.displayeditor.*: true
-      displayeditor.itemstorage.*: true
+  displayeditor.displayeditor.*:
+    default: op
+    description: Gives full access to the plugin
+    children:
+      displayeditor.displayeditor.create: true
+      displayeditor.displayeditor.delete: true
+      displayeditor.displayeditor.deselect: true
+      displayeditor.displayeditor.editormode: true
+      displayeditor.displayeditor.select: true
+      displayeditor.displayeditor.settext: true
+  displayeditor.displayeditor.create:
+    default: op
+    description: Create new display editors
+  displayeditor.displayeditor.delete:
+    default: op
+    description: Delect current selected display
+  displayeditor.displayeditor.select:
+    default: op
+    description: Select nearest display
+  displayeditor.displayeditor.deselect:
+    default: op
+    description: Deselect current selected display
+  displayeditor.displayeditor.editormode:
+    default: op
+    description: Open the editor mode
+  displayeditor.displayeditor.settext:
+    default: op
+    description: Ability to change text of selected display text
   displayeditor.bypass.*:
     default: op
     description: Gives full access to the plugin
@@ -39,7 +65,7 @@ permissions:
       displayeditor.bypass.censure: true
   displayeditor.bypass.censure:
     default: op
-    description: Bypass words restrictions when editing items
+    description: Bypass words restrictions when editing display text
   displayeditor.displayeditorinfo:
     default: op
     description: Gives full access to command /displayeditorinfo
