@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +45,6 @@ public class Settext extends SubCmd {
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
-        return Util.complete(args[1],EditorMode.class);
+        return Collections.emptyList();
     }
 }
