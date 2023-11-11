@@ -4,7 +4,9 @@ import emanondev.displayeditor.C;
 import emanondev.displayeditor.DisplayEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Light;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
@@ -15,7 +17,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,8 +34,10 @@ public enum EditorMode {
     COPY_PASTE,
     ;
 
+    private final DecimalFormat optional3Digit = new DecimalFormat("0.###");
 
     EditorMode() {
+        optional3Digit.setRoundingMode(RoundingMode.HALF_DOWN);
     }
 
     public void setup(Player player) {
@@ -47,8 +54,12 @@ public enum EditorMode {
         }
         String[] holders;
         switch (this) {
-            case POSITION:
-                holders = new String[]{"%move_coarse%", String.valueOf(C.MOVE_COARSE), "%move_fine%", String.valueOf(C.MOVE_FINE)};
+            case POSITION: {
+                Location loc = display.getLocation();
+                holders = new String[]{"%x_offset%", optional3Digit.format(loc.getX() - loc.getBlockX()),
+                        "%y_offset%", optional3Digit.format(loc.getY() - loc.getBlockY()),
+                        "%z_offset%", optional3Digit.format(loc.getZ() - loc.getBlockZ()),
+                        "%move_coarse%", String.valueOf(C.MOVE_COARSE), "%move_fine%", String.valueOf(C.MOVE_FINE)};
                 inv.setItem(0, setDesc(craftItem(Material.LAPIS_LAZULI), player, "editor.position.x", holders));
                 inv.setItem(1, setDesc(craftItem(Material.REDSTONE), player, "editor.position.y", holders));
                 inv.setItem(2, setDesc(craftItem(Material.EMERALD), player, "editor.position.z", holders));
@@ -57,8 +68,19 @@ public enum EditorMode {
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.position.reset"));
                 return;
-            case ROTATION:
-                holders = new String[]{"%rotate_coarse%", String.valueOf(C.ROTATE_COARSE), "%rotate_fine%", String.valueOf(C.ROTATE_FINE)};
+            }
+            case ROTATION: {
+                Vector3f vect = display.getTransformation().getRightRotation().getEulerAnglesXYZ(new Vector3f());
+                double x = vect.x;
+                x = (x / Math.PI + (x < 0 ? 2 : 0)) * 180;
+                double y = vect.y;
+                y = (y / Math.PI + (y < 0 ? 2 : 0)) * 180;
+                double z = vect.z;
+                z = (z / Math.PI + (z < 0 ? 2 : 0)) * 180;
+
+                holders = new String[]{"%x_degree%", optional3Digit.format(x),
+                        "%y_degree%", optional3Digit.format(y), "%z_degree%", optional3Digit.format(z),
+                        "%rotate_coarse%", String.valueOf(C.ROTATE_COARSE), "%rotate_fine%", String.valueOf(C.ROTATE_FINE)};
                 inv.setItem(0, setDesc(craftItem(Material.MUSIC_DISC_WAIT), player, "editor.rotation.x", holders));
                 inv.setItem(1, setDesc(craftItem(Material.MUSIC_DISC_BLOCKS), player, "editor.rotation.y", holders));
                 inv.setItem(2, setDesc(craftItem(Material.MUSIC_DISC_FAR), player, "editor.rotation.z", holders));
@@ -68,8 +90,12 @@ public enum EditorMode {
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.rotation.reset"));
                 return;
-            case SCALE:
-                holders = new String[]{"%scale_coarse%", String.valueOf(C.SCALE_COARSE), "%scale_fine%", String.valueOf(C.SCALE_FINE)};
+            }
+            case SCALE: {
+                Vector3f scale = display.getTransformation().getScale();
+                holders = new String[]{"%x_scale%", optional3Digit.format(scale.x),
+                        "%y_scale%", optional3Digit.format(scale.y),
+                        "%z_scale%", optional3Digit.format(scale.z), "%scale_coarse%", String.valueOf(C.SCALE_COARSE), "%scale_fine%", String.valueOf(C.SCALE_FINE)};
                 inv.setItem(0, setDesc(craftItem(Material.BLUE_DYE), player, "editor.scale.x", holders));
                 inv.setItem(1, setDesc(craftItem(Material.RED_DYE), player, "editor.scale.y", holders));
                 inv.setItem(2, setDesc(craftItem(Material.LIME_DYE), player, "editor.scale.z", holders));
@@ -78,7 +104,8 @@ public enum EditorMode {
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.scale.reset"));
                 return;
-            case SHADOW:
+            }
+            case SHADOW: {
                 Display.Brightness brightness = display.getBrightness();
                 if (brightness == null) {
                     inv.setItem(0, setDesc(craftItem(Material.BLACK_CONCRETE_POWDER), player, "editor.shadow.skylight"));
@@ -104,6 +131,7 @@ public enum EditorMode {
                 inv.setItem(5, null);
                 inv.setItem(6, null);
                 return;
+            }
             case ENTITY_SPECIFIC:
                 if (display instanceof TextDisplay) {
                     TextDisplay textDisplay = (TextDisplay) display;
@@ -129,6 +157,8 @@ public enum EditorMode {
                 }
                 if (display instanceof BlockDisplay) {
                     inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.entity_specific.dataeditor_soon")); //TODO edit data
+                    BlockData data = ((BlockDisplay) display).getBlock();
+
                     inv.setItem(1, null);
                     inv.setItem(2, null);
                     inv.setItem(3, null);

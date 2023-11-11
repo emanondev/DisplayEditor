@@ -22,9 +22,13 @@ import org.bukkit.util.Transformation;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 public class EditorModeListener implements Listener {
+
+    private final HashMap<UUID, Long> lastPlayerInteraction = new HashMap<>();
 
     @EventHandler
     public void event(EntityPickupItemEvent event) {
@@ -57,15 +61,21 @@ public class EditorModeListener implements Listener {
     public void event(PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL)
             return;
-        if (event.getHand()!=EquipmentSlot.HAND)
-            return;
         EditorMode mode = SelectionManager.getEditorMode(event.getPlayer());
-        if (mode != null) {
-            event.setCancelled(true);
-            if (event.getHand() == EquipmentSlot.HAND)
-                handleClick(event, mode);
-        }
+        if (mode == null)
+            return;
+        event.setCancelled(true);
+        if (event.getHand() != EquipmentSlot.HAND)
+            return;
 
+        //there is a strange bug that fires the event multiple times
+        long nowMs = System.currentTimeMillis();
+        long lastMs = this.lastPlayerInteraction.getOrDefault(event.getPlayer().getUniqueId(), nowMs - 150);
+
+        if (lastMs + 100 >= nowMs) //2 tick
+            return;
+        this.lastPlayerInteraction.put(event.getPlayer().getUniqueId(), nowMs);
+        handleClick(event, mode);
     }
 
     @EventHandler

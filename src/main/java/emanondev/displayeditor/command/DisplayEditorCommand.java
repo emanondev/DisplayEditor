@@ -6,10 +6,6 @@ import emanondev.displayeditor.command.displayeditor.*;
 public class DisplayEditorCommand extends AbstractCommand {
     public static DisplayEditorCommand instance;
 
-    public static DisplayEditorCommand get() {
-        return instance;
-    }
-
     public DisplayEditorCommand() {
         super("displayeditor", DisplayEditor.get());
         instance = this;
@@ -20,6 +16,10 @@ public class DisplayEditorCommand extends AbstractCommand {
         this.registerSubCommand(new Editormode(this));
         this.registerSubCommand(new Delete(this));
         this.registerSubCommand(new Settext(this));
+    }
+
+    public static DisplayEditorCommand get() {
+        return instance;
     }
 
 }

@@ -21,6 +21,18 @@ import java.util.regex.Pattern;
 
 public class Util {
     private static final int MAX_COMPLETES = 100;
+    private static final int GAME_MAIN_VERSION = Integer.parseInt(
+            Bukkit.getServer().getClass().getPackage().getName().substring(
+                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
+                    .split("_")[0].substring(1));
+    private static final int GAME_VERSION = Integer.parseInt(
+            Bukkit.getServer().getClass().getPackage().getName().substring(
+                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
+                    .split("_")[1]);
+    private static final int GAME_SUB_VERSION = Integer.parseInt(
+            Bukkit.getServer().getClass().getPackage().getName().substring(
+                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
+                    .split("_")[2].substring(1));
 
     public static <T extends Enum<T>> @NotNull List<String> complete(String prefix, @NotNull Class<T> enumClass) {
         prefix = prefix.toUpperCase();
@@ -35,7 +47,6 @@ public class Util {
             }
         return results;
     }
-
 
     public static @NotNull <T extends Enum<T>> List<String> complete(String prefix, @NotNull Class<T> type,
                                                                      @NotNull Predicate<T> predicate) {
@@ -227,7 +238,6 @@ public class Util {
         }
     }
 
-
     /**
      * for pre 1.13 compatibility
      *
@@ -286,19 +296,6 @@ public class Util {
     public static boolean isAirOrNull(ItemStack item) {
         return item == null || item.getType() == Material.AIR;
     }
-
-    private static final int GAME_MAIN_VERSION = Integer.parseInt(
-            Bukkit.getServer().getClass().getPackage().getName().substring(
-                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[0].substring(1));
-    private static final int GAME_VERSION = Integer.parseInt(
-            Bukkit.getServer().getClass().getPackage().getName().substring(
-                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[1]);
-    private static final int GAME_SUB_VERSION = Integer.parseInt(
-            Bukkit.getServer().getClass().getPackage().getName().substring(
-                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[2].substring(1));
 
     /**
      * Inclusive
@@ -393,6 +390,6 @@ public class Util {
     }
 
     public static boolean hasMiniMessageAPI() {
-        return hasPaperAPI()&&Util.isVersionAfter(1,18,2);//TODO
+        return hasPaperAPI() && Util.isVersionAfter(1, 18, 2);//TODO
     }
 }

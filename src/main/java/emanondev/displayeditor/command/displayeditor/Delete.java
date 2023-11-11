@@ -30,8 +30,7 @@ public class Delete extends SubCmd {
             if (mode != null)
                 mode.setup((Player) sender);
             sendLanguageString("success", null, player);
-        }
-        else
+        } else
             sendLanguageString("none-selected", null, player);
     }
 

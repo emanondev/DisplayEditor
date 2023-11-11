@@ -78,19 +78,19 @@ editor:
       - '&bAny &9➤ &bSelect nearest Display'
   position:
     x:
-      - '&6Move X coordinate'
+      - '&6Move X coordinate (Offset: &e%x_offset%&6)'
       - '&bLeft &9➤ &bDecrease by %move_coarse%'
       - '&bRight &9➤ &bIncrease by %move_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %move_fine%'
       - '&bShift+Right &9➤ &bIncrease by %move_fine%'
     y:
-      - '&6Move Y coordinate'
+      - '&6Move Y coordinate (Offset: &e%y_offset%&6)'
       - '&bLeft &9➤ &bDecrease by %move_coarse%'
       - '&bRight &9➤ &bIncrease by %move_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %move_fine%'
       - '&bShift+Right &9➤ &bIncrease by %move_fine%'
     z:
-      - '&6Move Z coordinate'
+      - '&6Move Z coordinate (Offset: &e%z_offset%&6)'
       - '&bLeft &9➤ &bDecrease by %move_coarse%'
       - '&bRight &9➤ &bIncrease by %move_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %move_fine%'
@@ -104,19 +104,19 @@ editor:
       - '&bAny &9➤ &bRound XYZ location to an int value'
   rotation:
     x:
-      - '&6Rotate on X axis'
+      - '&6Rotate on X axis (Rotation: &e%x_degree%&6°)'
       - '&bLeft &9➤ &bDecrease by %rotate_coarse%°'
       - '&bRight &9➤ &bIncrease by %rotate_coarse%°'
       - '&bShift+Left &9➤ &bDecrease by %rotate_fine%°'
       - '&bShift+Right &9➤ &bIncrease by %rotate_fine%°'
     y:
-      - '&6Rotate on Y axis'
+      - '&6Rotate on Y axis (Rotation: &e%y_degree%&6°)'
       - '&bLeft &9➤ &bDecrease by %rotate_coarse%°'
       - '&bRight &9➤ &bIncrease by %rotate_coarse%°'
       - '&bShift+Left &9➤ &bDecrease by %rotate_fine%°'
       - '&bShift+Right &9➤ &bIncrease by %rotate_fine%°'
     z:
-      - '&6Rotate on Z axis'
+      - '&6Rotate on Z axis (Rotation: &e%z_degree%&6°)'
       - '&bLeft &9➤ &bDecrease by %rotate_coarse%°'
       - '&bRight &9➤ &bIncrease by %rotate_coarse%°'
       - '&bShift+Left &9➤ &bDecrease by %rotate_fine%°'
@@ -131,25 +131,25 @@ editor:
       - '&bAny &9➤ &bSet rotation on X, Y, Z axis as 0°'
   scale:
     all:
-      - '&6Scale X, Y, Z'
+      - '&6Scale X, Y, Z (Scale: &e%x_scale%&6, &e%y_scale%&6, &e%z_scale%&6)'
       - '&bLeft &9➤ &bDecrease by %scale_coarse%'
       - '&bRight &9➤ &bIncrease by %scale_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
       - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     x:
-      - '&6Scale X'
+      - '&6Scale X (Scale: &e%x_scale%&6)'
       - '&bLeft &9➤ &bDecrease by %scale_coarse%'
       - '&bRight &9➤ &bIncrease by %scale_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
       - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     y:
-      - '&6Scale Y'
+      - '&6Scale Y (Scale: &e%y_scale%&6)'
       - '&bLeft &9➤ &bDecrease by %scale_coarse%'
       - '&bRight &9➤ &bIncrease by %scale_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %scale_fine%'
       - '&bShift+Right &9➤ &bIncrease by %scale_fine%'
     z:
-      - '&6Scale Z'
+      - '&6Scale Z (Scale: &e%z_scale%&6)'
       - '&bLeft &9➤ &bDecrease by %scale_coarse%'
       - '&bRight &9➤ &bIncrease by %scale_coarse%'
       - '&bShift+Left &9➤ &bDecrease by %scale_fine%'

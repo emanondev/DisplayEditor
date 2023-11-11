@@ -1,10 +1,8 @@
 package emanondev.displayeditor.command.displayeditor;
 
-import emanondev.displayeditor.Util;
 import emanondev.displayeditor.UtilsString;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
-import emanondev.displayeditor.selection.EditorMode;
 import emanondev.displayeditor.selection.SelectionManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display;
@@ -16,7 +14,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class Settext extends SubCmd {
     public Settext(@NotNull AbstractCommand cmd) {
@@ -26,7 +23,7 @@ public class Settext extends SubCmd {
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
         @Nullable Display sel = SelectionManager.getSelection((Player) sender);
-        if (sel==null) {
+        if (sel == null) {
             sendLanguageString("none-selected", null, sender);
             return;
         }
@@ -35,10 +32,10 @@ public class Settext extends SubCmd {
             return;
         }
         String text = "";
-        if (args.length>1){
-            text = String.join(" ", Arrays.asList(args).subList(1,args.length));
+        if (args.length > 1) {
+            text = String.join(" ", Arrays.asList(args).subList(1, args.length));
         }
-        text = UtilsString.fix(text,null,true);
+        text = UtilsString.fix(text, null, true);
         ((TextDisplay) sel).setText(text);
         sendLanguageString("success", null, sender);
     }

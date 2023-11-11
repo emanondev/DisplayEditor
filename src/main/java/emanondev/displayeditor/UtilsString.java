@@ -124,7 +124,7 @@ public class UtilsString {
             return null;
 
         // holders
-        if (holders!=null && holders.length%2!=0)
+        if (holders != null && holders.length % 2 != 0)
             throw new IllegalArgumentException("holder without replacer");
         if (holders != null && holders.length > 0)
             for (int i = 0; i < holders.length; i += 2)

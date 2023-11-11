@@ -135,7 +135,7 @@ public abstract class APlugin extends JavaPlugin {
         String fileName = "languages" + File.separator + locale + ".yml";
 
         if (locale.equals(this.defaultLanguage) || new File(getDataFolder(), fileName).exists()
-                || this.getResource("languages/"  + locale + ".yml") != null) {
+                || this.getResource("languages/" + locale + ".yml") != null) {
             YMLConfig conf = new YMLConfig(this, fileName);
             languageConfigs.put(locale, conf);
             return conf;
@@ -174,8 +174,8 @@ public abstract class APlugin extends JavaPlugin {
             }
 
             String[] version = Bukkit.getServer().getBukkitVersion().split("\\.");
-            if (Integer.parseInt(version[0])==1 && Integer.parseInt(version[1])<19) {
-                enableWithError(Bukkit.getServer().getBukkitVersion()+" is not supported!!! use 1.19.4+");
+            if (Integer.parseInt(version[0]) == 1 && Integer.parseInt(version[1]) < 19) {
+                enableWithError(Bukkit.getServer().getBukkitVersion() + " is not supported!!! use 1.19.4+");
                 log(ChatColor.GREEN, "#", "Enabled (took &e" + (System.currentTimeMillis() - now) + "&f ms)");
                 return;
             }
@@ -227,6 +227,21 @@ public abstract class APlugin extends JavaPlugin {
         log(ChatColor.GREEN, "#", "Reloaded (took &e" + (System.currentTimeMillis() - now) + "&f ms)");
     }
 
+    public void onDisable() {
+        disable();
+    }
+
+    public abstract void disable();
+
+    public Metrics registerMetrics(int pluginId) {
+        try {
+            return new Metrics(this, pluginId);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Utility class to explain users what when wrong on plugin load/enable and why commands are not working
      */
@@ -250,21 +265,6 @@ public abstract class APlugin extends JavaPlugin {
             sender.sendMessage(msg);
             return true;
         }
-    }
-
-    public void onDisable() {
-        disable();
-    }
-
-    public abstract void disable();
-
-    public Metrics registerMetrics(int pluginId) {
-        try {
-            return new Metrics(this, pluginId);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        return null;
     }
 
 }

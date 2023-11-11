@@ -24,7 +24,7 @@ editor:
     #Movement tool coarse amount (blocks)
     coarse: 0.5
     #Movement tool fine amount (blocks)
-    fine: 0.05
+    fine: 0.025
   scale:
     #Scale tool coarse amount (blocks)
     coarse: 0.5
@@ -34,4 +34,4 @@ editor:
     #Movement tool coarse amount (degrees)
     coarse_degrees: 22.5
     #Movement tool fine amount (degrees)
-    fine_degrees: 2.5
+    fine_degrees: 1.25

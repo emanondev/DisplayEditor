@@ -25,26 +25,6 @@ public class YMLConfig extends YamlConfiguration {
     private final String name;
 
     /**
-     * Returns the file path of this config.
-     *
-     * @return the file path starting by
-     * {@link #getPlugin()}.{@link JavaPlugin#getDataFolder()
-     * getDataFolder()}.
-     */
-    public String getFileName() {
-        return name;
-    }
-
-    /**
-     * Return the plugin associated with this Config.
-     *
-     * @return the plugin associated with this Config
-     */
-    public JavaPlugin getPlugin() {
-        return plugin;
-    }
-
-    /**
      * Constructs a new Configuration File.<br>
      * Used file is located at plugin.{@link JavaPlugin#getDataFolder()
      * getDataFolder()}/{@link YMLConfig#fixName(String) YMLConfig.fixName(name)}.<br>
@@ -74,10 +54,30 @@ public class YMLConfig extends YamlConfiguration {
      */
     public static String fixName(@NotNull String name) {
         if (name.isEmpty())
-            throw new IllegalArgumentException( "YAML file must have a name!");
+            throw new IllegalArgumentException("YAML file must have a name!");
         if (!name.endsWith(".yml"))
             name += ".yml";
         return name;
+    }
+
+    /**
+     * Returns the file path of this config.
+     *
+     * @return the file path starting by
+     * {@link #getPlugin()}.{@link JavaPlugin#getDataFolder()
+     * getDataFolder()}.
+     */
+    public String getFileName() {
+        return name;
+    }
+
+    /**
+     * Return the plugin associated with this Config.
+     *
+     * @return the plugin associated with this Config
+     */
+    public JavaPlugin getPlugin() {
+        return plugin;
     }
 
     /**

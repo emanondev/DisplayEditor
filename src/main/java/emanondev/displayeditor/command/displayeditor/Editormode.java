@@ -20,18 +20,18 @@ public class Editormode extends SubCmd {
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
         EditorMode target;
-        if (args.length==1){
-            target = SelectionManager.isOnEditorMode((Player) sender)?null:EditorMode.POSITION;
+        if (args.length == 1) {
+            target = SelectionManager.isOnEditorMode((Player) sender) ? null : EditorMode.POSITION;
         } else {
-            try{
+            try {
                 target = EditorMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-            }catch (Exception e){
+            } catch (Exception e) {
                 sendLanguageString("wrong-type", null, sender);
                 return;
             }
         }
-        SelectionManager.setEditorMode((Player) sender,target);
-        if (target==null)
+        SelectionManager.setEditorMode((Player) sender, target);
+        if (target == null)
             sendLanguageString("success-disabled", null, sender);
         else
             sendLanguageString("success-enabled", null, sender);
@@ -39,6 +39,6 @@ public class Editormode extends SubCmd {
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
-        return Util.complete(args[1],EditorMode.class);
+        return Util.complete(args[1], EditorMode.class);
     }
 }

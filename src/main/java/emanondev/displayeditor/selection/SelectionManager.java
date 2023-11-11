@@ -15,8 +15,6 @@ import java.util.HashMap;
 
 public class SelectionManager {
 
-    private static BukkitTask cornerFlash;
-
     private static final HashMap<Player, Display> selections = new HashMap<>();
     /* TODO coming soon
     private static final HashMap<Player, BoundingBox> copyArea = new HashMap<>();
@@ -27,26 +25,26 @@ public class SelectionManager {
     private static final HashMap<Player, ItemStack[]> inventoryBackup = new HashMap<>();
     private static final HashMap<Player, ItemStack[]> offhandBackup = new HashMap<>();
     private static final HashMap<Player, ItemStack[]> equipmentBackup = new HashMap<>();
-
+    private static BukkitTask cornerFlash;
 
     public static void select(@NotNull Player player, @NotNull Display display) {
         selections.put(player, display);
-        new BukkitRunnable(){
+        new BukkitRunnable() {
+            int i = 0;
+
             @Override
             public void run() {
-                if (!display.isValid() || i>10)
+                if (!display.isValid() || i > 10)
                     this.cancel();
-                if (i%2!=0)
-                    player.showEntity(DisplayEditor.get(),display);
+                if (i % 2 != 0)
+                    player.showEntity(DisplayEditor.get(), display);
                 else
-                    player.hideEntity(DisplayEditor.get(),display);
+                    player.hideEntity(DisplayEditor.get(), display);
 
                 i++;
             }
 
-            int i = 0;
-
-        }.runTaskTimer(DisplayEditor.get(),2L,2L);
+        }.runTaskTimer(DisplayEditor.get(), 2L, 2L);
     }
 
     public static boolean deselect(@NotNull Player player) {
@@ -62,7 +60,7 @@ public class SelectionManager {
     }
 
     public static boolean isOnEditorMode(@NotNull Player player) {
-        return getEditorMode(player)!=null;
+        return getEditorMode(player) != null;
     }
 
     public static void setEditorMode(@NotNull Player player, @Nullable EditorMode mode) {
@@ -88,23 +86,23 @@ public class SelectionManager {
         }
 
 
-        if (editorMode.isEmpty() && cornerFlash!=null){
+        if (editorMode.isEmpty() && cornerFlash != null) {
             cornerFlash.cancel();
             cornerFlash = null;
         }
-        if (!editorMode.isEmpty() && cornerFlash==null){
-            cornerFlash = new BukkitRunnable(){
+        if (!editorMode.isEmpty() && cornerFlash == null) {
+            cornerFlash = new BukkitRunnable() {
 
                 @Override
                 public void run() {
-                    selections.forEach((p,disp)->{
+                    selections.forEach((p, disp) -> {
                         if (p.isValid() && p.isOnline() && disp.isValid() && p.getWorld().equals(disp.getWorld()))
-                            p.spawnParticle(Particle.REDSTONE,disp.getLocation(),
-                                    4,0,0,0,0,
-                                    new Particle.DustOptions(Color.RED,1));
+                            p.spawnParticle(Particle.REDSTONE, disp.getLocation(),
+                                    4, 0, 0, 0, 0,
+                                    new Particle.DustOptions(Color.RED, 1));
                     });
                 }
-            }.runTaskTimer(DisplayEditor.get(),2L,2L);
+            }.runTaskTimer(DisplayEditor.get(), 2L, 2L);
         }
 
     }
@@ -115,15 +113,15 @@ public class SelectionManager {
 
 
     public static void swapEditorMode(@NotNull Player player) {
-        swapEditorMode(player,1);
+        swapEditorMode(player, 1);
     }
 
-    public static void swapEditorMode(@NotNull Player player,int amount) {
+    public static void swapEditorMode(@NotNull Player player, int amount) {
         EditorMode mode = getEditorMode(player);
         if (mode == null)
             setEditorMode(player, EditorMode.POSITION);
         else {
-            setEditorMode(player, EditorMode.values()[(EditorMode.values().length+ mode.ordinal() + amount) % EditorMode.values().length]);
+            setEditorMode(player, EditorMode.values()[(EditorMode.values().length + mode.ordinal() + amount) % EditorMode.values().length]);
         }
     }
 

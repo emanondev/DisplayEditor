@@ -54,7 +54,7 @@ public class Select extends SubCmd {
 
         SelectionManager.select(player, target);
         @Nullable EditorMode mode = SelectionManager.getEditorMode(player);
-        if (mode==null)
+        if (mode == null)
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         else
             mode.setup(player);

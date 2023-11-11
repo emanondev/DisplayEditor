@@ -10,14 +10,13 @@ import emanondev.displayeditor.selection.SelectionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 
 public final class DisplayEditor extends APlugin {
-    private static DisplayEditor plugin = null;
     private final static Integer PROJECT_ID = 113254;
     private static final int BSTATS_PLUGIN_ID = 19646;
+    private static DisplayEditor plugin = null;
 
     public static @NotNull DisplayEditor get() {
         return plugin;
@@ -45,7 +44,6 @@ public final class DisplayEditor extends APlugin {
         new ReloadCommand(this).register();
 
         registerMetrics(BSTATS_PLUGIN_ID);
-
     }
 
     @Override
@@ -56,8 +54,8 @@ public final class DisplayEditor extends APlugin {
 
     @Override
     public void disable() {
-        for (Player p: Bukkit.getOnlinePlayers())
-            SelectionManager.setEditorMode(p,null);
+        for (Player p : Bukkit.getOnlinePlayers())
+            SelectionManager.setEditorMode(p, null);
         for (Player p : Bukkit.getOnlinePlayers())
             if (p.getOpenInventory().getTopInventory().getHolder() instanceof Gui)
                 p.closeInventory();

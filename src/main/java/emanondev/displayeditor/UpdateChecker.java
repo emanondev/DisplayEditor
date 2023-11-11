@@ -13,9 +13,9 @@ import java.net.UnknownHostException;
 
 public class UpdateChecker {
     private final int project;
+    private final JavaPlugin plugin;
     private URL checkURL;
     private String newVersion;
-    private final JavaPlugin plugin;
 
     public UpdateChecker(JavaPlugin plugin, int projectID) {
         this.plugin = plugin;

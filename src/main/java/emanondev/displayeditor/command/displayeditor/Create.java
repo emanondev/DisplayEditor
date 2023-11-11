@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class Create extends SubCmd {
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
         if (args.length == 0) {
-            onFail(sender,alias);
+            onFail(sender, alias);
             return;
         }
         switch (args[1].toLowerCase(Locale.ENGLISH)) {
@@ -42,31 +43,32 @@ public class Create extends SubCmd {
                 text((Player) sender, alias, args);
                 return;
         }
-        onFail(sender,alias);
+        onFail(sender, alias);
     }
 
     //create block [type=STONE/HAND]
     private void block(Player player, String alias, String[] args) {
         Material type = Material.STONE;
-        if (args.length>2){
+        if (args.length > 2) {
             try {
                 type = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
-            }catch (Exception e){
+            } catch (Exception e) {
                 sendLanguageString("wrong-block-type", null, player);
                 return;
             }
-        }else if (getItemInHand(player)!=null && !getItemInHand(player).getType().isAir() && getItemInHand(player).getType().isBlock()){
+        } else if (getItemInHand(player) != null && !getItemInHand(player).getType().isAir() && getItemInHand(player).getType().isBlock()) {
             type = getItemInHand(player).getType();
         }
-        if (!type.isBlock()){
+        if (!type.isBlock()) {
             sendLanguageString("wrong-block-type", null, player);
             return;
         }
         //TODO can create on this position check
-        BlockDisplay block = (BlockDisplay) player.getWorld().spawnEntity(player.getLocation(), EntityType.BLOCK_DISPLAY);
+        BlockDisplay block = (BlockDisplay) player.getWorld().spawnEntity(player.getLocation()
+                .clone().setDirection(new Vector(0, 0, 0)), EntityType.BLOCK_DISPLAY);
         block.setBlock(Bukkit.createBlockData(type));
-        setOwner(block,player);
-        SelectionManager.select(player,block);
+        setOwner(block, player);
+        SelectionManager.select(player, block);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         sendLanguageString("success-block", null, player);
@@ -76,27 +78,27 @@ public class Create extends SubCmd {
     //create item [item=HAND/STONE]
     private void item(Player player, String alias, String[] args) {
         ItemStack type = new ItemStack(Material.STONE);
-        if (args.length>2){
+        if (args.length > 2) {
             try {
                 Material mat = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
-                if (!mat.isItem()){
+                if (!mat.isItem()) {
                     sendLanguageString("wrong-item-type", null, player);
                     return;
                 }
                 type = new ItemStack(mat);
-            }catch (Exception e){
+            } catch (Exception e) {
                 sendLanguageString("wrong-item-type", null, player);
                 return;
             }
-        }
-        else if (getItemInHand(player)!=null && !getItemInHand(player).getType().isAir()){
+        } else if (getItemInHand(player) != null && !getItemInHand(player).getType().isAir()) {
             type = new ItemStack(getItemInHand(player));
         }
         //TODO can create on this position check
-        ItemDisplay item = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation(), EntityType.ITEM_DISPLAY);
+        ItemDisplay item = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().clone()
+                .setDirection(new Vector(0, 0, 0)), EntityType.ITEM_DISPLAY);
         item.setItemStack(type);
-        setOwner(item,player);
-        SelectionManager.select(player,item);
+        setOwner(item, player);
+        SelectionManager.select(player, item);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         sendLanguageString("success-item", null, player);
@@ -105,18 +107,19 @@ public class Create extends SubCmd {
     //create text [text=Hologram]
     private void text(Player player, String alias, String[] args) {
         String text = "Hologram";
-        if (args.length>2){
-            text = String.join(" ", Arrays.asList(args).subList(2,args.length));
+        if (args.length > 2) {
+            text = String.join(" ", Arrays.asList(args).subList(2, args.length));
         }
         //TODO fix text
         //TODO apply censure or bypass it
         //TODO can create on this position check
-        text = UtilsString.fix(text,null,true);
-        TextDisplay textDisplay = (TextDisplay) player.getWorld().spawnEntity(player.getLocation(), EntityType.TEXT_DISPLAY,false);
+        text = UtilsString.fix(text, null, true);
+        TextDisplay textDisplay = (TextDisplay) player.getWorld().spawnEntity(player.getLocation().clone()
+                .setDirection(new Vector(0, 0, 0)), EntityType.TEXT_DISPLAY, false);
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setText(text);
-        setOwner(textDisplay,player);
-        SelectionManager.select(player,textDisplay);
+        setOwner(textDisplay, player);
+        SelectionManager.select(player, textDisplay);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         sendLanguageString("success-text", null, player);
@@ -137,7 +140,6 @@ public class Create extends SubCmd {
         }
         return Collections.emptyList();
     }
-
 
 
     private void setOwner(Display display, Player player) {
