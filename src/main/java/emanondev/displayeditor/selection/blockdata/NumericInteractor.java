@@ -41,9 +41,9 @@ public class NumericInteractor extends BlockDataIntractor {
         int current = getCurrentValue.apply(data);
 
         if (isLeftClick)
-            current++;
-        else
             current--;
+        else
+            current++;
         if (current < getMin.apply(data))
             current = getMax.apply(data);
         else if (current > getMax.apply(data))

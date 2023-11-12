@@ -20,13 +20,13 @@ class BlockDataAddon_1_20 {
                     (d) -> ((Hatchable) d).getMaximumHatch()));
         }
         if (data instanceof Brushable){
-            values.add(new NumericInteractor("dust", Material.BRUSH,
+            values.add(new NumericInteractor("dusted", Material.BRUSH,
                     (d) -> ((Brushable) d).getDusted(),
                     (d, v) -> ((Brushable) d).setDusted(v),
                     (d) -> ((Brushable) d).getMaximumDusted()));
         }
         if (data instanceof PinkPetals) {
-            values.add(new NumericInteractor("pinkpetals", Material.PINK_PETALS,
+            values.add(new NumericInteractor("floweramount", Material.PINK_PETALS,
                     (d) -> ((PinkPetals) d).getFlowerAmount(),
                     (d, v) -> ((PinkPetals) d).setFlowerAmount(v),
                     (d) -> ((PinkPetals) d).getMaximumFlowerAmount()));

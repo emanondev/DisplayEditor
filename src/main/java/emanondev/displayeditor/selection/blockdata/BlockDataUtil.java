@@ -1,5 +1,6 @@
 package emanondev.displayeditor.selection.blockdata;
 
+import emanondev.displayeditor.Util;
 import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -41,23 +42,23 @@ public class BlockDataUtil {
                     (d, v) -> ((Bed) d).setPart(v)));
         }
         if (data instanceof Beehive) {
-            values.add(new NumericInteractor("honey", Material.HONEYCOMB,
+            values.add(new NumericInteractor("honeylevel", Material.HONEYCOMB,
                     (d) -> ((Beehive) d).getHoneyLevel(),
                     (d, v) -> ((Beehive) d).setHoneyLevel(v),
                     (d) -> ((Beehive) d).getMaximumHoneyLevel()));
         }
         if (data instanceof Bell) {
-            values.add(new EnumInteractor<>("bell", Material.BELL,Bell.Attachment.class,
+            values.add(new EnumInteractor<>("bellattachment", Material.BELL,Bell.Attachment.class,
                     (d) -> ((Bell) d).getAttachment(),
                     (d, v) -> ((Bell) d).setAttachment(v)));
         }
         if (data instanceof BigDripleaf) {
-            values.add(new EnumInteractor<>("tilt", Material.BIG_DRIPLEAF,BigDripleaf.Tilt.class,
+            values.add(new EnumInteractor<>("bigdripleaftilt", Material.BIG_DRIPLEAF,BigDripleaf.Tilt.class,
                     (d) -> ((BigDripleaf) d).getTilt(),
                     (d, v) -> ((BigDripleaf) d).setTilt(v)));
         }
         if (data instanceof Bisected) {
-            values.add(new EnumInteractor<>("half", Material.SPRUCE_TRAPDOOR,Bisected.Half.class,
+            values.add(new EnumInteractor<>("bisectedhalf", Material.SPRUCE_TRAPDOOR,Bisected.Half.class,
                     (d) -> ((Bisected) d).getHalf(),
                     (d, v) -> ((Bisected) d).setHalf(v)));
         }
@@ -65,7 +66,7 @@ public class BlockDataUtil {
             //TODO
         }
         if (data instanceof Cake) {
-            values.add(new NumericInteractor("bites", Material.CAKE,
+            values.add(new NumericInteractor("cakebites", Material.CAKE,
                     (d) -> ((Cake) d).getBites(),
                     (d, v) -> ((Cake) d).setBites(v),
                     (d) -> ((Cake) d).getMaximumBites()));
@@ -74,7 +75,8 @@ public class BlockDataUtil {
             values.add(new NumericInteractor("candles", Material.CANDLE,
                     (d) -> ((Candle) d).getCandles(),
                     (d, v) -> ((Candle) d).setCandles(v),
-                    (d) -> ((Candle) d).getMaximumCandles()));
+                    (d) -> 1,
+                    (d) -> ((Candle) d).getMaximumCandles()));//TODO min = 1?
         }
         if (data instanceof CaveVinesPlant) {
             values.add(new BooleanInteractor("berries", Material.SWEET_BERRIES,
@@ -87,7 +89,30 @@ public class BlockDataUtil {
                     (d, v) -> ((Chest) d).setType(v)));
         }
         if (data instanceof ChiseledBookshelf) {
-
+            values.add(new NumericInteractor("books1", Material.CHISELED_BOOKSHELF,
+                    (d) -> {
+                        ChiseledBookshelf c = ((ChiseledBookshelf) d);
+                        return (c.isSlotOccupied(0)?1:0)+(c.isSlotOccupied(1)?2:0)+(c.isSlotOccupied(2)?4:0);
+                    },
+                    (d, v) -> {
+                        ChiseledBookshelf c = ((ChiseledBookshelf) d);
+                        c.setSlotOccupied(0,v%2!=0);
+                        c.setSlotOccupied(1,v/2%2!=0);
+                        c.setSlotOccupied(2,v/4%2!=0);
+                    },
+                    (d) -> 7));
+            values.add(new NumericInteractor("books2", Material.CHISELED_BOOKSHELF,
+                    (d) -> {
+                        ChiseledBookshelf c = ((ChiseledBookshelf) d);
+                        return (c.isSlotOccupied(3)?1:0)+(c.isSlotOccupied(4)?2:0)+(c.isSlotOccupied(5)?4:0);
+                    },
+                    (d, v) -> {
+                        ChiseledBookshelf c = ((ChiseledBookshelf) d);
+                        c.setSlotOccupied(3,v%2!=0);
+                        c.setSlotOccupied(4,v/2%2!=0);
+                        c.setSlotOccupied(5,v/4%2!=0);
+                    },
+                    (d) -> 7));
         }
         if (data instanceof Comparator) {
             values.add(new EnumInteractor<>("comparatormode", Material.COMPARATOR,Comparator.Mode.class,
@@ -129,7 +154,7 @@ public class BlockDataUtil {
                     (d, v) -> ((Hangable) d).setHanging(v)));
         }
         if (data instanceof Jigsaw) {
-            values.add(new EnumInteractor<>("jigsaw", Material.WHEAT_SEEDS,Jigsaw.Orientation.class,
+            values.add(new EnumInteractor<>("jigsaworientation", Material.WHEAT_SEEDS,Jigsaw.Orientation.class,
                     (d) -> ((Jigsaw) d).getOrientation(),
                     (d, v) -> ((Jigsaw) d).setOrientation(v)));
         }
@@ -143,7 +168,7 @@ public class BlockDataUtil {
                     (d) -> ((Levelled) d).getMaximumLevel()));
         }
         if (data instanceof Lightable) {
-            values.add(new BooleanInteractor("light", Material.RED_CANDLE,
+            values.add(new BooleanInteractor("lit", Material.RED_CANDLE,
                     (d) -> ((Lightable) d).isLit(),
                     (d, v) -> ((Lightable) d).setLit(v)));
         }
@@ -172,7 +197,7 @@ public class BlockDataUtil {
                     (d, v) -> ((PistonHead) d).setShort(v)));
         }
         if (data instanceof PointedDripstone) {
-            values.add(new EnumInteractor<>("dripstone", Material.POINTED_DRIPSTONE,PointedDripstone.Thickness.class,
+            values.add(new EnumInteractor<>("dripstonethickness", Material.POINTED_DRIPSTONE,PointedDripstone.Thickness.class,
                     (d) -> ((PointedDripstone) d).getThickness(),
                     (d, v) -> ((PointedDripstone) d).setThickness(v)));
             values.add(new EnumInteractor<>("directional", Material.HOPPER,BlockFace.class,
@@ -181,7 +206,7 @@ public class BlockDataUtil {
                     (d, v) -> ((PointedDripstone) d).getVerticalDirections().contains(v)));
         }
         if (data instanceof Powerable) {
-            values.add(new BooleanInteractor("powerable", Material.POWERED_RAIL,
+            values.add(new BooleanInteractor("powered", Material.POWERED_RAIL,
                     (d) -> ((Powerable) d).isPowered(),
                     (d, v) -> ((Powerable) d).setPowered(v)));
         }
@@ -264,13 +289,13 @@ public class BlockDataUtil {
                     (d, v) -> ((Snowable) d).setSnowy(v)));
         }
         if (data instanceof Stairs) {
-            values.add(new EnumInteractor<>("shape", Material.SCULK_SHRIEKER,
+            values.add(new EnumInteractor<>("stairsshape", Material.STONE_STAIRS,
                     Stairs.Shape.class,
                     (d) -> ((Stairs) d).getShape(),
                     (d, v) -> ((Stairs) d).setShape(v)));
         }
         if (data instanceof TechnicalPiston) {
-            values.add(new EnumInteractor<>("sticky", Material.STICKY_PISTON,
+            values.add(new EnumInteractor<>("pistontype", Material.STICKY_PISTON,
                     TechnicalPiston.Type.class,
                     (d) -> ((TechnicalPiston) d).getType(),
                     (d, v) -> ((TechnicalPiston) d).setType(v)));
@@ -302,6 +327,8 @@ public class BlockDataUtil {
                     (d) -> ((Waterlogged) d).isWaterlogged(),
                     (d, v) -> ((Waterlogged) d).setWaterlogged(v)));
         }
+        if (Util.isVersionUpTo(1,19,4))
+            return values;
         BlockDataAddon_1_20.add(values,data);
         return values;
     }

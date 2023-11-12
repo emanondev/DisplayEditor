@@ -250,7 +250,7 @@ public class EditorModeListener implements Listener {
             BlockData data = ((BlockDisplay) sel).getBlock();
             List<BlockDataIntractor> values = BlockDataUtil.getBlockDataValues(data);
             if (values.size()>slot)
-                values.get(slot).handleClick((BlockDisplay) sel,player,isLeftClick);
+                edit(sel,player,()->values.get(slot).handleClick((BlockDisplay) sel, player, isLeftClick),editorMode);
             return;
         }
         if (sel instanceof ItemDisplay) {

@@ -159,12 +159,12 @@ editor:
       - '&bAny &9➤ &bSet scale to 1'
   shadow:
     skylight:
-      - '&6Sets SkyLight'
+      - '&6Sets Sky Light'
       - '&bRight &9➤ &bIncrease Light'
       - '&bLeft &9➤ &bDecrease Light'
       - '&bShift+Right/left &9➤ &bReset to natural'
     blocklight:
-      - '&6Sets SkyLight'
+      - '&6Sets Block Light'
       - '&bRight &9➤ &bIncrease Light'
       - '&bLeft &9➤ &bDecrease Light'
       - '&bShift+Right/left &9➤ &bReset to natural'
@@ -211,6 +211,168 @@ editor:
       - ''
       - '&7Some items can''t be affected by glow status'
       - '&7(Heads, enchanted books, ...)'
+    block_ageable:
+      - '&6Ageable (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_power:
+      - '&6Power (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_attachable:
+      - '&6Attachable (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bambooleaves:
+      - '&6Bamboo Leaves (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bedpart:
+      - '&6Bed Part (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_honeylevel:
+      - '&6Honey Level (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bellattachment:
+      - '&6Bell Attachment (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bigdripleaftilt:
+      - '&6BigDripleaf Tilt (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bisectedhalf:
+      - '&6Bisected Half (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_cakebites:
+      - '&6Bites (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_candles:
+      - '&6Candles Amount (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_berries:
+      - '&6Berries (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_chesttype:
+      - '&6Chest Type (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_comparatormode:
+      - '&6Comparator Mode (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_inverted:
+      - '&6Inverted Level (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_directional:
+      - '&6Face Direction (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_hinge:
+      - '&6Hinge (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_eye:
+      - '&6Eye (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_wall:
+      - '&6Wall (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_hanging:
+      - '&6Hanging (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_jigsaworientation:
+      - '&6Jigsaw Orientation (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_level:
+      - '&6Level (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_lit:
+      - '&6Lit (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_open:
+      - '&6Open (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_axis:
+      - '&6Axis (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_extended:
+      - '&6Extended (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_short:
+      - '&6Short (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_dripstonethickness:
+      - '&6Thickness (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_powered:
+      - '&6Powered (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_railshape:
+      - '&6Rail Shape (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_delay:
+      - '&6Delay (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_locked:
+      - '&6Locked (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_charges:
+      - '&6Charges (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_rotation:
+      - '&6Rotation (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bottom:
+      - '&6Bottom (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_bloom:
+      - '&6Bloom (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_sculkphase:
+      - '&6Sculk Phase (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_shrieking:
+      - '&6Shrieking (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_cansummon:
+      - '&6Can summon (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_pickles:
+      - '&6Pickles Amount (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_slabtype:
+      - '&6Slab Type (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_layers:
+      - '&6Layers (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_snowy:
+      - '&6Snowy (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_stairsshape:
+      - '&6Stairs Shape (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_pistontype:
+      - '&6Piston Type (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_disarmed:
+      - '&6Disarmed (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_eggs:
+      - '&6Eggs Amount (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_hatch:
+      - '&6Hatch (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_wallup:
+      - '&6Up (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_waterlogged:
+      - '&6Waterlogged (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_dusted:
+      - '&6Dusted (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_floweramount:
+      - '&6Flower Amount (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_books1:
+      - '&6Layer 1 Books (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_books2:
+      - '&6Layer 2 Books (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
     dataeditor_soon:
       - '&6Block Data (Coming soon)'
   copy_paste:

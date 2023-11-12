@@ -306,8 +306,9 @@ public class Util {
     }
 
     /**
-     * Inclusive
-     * isVersionUpTo(1,9,4) on 1.9.4 is true
+     * Inclusive<br>
+     * isVersionUpTo(1,9,4) on 1.9.4 is true<br>
+     * isVersionUpTo(1,9,4) on 1.10.0 is false
      */
     public static boolean isVersionUpTo(int mainGameVersion, int gameVersion, int gameSubVersion) {
         if (GAME_MAIN_VERSION > mainGameVersion)

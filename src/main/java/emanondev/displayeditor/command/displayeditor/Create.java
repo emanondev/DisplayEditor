@@ -8,6 +8,7 @@ import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.selection.EditorMode;
 import emanondev.displayeditor.selection.SelectionManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
@@ -64,13 +65,17 @@ public class Create extends SubCmd {
             return;
         }
         //TODO can create on this position check
-        BlockDisplay block = (BlockDisplay) player.getWorld().spawnEntity(player.getLocation()
-                .clone().setDirection(new Vector(0, 0, 0)), EntityType.BLOCK_DISPLAY);
+        Location loc = player.getLocation().clone();
+        loc.setYaw(0);
+        loc.setPitch(0);
+        BlockDisplay block = (BlockDisplay) player.getWorld().spawnEntity(loc, EntityType.BLOCK_DISPLAY);
         block.setBlock(Bukkit.createBlockData(type));
         setOwner(block, player);
         SelectionManager.select(player, block);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
+        else
+            SelectionManager.getEditorMode(player).setup(player);
         sendLanguageString("success-block", null, player);
     }
 
@@ -94,13 +99,17 @@ public class Create extends SubCmd {
             type = new ItemStack(getItemInHand(player));
         }
         //TODO can create on this position check
-        ItemDisplay item = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().clone()
-                .setDirection(new Vector(0, 0, 0)), EntityType.ITEM_DISPLAY);
+        Location loc = player.getLocation().clone();
+        loc.setYaw(0);
+        loc.setPitch(0);
+        ItemDisplay item = (ItemDisplay) player.getWorld().spawnEntity(loc, EntityType.ITEM_DISPLAY);
         item.setItemStack(type);
         setOwner(item, player);
         SelectionManager.select(player, item);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
+        else
+            SelectionManager.getEditorMode(player).setup(player);
         sendLanguageString("success-item", null, player);
     }
 
@@ -114,14 +123,18 @@ public class Create extends SubCmd {
         //TODO apply censure or bypass it
         //TODO can create on this position check
         text = UtilsString.fix(text, null, true);
-        TextDisplay textDisplay = (TextDisplay) player.getWorld().spawnEntity(player.getLocation().clone()
-                .setDirection(new Vector(0, 0, 0)), EntityType.TEXT_DISPLAY, false);
+        Location loc = player.getLocation().clone();
+        loc.setYaw(0);
+        loc.setPitch(0);
+        TextDisplay textDisplay = (TextDisplay) player.getWorld().spawnEntity(loc, EntityType.TEXT_DISPLAY, false);
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setText(text);
         setOwner(textDisplay, player);
         SelectionManager.select(player, textDisplay);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
+        else
+            SelectionManager.getEditorMode(player).setup(player);
         sendLanguageString("success-text", null, player);
     }
 

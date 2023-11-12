@@ -40,9 +40,9 @@ public class EnumInteractor<E extends Enum<E>> extends BlockDataIntractor {
         while (safeCounter < 200) {
             safeCounter++;
             if (isLeftClick)
-                index++;
-            else
                 index--;
+            else
+                index++;
             if (index < 0)
                 index += enumClass.getEnumConstants().length;
             else if (index >= enumClass.getEnumConstants().length)
