@@ -1,10 +1,13 @@
 package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.C;
+import emanondev.displayeditor.selection.blockdata.BlockDataIntractor;
+import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -23,6 +26,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -243,7 +247,10 @@ public class EditorModeListener implements Listener {
             return;
         }
         if (sel instanceof BlockDisplay) {
-            //TODO
+            BlockData data = ((BlockDisplay) sel).getBlock();
+            List<BlockDataIntractor> values = BlockDataUtil.getBlockDataValues(data);
+            if (values.size()>slot)
+                values.get(slot).handleClick((BlockDisplay) sel,player,isLeftClick);
             return;
         }
         if (sel instanceof ItemDisplay) {

@@ -2,6 +2,8 @@ package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.C;
 import emanondev.displayeditor.DisplayEditor;
+import emanondev.displayeditor.selection.blockdata.BlockDataIntractor;
+import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -156,15 +158,21 @@ public enum EditorMode {
                     return;
                 }
                 if (display instanceof BlockDisplay) {
-                    inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.entity_specific.dataeditor_soon")); //TODO edit data
                     BlockData data = ((BlockDisplay) display).getBlock();
+                    List<BlockDataIntractor> datas = BlockDataUtil.getBlockDataValues(data);
+                    for (int i = 0; i < 7; i++) {
+                        if (i >= datas.size())
+                            inv.setItem(i, null);
+                        else{
+                            BlockDataIntractor value = datas.get(i);
+                            inv.setItem(i,
+                                    setDesc(craftItem(value.getMaterial(data),value.getAmount(data)), player,
+                            value.getLanguagePath(data),value.getHolders(data)));
+                        }
 
-                    inv.setItem(1, null);
-                    inv.setItem(2, null);
-                    inv.setItem(3, null);
-                    inv.setItem(4, null);
-                    inv.setItem(5, null);
-                    inv.setItem(6, null);
+                    }
+                    if (datas.size()>6)
+                        DisplayEditor.get().log("BlockData require more than 6 slots, report this message to the developer &e"+((BlockDisplay) display).getBlock().getAsString(false));
                     return;
                 }
                 if (display instanceof ItemDisplay) {
@@ -231,5 +239,6 @@ public enum EditorMode {
         item.setItemMeta(meta);
         return item;
     }
+
 
 }
