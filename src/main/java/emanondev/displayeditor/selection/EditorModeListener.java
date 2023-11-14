@@ -173,7 +173,6 @@ public class EditorModeListener implements Listener {
     private void copyPasteHandleClick(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak, EditorMode editorMode) {
         switch (slot) {
             case 0:
-
                 Display target = null;
                 for (Entity en : player.getNearbyEntities(C.DEFAULT_SELECT_RADIUS, C.DEFAULT_SELECT_RADIUS, C.DEFAULT_SELECT_RADIUS)) {
                     if (en instanceof Display) {
@@ -184,10 +183,14 @@ public class EditorModeListener implements Listener {
                                     (Display) en : target;
                     }
                 }
-                if (target == null)
+                if (target == null) {
+                    //TODO feedback none near
                     return;
-
+                }
                 SelectionManager.select(player, target);
+                return;
+            case 1://TODO clone
+            {}
         }
     }
 
@@ -197,50 +200,27 @@ public class EditorModeListener implements Listener {
             Color color = display.getBackgroundColor() == null ? Color.fromARGB(125, 125, 125, 125) : display.getBackgroundColor();
             switch (slot) {
                 case 0:
-                    if (isLeftClick)
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setRed(Math.max(0, Math.min(255, color.getRed() - (sneak ? 1 : 16))))), editorMode);
-                    else
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setRed(Math.max(0, Math.min(255, color.getRed() + (sneak ? 1 : 16))))), editorMode);
+                    edit(display, player, () -> display.setBackgroundColor(color.setRed(Math.max(0, Math.min(255,
+                            color.getRed() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
                     return;
-
                 case 1:
-
-                    if (isLeftClick)
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setGreen(Math.max(0, Math.min(255, color.getGreen() - (sneak ? 1 : 16))))), editorMode);
-                    else
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setGreen(Math.max(0, Math.min(255, color.getGreen() + (sneak ? 1 : 16))))), editorMode);
+                    edit(display, player, () -> display.setBackgroundColor(color.setGreen(Math.max(0, Math.min(255,
+                            color.getGreen() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
                     return;
 
                 case 2:
-                    if (isLeftClick)
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setBlue(Math.max(0, Math.min(255, color.getBlue() - (sneak ? 1 : 16))))), editorMode);
-                    else
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setBlue(Math.max(0, Math.min(255, color.getBlue() + (sneak ? 1 : 16))))), editorMode);
+                    edit(display, player, () -> display.setBackgroundColor(color.setBlue(Math.max(0, Math.min(255,
+                            color.getBlue() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
                     return;
 
                 case 3:
-                    if (isLeftClick)
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setAlpha(Math.max(0, Math.min(255, color.getAlpha() - (sneak ? 1 : 16))))), editorMode);
-                    else
-                        edit(display, player, () -> display
-                                .setBackgroundColor(color.setAlpha(Math.max(0, Math.min(255, color.getAlpha() + (sneak ? 1 : 16))))), editorMode);
+                    edit(display, player, () -> display.setBackgroundColor(color.setAlpha(Math.max(0, Math.min(255,
+                            color.getAlpha() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
                     return;
 
                 case 4:
-                    if (isLeftClick)
-                        edit(display, player, () -> display.setAlignment(
-                                TextDisplay.TextAlignment.values()[(TextDisplay.TextAlignment.values().length
-                                        + display.getAlignment().ordinal() - 1) % TextDisplay.TextAlignment.values().length]), editorMode);
-                    else
-                        edit(display, player, () -> display.setAlignment(
-                                TextDisplay.TextAlignment.values()[(display.getAlignment().ordinal() + 1) % TextDisplay.TextAlignment.values().length]), editorMode);
+                    edit(display, player, () -> display.setAlignment(TextDisplay.TextAlignment.values()[(TextDisplay.TextAlignment.values().length
+                            + display.getAlignment().ordinal() + (isLeftClick ? -1 : 1)) % TextDisplay.TextAlignment.values().length]), editorMode);
                     return;
 
             }
@@ -249,21 +229,16 @@ public class EditorModeListener implements Listener {
         if (sel instanceof BlockDisplay) {
             BlockData data = ((BlockDisplay) sel).getBlock();
             List<BlockDataIntractor> values = BlockDataUtil.getBlockDataValues(data);
-            if (values.size()>slot)
-                edit(sel,player,()->values.get(slot).handleClick((BlockDisplay) sel, player, isLeftClick),editorMode);
+            if (values.size() > slot)
+                edit(sel, player, () -> values.get(slot).handleClick((BlockDisplay) sel, player, isLeftClick), editorMode);
             return;
         }
         if (sel instanceof ItemDisplay) {
             ItemDisplay display = (ItemDisplay) sel;
             switch (slot) {
                 case 0:
-                    if (isLeftClick)
-                        edit(display, player, () -> display.setItemDisplayTransform(
-                                ItemDisplay.ItemDisplayTransform.values()[(ItemDisplay.ItemDisplayTransform.values().length
-                                        + display.getItemDisplayTransform().ordinal() - 1) % ItemDisplay.ItemDisplayTransform.values().length]), editorMode);
-                    else
-                        edit(display, player, () -> display.setItemDisplayTransform(
-                                ItemDisplay.ItemDisplayTransform.values()[(display.getItemDisplayTransform().ordinal() + 1) % ItemDisplay.ItemDisplayTransform.values().length]), editorMode);
+                    edit(display, player, () -> display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.values()[(ItemDisplay.ItemDisplayTransform.values().length
+                            + display.getItemDisplayTransform().ordinal() + (isLeftClick ? -1 : 1)) % ItemDisplay.ItemDisplayTransform.values().length]), editorMode);
                     return;
                 case 1:
                     edit(display, player, () -> {

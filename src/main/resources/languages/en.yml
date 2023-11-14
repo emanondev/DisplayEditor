@@ -265,7 +265,7 @@ editor:
     block_eye:
       - '&6Eye (Current: &e%value%&6)'
       - '&bLeft/Right &9➤ &bChange value'
-    block_wall:
+    block_gatewall:
       - '&6Wall (Current: &e%value%&6)'
       - '&bLeft/Right &9➤ &bChange value'
     block_hanging:
@@ -373,8 +373,27 @@ editor:
     block_books2:
       - '&6Layer 2 Books (Current: &e%value%&6)'
       - '&bLeft/Right &9➤ &bChange value'
-    dataeditor_soon:
-      - '&6Block Data (Coming soon)'
+    block_brewingstandbottles:
+      - '&6Bottles (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_attachedface:
+      - '&6Attached Face (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_multiplefacing:
+      - '&6Attached Face (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_redstonewire1:
+      - '&6Redstone wire connection North & East (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_redstonewire2:
+      - '&6Redstone wire connection South & West (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_wallheight1:
+      - '&6Wall connection North & East (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
+    block_wallheight2:
+      - '&6Wall connection South & West (Current: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bChange value'
   copy_paste:
     select:
       - '&6Select Nearest Display'

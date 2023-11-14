@@ -32,12 +32,12 @@ public class BlockDataUtil {
                     (d, v) -> ((Attachable) d).setAttached(v)));
         }
         if (data instanceof Bamboo) {
-            values.add(new EnumInteractor<>("bambooleaves", Material.BAMBOO,Bamboo.Leaves.class,
+            values.add(new EnumInteractor<>("bambooleaves", Material.BAMBOO, Bamboo.Leaves.class,
                     (d) -> ((Bamboo) d).getLeaves(),
                     (d, v) -> ((Bamboo) d).setLeaves(v)));
         }
         if (data instanceof Bed) {
-            values.add(new EnumInteractor<>("bedpart", Material.RED_BED,Bed.Part.class,
+            values.add(new EnumInteractor<>("bedpart", Material.RED_BED, Bed.Part.class,
                     (d) -> ((Bed) d).getPart(),
                     (d, v) -> ((Bed) d).setPart(v)));
         }
@@ -48,22 +48,33 @@ public class BlockDataUtil {
                     (d) -> ((Beehive) d).getMaximumHoneyLevel()));
         }
         if (data instanceof Bell) {
-            values.add(new EnumInteractor<>("bellattachment", Material.BELL,Bell.Attachment.class,
+            values.add(new EnumInteractor<>("bellattachment", Material.BELL, Bell.Attachment.class,
                     (d) -> ((Bell) d).getAttachment(),
                     (d, v) -> ((Bell) d).setAttachment(v)));
         }
         if (data instanceof BigDripleaf) {
-            values.add(new EnumInteractor<>("bigdripleaftilt", Material.BIG_DRIPLEAF,BigDripleaf.Tilt.class,
+            values.add(new EnumInteractor<>("bigdripleaftilt", Material.BIG_DRIPLEAF, BigDripleaf.Tilt.class,
                     (d) -> ((BigDripleaf) d).getTilt(),
                     (d, v) -> ((BigDripleaf) d).setTilt(v)));
         }
         if (data instanceof Bisected) {
-            values.add(new EnumInteractor<>("bisectedhalf", Material.SPRUCE_TRAPDOOR,Bisected.Half.class,
+            values.add(new EnumInteractor<>("bisectedhalf", Material.SPRUCE_TRAPDOOR, Bisected.Half.class,
                     (d) -> ((Bisected) d).getHalf(),
                     (d, v) -> ((Bisected) d).setHalf(v)));
         }
         if (data instanceof BrewingStand) {
-            //TODO
+            values.add(new NumericInteractor("brewingstandbottles", Material.POTION,
+                    (d) -> {
+                        BrewingStand c = ((BrewingStand) d);
+                        return (c.hasBottle(0) ? 1 : 0) + (c.hasBottle(1) ? 2 : 0) + (c.hasBottle(2) ? 4 : 0);
+                    },
+                    (d, v) -> {
+                        BrewingStand c = ((BrewingStand) d);
+                        c.setBottle(0, v % 2 != 0);
+                        c.setBottle(1, v / 2 % 2 != 0);
+                        c.setBottle(2, v / 4 % 2 != 0);
+                    },
+                    (d) -> 7));
         }
         if (data instanceof Cake) {
             values.add(new NumericInteractor("cakebites", Material.CAKE,
@@ -76,7 +87,7 @@ public class BlockDataUtil {
                     (d) -> ((Candle) d).getCandles(),
                     (d, v) -> ((Candle) d).setCandles(v),
                     (d) -> 1,
-                    (d) -> ((Candle) d).getMaximumCandles()));//TODO min = 1?
+                    (d) -> ((Candle) d).getMaximumCandles()));
         }
         if (data instanceof CaveVinesPlant) {
             values.add(new BooleanInteractor("berries", Material.SWEET_BERRIES,
@@ -84,7 +95,7 @@ public class BlockDataUtil {
                     (d, v) -> ((CaveVinesPlant) d).setBerries(v)));
         }
         if (data instanceof Chest) {
-            values.add(new EnumInteractor<>("chesttype", Material.CHEST,Chest.Type.class,
+            values.add(new EnumInteractor<>("chesttype", Material.CHEST, Chest.Type.class,
                     (d) -> ((Chest) d).getType(),
                     (d, v) -> ((Chest) d).setType(v)));
         }
@@ -92,30 +103,30 @@ public class BlockDataUtil {
             values.add(new NumericInteractor("books1", Material.CHISELED_BOOKSHELF,
                     (d) -> {
                         ChiseledBookshelf c = ((ChiseledBookshelf) d);
-                        return (c.isSlotOccupied(0)?1:0)+(c.isSlotOccupied(1)?2:0)+(c.isSlotOccupied(2)?4:0);
+                        return (c.isSlotOccupied(0) ? 1 : 0) + (c.isSlotOccupied(1) ? 2 : 0) + (c.isSlotOccupied(2) ? 4 : 0);
                     },
                     (d, v) -> {
                         ChiseledBookshelf c = ((ChiseledBookshelf) d);
-                        c.setSlotOccupied(0,v%2!=0);
-                        c.setSlotOccupied(1,v/2%2!=0);
-                        c.setSlotOccupied(2,v/4%2!=0);
+                        c.setSlotOccupied(0, v % 2 != 0);
+                        c.setSlotOccupied(1, v / 2 % 2 != 0);
+                        c.setSlotOccupied(2, v / 4 % 2 != 0);
                     },
                     (d) -> 7));
             values.add(new NumericInteractor("books2", Material.CHISELED_BOOKSHELF,
                     (d) -> {
                         ChiseledBookshelf c = ((ChiseledBookshelf) d);
-                        return (c.isSlotOccupied(3)?1:0)+(c.isSlotOccupied(4)?2:0)+(c.isSlotOccupied(5)?4:0);
+                        return (c.isSlotOccupied(3) ? 1 : 0) + (c.isSlotOccupied(4) ? 2 : 0) + (c.isSlotOccupied(5) ? 4 : 0);
                     },
                     (d, v) -> {
                         ChiseledBookshelf c = ((ChiseledBookshelf) d);
-                        c.setSlotOccupied(3,v%2!=0);
-                        c.setSlotOccupied(4,v/2%2!=0);
-                        c.setSlotOccupied(5,v/4%2!=0);
+                        c.setSlotOccupied(3, v % 2 != 0);
+                        c.setSlotOccupied(4, v / 2 % 2 != 0);
+                        c.setSlotOccupied(5, v / 4 % 2 != 0);
                     },
                     (d) -> 7));
         }
         if (data instanceof Comparator) {
-            values.add(new EnumInteractor<>("comparatormode", Material.COMPARATOR,Comparator.Mode.class,
+            values.add(new EnumInteractor<>("comparatormode", Material.COMPARATOR, Comparator.Mode.class,
                     (d) -> ((Comparator) d).getMode(),
                     (d, v) -> ((Comparator) d).setMode(v)));
         }
@@ -125,13 +136,13 @@ public class BlockDataUtil {
                     (d, v) -> ((DaylightDetector) d).setInverted(v)));
         }
         if (data instanceof Directional) {
-            values.add(new EnumInteractor<>("directional", Material.HOPPER,BlockFace.class,
+            values.add(new EnumInteractor<>("directional", Material.HOPPER, BlockFace.class,
                     (d) -> ((Directional) d).getFacing(),
                     (d, v) -> ((Directional) d).setFacing(v),
-                    (d,v) -> ((Directional) d).getFaces().contains(v)));
+                    (d, v) -> ((Directional) d).getFaces().contains(v)));
         }
         if (data instanceof Door) {
-            values.add(new EnumInteractor<>("hinge", Material.SPRUCE_DOOR,Door.Hinge.class,
+            values.add(new EnumInteractor<>("hinge", Material.SPRUCE_DOOR, Door.Hinge.class,
                     (d) -> ((Door) d).getHinge(),
                     (d, v) -> ((Door) d).setHinge(v)));
         }
@@ -141,10 +152,12 @@ public class BlockDataUtil {
                     (d, v) -> ((EndPortalFrame) d).setEye(v)));
         }
         if (data instanceof FaceAttachable) {
-            //TODO
+            values.add(new EnumInteractor<>("attachedface", Material.SPRUCE_DOOR, FaceAttachable.AttachedFace.class,
+                    (d) -> ((FaceAttachable) d).getAttachedFace(),
+                    (d, v) -> ((FaceAttachable) d).setAttachedFace(v)));
         }
         if (data instanceof Gate) {
-            values.add(new BooleanInteractor("wall", Material.OAK_FENCE_GATE,
+            values.add(new BooleanInteractor("gatewall", Material.OAK_FENCE_GATE,
                     (d) -> ((Gate) d).isInWall(),
                     (d, v) -> ((Gate) d).setInWall(v)));
         }
@@ -154,7 +167,7 @@ public class BlockDataUtil {
                     (d, v) -> ((Hangable) d).setHanging(v)));
         }
         if (data instanceof Jigsaw) {
-            values.add(new EnumInteractor<>("jigsaworientation", Material.WHEAT_SEEDS,Jigsaw.Orientation.class,
+            values.add(new EnumInteractor<>("jigsaworientation", Material.JIGSAW, Jigsaw.Orientation.class,
                     (d) -> ((Jigsaw) d).getOrientation(),
                     (d, v) -> ((Jigsaw) d).setOrientation(v)));
         }
@@ -173,7 +186,26 @@ public class BlockDataUtil {
                     (d, v) -> ((Lightable) d).setLit(v)));
         }
         if (data instanceof MultipleFacing) {
-            //TODO
+            values.add(new NumericInteractor("multiplefacing", Material.OAK_FENCE,
+                    (d) -> {
+                        MultipleFacing c = ((MultipleFacing) d);
+                        int i = 0;
+                        int value = 0;
+                        for (BlockFace face : c.getAllowedFaces()) {
+                            value += (c.hasFace(face) ? Math.pow(2, i) : 0);
+                            i++;
+                        }
+                        return value;
+                    },
+                    (d, v) -> {
+                        MultipleFacing c = ((MultipleFacing) d);
+                        int i = 0;
+                        for (BlockFace face : c.getAllowedFaces()) {
+                            c.setFace(face, v / ((int) Math.pow(2, i)) % 2 != 0);
+                            i++;
+                        }
+                    },
+                    (d) -> (int) Math.pow(2, ((MultipleFacing) d).getAllowedFaces().size()) - 1));
         }
         if (data instanceof Openable) {
             values.add(new BooleanInteractor("open", Material.BARREL,
@@ -181,7 +213,7 @@ public class BlockDataUtil {
                     (d, v) -> ((Openable) d).setOpen(v)));
         }
         if (data instanceof Orientable) {
-            values.add(new EnumInteractor<>("axis", Material.OAK_LOG,Axis.class,
+            values.add(new EnumInteractor<>("axis", Material.OAK_LOG, Axis.class,
                     (d) -> ((Orientable) d).getAxis(),
                     (d, v) -> ((Orientable) d).setAxis(v),
                     (d, v) -> ((Orientable) d).getAxes().contains(v)));
@@ -197,10 +229,10 @@ public class BlockDataUtil {
                     (d, v) -> ((PistonHead) d).setShort(v)));
         }
         if (data instanceof PointedDripstone) {
-            values.add(new EnumInteractor<>("dripstonethickness", Material.POINTED_DRIPSTONE,PointedDripstone.Thickness.class,
+            values.add(new EnumInteractor<>("dripstonethickness", Material.POINTED_DRIPSTONE, PointedDripstone.Thickness.class,
                     (d) -> ((PointedDripstone) d).getThickness(),
                     (d, v) -> ((PointedDripstone) d).setThickness(v)));
-            values.add(new EnumInteractor<>("directional", Material.HOPPER,BlockFace.class,
+            values.add(new EnumInteractor<>("directional", Material.HOPPER, BlockFace.class,
                     (d) -> ((PointedDripstone) d).getVerticalDirection(),
                     (d, v) -> ((PointedDripstone) d).setVerticalDirection(v),
                     (d, v) -> ((PointedDripstone) d).getVerticalDirections().contains(v)));
@@ -211,13 +243,70 @@ public class BlockDataUtil {
                     (d, v) -> ((Powerable) d).setPowered(v)));
         }
         if (data instanceof Rail) {
-            values.add(new EnumInteractor<>("railshape", Material.RAIL,Rail.Shape.class,
+            values.add(new EnumInteractor<>("railshape", Material.RAIL, Rail.Shape.class,
                     (d) -> ((Rail) d).getShape(),
                     (d, v) -> ((Rail) d).setShape(v),
                     (d, v) -> ((Rail) d).getShapes().contains(v)));
         }
         if (data instanceof RedstoneWire) {
-            //TODO
+            values.add(new NumericInteractor("redstonewire1", Material.OAK_FENCE,
+                    (d) -> {
+                        RedstoneWire c = ((RedstoneWire) d);
+                        List<BlockFace> allowed = new ArrayList<>(c.getAllowedFaces())
+                                .subList(0, c.getAllowedFaces().size() / 2);
+                        int i = 0;
+                        int value = 0;
+                        for (BlockFace face : allowed) {
+                            value += c.getFace(face).ordinal() * Math.pow(RedstoneWire.Connection.values().length, i);
+                            i++;
+                        }
+                        return value;
+                    },
+                    (d, v) -> {
+                        RedstoneWire c = ((RedstoneWire) d);
+                        List<BlockFace> allowed = new ArrayList<>(c.getAllowedFaces()).subList(0, c.getAllowedFaces().size() / 2);
+                        int i = 0;
+                        for (BlockFace face : allowed) {
+                            c.setFace(face, RedstoneWire.Connection.values()[
+                                    v / ((int) Math.pow(RedstoneWire.Connection.values().length, i)) % 3]);
+                            i++;
+                        }
+                    },
+                    (d) -> {
+                        RedstoneWire c = ((RedstoneWire) d);
+                        List<BlockFace> allowed = new ArrayList<>(c.getAllowedFaces()).subList(0, c.getAllowedFaces().size() / 2);
+                        return (int) Math.pow(RedstoneWire.Connection.values().length, allowed.size()) - 1;
+                    }));
+            values.add(new NumericInteractor("redstonewire2", Material.OAK_FENCE,
+                    (d) -> {
+                        RedstoneWire c = ((RedstoneWire) d);
+                        List<BlockFace> allowed = new ArrayList<>(c.getAllowedFaces())
+                                .subList(c.getAllowedFaces().size() / 2, c.getAllowedFaces().size());
+                        int i = 0;
+                        int value = 0;
+                        for (BlockFace face : allowed) {
+                            value += c.getFace(face).ordinal() * Math.pow(RedstoneWire.Connection.values().length, i);
+                            i++;
+                        }
+                        return value;
+                    },
+                    (d, v) -> {
+                        RedstoneWire c = ((RedstoneWire) d);
+                        List<BlockFace> allowed = new ArrayList<>(c.getAllowedFaces()).subList(
+                                c.getAllowedFaces().size() / 2, c.getAllowedFaces().size());
+                        int i = 0;
+                        for (BlockFace face : allowed) {
+                            c.setFace(face, RedstoneWire.Connection.values()[
+                                    v / ((int) Math.pow(RedstoneWire.Connection.values().length, i)) % 3]);
+                            i++;
+                        }
+                    },
+                    (d) -> {
+                        RedstoneWire c = ((RedstoneWire) d);
+                        List<BlockFace> allowed = new ArrayList<>(c.getAllowedFaces()).subList(
+                                c.getAllowedFaces().size() / 2, c.getAllowedFaces().size());
+                        return (int) Math.pow(RedstoneWire.Connection.values().length, allowed.size()) - 1;
+                    }));
         }
         if (data instanceof Repeater) {
             values.add(new NumericInteractor("delay", Material.REPEATER,
@@ -236,7 +325,7 @@ public class BlockDataUtil {
                     (d) -> ((RespawnAnchor) d).getMaximumCharges()));
         }
         if (data instanceof Rotatable) {
-            values.add(new EnumInteractor<>("rotation", Material.OAK_SIGN,BlockFace.class,
+            values.add(new EnumInteractor<>("rotation", Material.OAK_SIGN, BlockFace.class,
                     (d) -> ((Rotatable) d).getRotation(),
                     (d, v) -> ((Rotatable) d).setRotation(v)));
         }
@@ -251,7 +340,7 @@ public class BlockDataUtil {
                     (d, v) -> ((SculkCatalyst) d).setBloom(v)));
         }
         if (data instanceof SculkSensor) {
-            values.add(new EnumInteractor<>("sculkphase", Material.SCULK_SENSOR,SculkSensor.Phase.class,
+            values.add(new EnumInteractor<>("sculkphase", Material.SCULK_SENSOR, SculkSensor.Phase.class,
                     (d) -> ((SculkSensor) d).getPhase(),
                     (d, v) -> ((SculkSensor) d).setPhase(v)));
         }
@@ -317,6 +406,53 @@ public class BlockDataUtil {
                     (d) -> ((TurtleEgg) d).getMaximumHatch()));
         }
         if (data instanceof Wall) {
+            values.add(new NumericInteractor("wallheight1", Material.OAK_FENCE,
+                    (d) -> {
+                        Wall c = ((Wall) d);
+                        List<BlockFace> allowed = List.of(BlockFace.NORTH, BlockFace.EAST);
+                        int i = 0;
+                        int value = 0;
+                        for (BlockFace face : allowed) {
+                            value += c.getHeight(face).ordinal() * Math.pow(Wall.Height.values().length, i);
+                            i++;
+                        }
+                        return value;
+                    },
+                    (d, v) -> {
+                        Wall c = ((Wall) d);
+                        List<BlockFace> allowed = List.of(BlockFace.NORTH, BlockFace.EAST);
+                        int i = 0;
+                        for (BlockFace face : allowed) {
+                            c.setHeight(face, Wall.Height.values()[
+                                    v / ((int) Math.pow(Wall.Height.values().length, i)) % Wall.Height.values().length]);
+                            i++;
+                        }
+                    },
+                    (d) -> (int) Math.pow(Wall.Height.values().length, 2) - 1));
+            values.add(new NumericInteractor("wallheight2", Material.OAK_FENCE,
+                    (d) -> {
+                        Wall c = ((Wall) d);
+                        List<BlockFace> allowed = List.of(BlockFace.SOUTH, BlockFace.WEST);
+                        int i = 0;
+                        int value = 0;
+                        for (BlockFace face : allowed) {
+                            value += c.getHeight(face).ordinal() * Math.pow(Wall.Height.values().length, i);
+                            i++;
+                        }
+                        return value;
+                    },
+                    (d, v) -> {
+                        Wall c = ((Wall) d);
+                        List<BlockFace> allowed = List.of(BlockFace.SOUTH, BlockFace.WEST);
+                        int i = 0;
+                        for (BlockFace face : allowed) {
+                            c.setHeight(face, Wall.Height.values()[
+                                    v / ((int) Math.pow(Wall.Height.values().length, i)) % Wall.Height.values().length]);
+                            i++;
+                        }
+                    },
+                    (d) -> (int) Math.pow(Wall.Height.values().length, 2) - 1));
+
             //TODO
             values.add(new BooleanInteractor("wallup", Material.STONE_BRICK_WALL,
                     (d) -> ((Wall) d).isUp(),
@@ -327,9 +463,9 @@ public class BlockDataUtil {
                     (d) -> ((Waterlogged) d).isWaterlogged(),
                     (d, v) -> ((Waterlogged) d).setWaterlogged(v)));
         }
-        if (Util.isVersionUpTo(1,19,4))
+        if (Util.isVersionUpTo(1, 19, 4))
             return values;
-        BlockDataAddon_1_20.add(values,data);
+        BlockDataAddon_1_20.add(values, data);
         return values;
     }
 }
