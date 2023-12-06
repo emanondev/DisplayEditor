@@ -63,6 +63,6 @@ public class EnumInteractor<E extends Enum<E>> extends BlockDataIntractor {
 
     @Override
     public String[] getHolders(BlockData data) {
-        return new String[]{"%value%",String.valueOf(getCurrentValue.apply(data).name())};
+        return new String[]{"%value%", getCurrentValue.apply(data).name()};
     }
 }

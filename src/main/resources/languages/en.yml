@@ -211,6 +211,12 @@ editor:
       - ''
       - '&7Some items can''t be affected by glow status'
       - '&7(Heads, enchanted books, ...)'
+    item_modeldata:
+      - '&6Change Custom Model Data (Current: &e%current%&6)'
+      - '&bLeft &9➤ &bDecrease by %value%'
+      - '&bRight &9➤ &bIncrease by %value%'
+      - '&bShift+Left &9➤ &bDecrease %shift-value%'
+      - '&bShift+Right &9➤ &bIncrease %shift-value%'
     block_ageable:
       - '&6Ageable (Current: &e%value%&6)'
       - '&bLeft/Right &9➤ &bChange value'

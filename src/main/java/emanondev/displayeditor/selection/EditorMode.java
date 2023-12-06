@@ -163,30 +163,39 @@ public enum EditorMode {
                     for (int i = 0; i < 7; i++) {
                         if (i >= datas.size())
                             inv.setItem(i, null);
-                        else{
+                        else {
                             BlockDataIntractor value = datas.get(i);
                             inv.setItem(i,
-                                    setDesc(craftItem(value.getMaterial(data),value.getAmount(data)), player,
-                            value.getLanguagePath(data),value.getHolders(data)));
+                                    setDesc(craftItem(value.getMaterial(data), value.getAmount(data)), player,
+                                            value.getLanguagePath(data), value.getHolders(data)));
                         }
 
                     }
-                    if (datas.size()>6)
-                        DisplayEditor.get().log("BlockData require more than 6 slots, report this message to the developer &e"+((BlockDisplay) display).getBlock().getAsString(false));
+                    if (datas.size() > 6)
+                        DisplayEditor.get().log("BlockData require more than 6 slots, report this message to the developer &e" + ((BlockDisplay) display).getBlock().getAsString(false));
                     return;
                 }
                 if (display instanceof ItemDisplay) {
                     ItemDisplay itemDisplay = (ItemDisplay) display;
+                    int current = 0;
+                    ItemStack item = ((ItemDisplay) display).getItemStack();
+                    if (item != null) {
+                        ItemMeta meta = item.getItemMeta();
+                        if (meta != null)
+                            current = meta.hasCustomModelData() ? meta.getCustomModelData() : 0;
+                    }
                     inv.setItem(0, setDesc(craftItem(Material.GLOBE_BANNER_PATTERN), player,
                             "editor.entity_specific.item_view", "%value%",
                             itemDisplay.getItemDisplayTransform().name().toLowerCase(Locale.ENGLISH)));
                     inv.setItem(1, setDesc(craftItem(Material.ENCHANTED_BOOK), player,
                             "editor.entity_specific.item_glow"));
-                    inv.setItem(2, null);
-                    inv.setItem(3, null);
-                    inv.setItem(4, null);
-                    inv.setItem(5, null);
-                    inv.setItem(6, null);
+                    for (int i = 1; i <= 5; i++) {
+                        DecimalFormat format = new DecimalFormat("###,###");
+                        int val = (int) Math.pow(10, 2 * (i - 1));
+                        inv.setItem(1 + i, setDesc(craftItem(Material.PAINTING, i * 2 - 1), player,
+                                "editor.entity_specific.item_modeldata", "%value%",format.format(val)
+                                , "%shift-value%", format.format((int) val*10), "%current%", format.format(current)));
+                    }
                     return;
                 }
                 return;

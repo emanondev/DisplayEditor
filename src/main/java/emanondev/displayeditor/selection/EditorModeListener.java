@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.joml.Quaternionf;
@@ -190,7 +191,8 @@ public class EditorModeListener implements Listener {
                 SelectionManager.select(player, target);
                 return;
             case 1://TODO clone
-            {}
+            {
+            }
         }
     }
 
@@ -250,6 +252,24 @@ public class EditorModeListener implements Listener {
                             item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                         else
                             item.getEnchantments().keySet().forEach(item::removeEnchantment);
+                        display.setItemStack(item);
+                    }, editorMode);
+                    return;
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    edit(display, player, () -> {
+                        ItemStack item = display.getItemStack();
+                        if (item == null)
+                            item = new ItemStack(Material.STONE);
+                        ItemMeta meta = item.getItemMeta();
+                        assert meta != null;
+                        int value = meta.hasCustomModelData() ? meta.getCustomModelData():0;
+                        value += (Math.pow(10,2*(slot-2)+(sneak?1:0))*(isLeftClick?-1:1));
+                        meta.setCustomModelData(value);
+                        item.setItemMeta(meta);
                         display.setItemStack(item);
                     }, editorMode);
             }
