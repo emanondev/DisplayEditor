@@ -1,8 +1,11 @@
 package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.DisplayEditor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Color;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +32,10 @@ public class SelectionManager {
 
     public static void select(@NotNull Player player, @NotNull Display display) {
         selections.put(player, display);
+        EditorMode mode = SelectionManager.getEditorMode(player);
+        if (mode != null)
+            mode.setup(player);
+        player.playSound(player, Sound.UI_BUTTON_CLICK, 1F, 0.9F);
         new BukkitRunnable() {
             int i = 0;
 
@@ -48,7 +55,15 @@ public class SelectionManager {
     }
 
     public static boolean deselect(@NotNull Player player) {
-        return selections.remove(player) != null;
+        if (selections.containsKey(player))
+            player.playSound(player, Sound.UI_BUTTON_CLICK, 1F, 0.1F);
+        if (selections.remove(player) != null) {
+            EditorMode mode = SelectionManager.getEditorMode(player);
+            if (mode != null)
+                mode.setup(player);
+            return true;
+        }
+        return false;
     }
 
     public static @Nullable Display getSelection(@NotNull Player player) {
@@ -73,13 +88,19 @@ public class SelectionManager {
             offhandBackup.put(player, player.getInventory().getExtraContents());
             equipmentBackup.put(player, player.getInventory().getArmorContents());
             player.getInventory().clear();
+            if (!selections.containsKey(player))
+                player.playSound(player, Sound.UI_BUTTON_CLICK, 1F, 0.9F);
         }
 
         if (mode == null) {
             editorMode.remove(player);
+            selections.remove(player);
             player.getInventory().setStorageContents(inventoryBackup.remove(player));
             player.getInventory().setExtraContents(offhandBackup.remove(player));
             player.getInventory().setArmorContents(equipmentBackup.remove(player));
+            player.playSound(player, Sound.UI_BUTTON_CLICK, 1F, 0.1F);
+            if (DisplayEditor.get().getConfig().loadBoolean("editor.actionbar_reminder", true))
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().create());
         } else {
             editorMode.put(player, mode);
             mode.setup(player);
@@ -92,14 +113,27 @@ public class SelectionManager {
         }
         if (!editorMode.isEmpty() && cornerFlash == null) {
             cornerFlash = new BukkitRunnable() {
+                long counter = 0;
 
                 @Override
                 public void run() {
+                    counter++;
+                    editorMode.keySet().forEach(p -> {
+                        if (!(p.isValid() && p.isOnline()))
+                            return;
+                        if (DisplayEditor.get().getConfig().loadBoolean("editor.actionbar_reminder", true) && counter % 5 == 0)
+                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(
+                                    DisplayEditor.get().getLanguageConfig(p).getMessage("editor.reminder",
+                                            "&6You are on (Display) Editor Mode")).create());
+                    });
                     selections.forEach((p, disp) -> {
-                        if (p.isValid() && p.isOnline() && disp.isValid() && p.getWorld().equals(disp.getWorld()))
+                        if (!(p.isValid() && p.isOnline()))
+                            return;
+                        if (disp.isValid() && p.getWorld().equals(disp.getWorld()))
                             p.spawnParticle(Particle.REDSTONE, disp.getLocation(),
                                     4, 0, 0, 0, 0,
                                     new Particle.DustOptions(Color.RED, 1));
+
                     });
                 }
             }.runTaskTimer(DisplayEditor.get(), 2L, 2L);

@@ -17,9 +17,10 @@ public class Deselect extends SubCmd {
 
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
-        if (SelectionManager.deselect((Player) sender)) {
-            SelectionManager.setEditorMode((Player) sender, null);
+        Player p = (Player) sender;
+        if (SelectionManager.deselect(p)) {
             sendLanguageString("success", null, sender);
+            return;
         }
         sendLanguageString("none-selected", null, sender);
     }

@@ -51,9 +51,10 @@ public enum EditorMode {
         inv.setItem(8, setDesc(craftItem(Material.BARRIER), player, "editor.all.exit"));
         if (display == null && this != COPY_PASTE) {
             for (int i = 0; i < 7; i++)
-                inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.all.select"));
+                inv.setItem(i, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.all.select"));
             return;
         }
+
         String[] holders;
         switch (this) {
             case POSITION: {

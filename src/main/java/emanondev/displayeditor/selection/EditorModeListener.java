@@ -146,7 +146,7 @@ public class EditorModeListener implements Listener {
                 copyPasteHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
                 return;
             }
-            //TODO feedback
+            selectNearest(event.getPlayer(), slot, isLeftClick, sel, sneak);
             return;
         }
         switch (editorMode) {
@@ -171,24 +171,28 @@ public class EditorModeListener implements Listener {
         }
     }
 
+    private void selectNearest(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak) {
+        Display target = null;
+        for (Entity en : player.getNearbyEntities(C.DEFAULT_SELECT_RADIUS, C.DEFAULT_SELECT_RADIUS, C.DEFAULT_SELECT_RADIUS)) {
+            if (en instanceof Display) {
+                if (target == null)
+                    target = (Display) en;
+                else //select closest  //TODO check if is owner or may select/edit not owned
+                    target = target.getLocation().distanceSquared(player.getLocation()) > en.getLocation().distanceSquared(player.getLocation()) ?
+                            (Display) en : target;
+            }
+        }
+        if (target == null) {
+            //TODO feedback none near
+            return;
+        }
+        SelectionManager.select(player, target);
+    }
+
     private void copyPasteHandleClick(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak, EditorMode editorMode) {
         switch (slot) {
             case 0:
-                Display target = null;
-                for (Entity en : player.getNearbyEntities(C.DEFAULT_SELECT_RADIUS, C.DEFAULT_SELECT_RADIUS, C.DEFAULT_SELECT_RADIUS)) {
-                    if (en instanceof Display) {
-                        if (target == null)
-                            target = (Display) en;
-                        else //select closest  //TODO check if is owner or may select/edit not owned
-                            target = target.getLocation().distanceSquared(player.getLocation()) > en.getLocation().distanceSquared(player.getLocation()) ?
-                                    (Display) en : target;
-                    }
-                }
-                if (target == null) {
-                    //TODO feedback none near
-                    return;
-                }
-                SelectionManager.select(player, target);
+                selectNearest(player,  slot,  isLeftClick,  sel,  sneak);
                 return;
             case 1://TODO clone
             {

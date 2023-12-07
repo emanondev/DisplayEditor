@@ -65,6 +65,7 @@ displayeditor:
     none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
     success: '&9[&fDisplayEditor&9] &aText Updated'
 editor:
+  reminder: "&6You are on (Display) Editor Mode"
   all:
     page:
       - '&6Change Page'
