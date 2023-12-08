@@ -26,6 +26,7 @@ public class Delete extends SubCmd {
         @Nullable Display sel = SelectionManager.getSelection(player);
         if (sel != null) {
             sel.remove();
+            SelectionManager.deselect(player);
             EditorMode mode = SelectionManager.getEditorMode(player);
             if (mode != null)
                 mode.setup((Player) sender);
