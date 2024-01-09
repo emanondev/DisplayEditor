@@ -14,7 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -34,15 +33,18 @@ public class Create extends SubCmd {
             return;
         }
         switch (args[1].toLowerCase(Locale.ENGLISH)) {
-            case "item":
+            case "item" -> {
                 item((Player) sender, alias, args);
                 return;
-            case "block":
+            }
+            case "block" -> {
                 block((Player) sender, alias, args);
                 return;
-            case "text":
+            }
+            case "text" -> {
                 text((Player) sender, alias, args);
                 return;
+            }
         }
         onFail(sender, alias);
     }
@@ -140,18 +142,15 @@ public class Create extends SubCmd {
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
-        switch (args.length) {
-            case 2:
-                return Util.complete(args[1], "text", "item", "block");
-            case 3:
-                switch (args[1].toLowerCase(Locale.ENGLISH)) {
-                    case "item":
-                        return Util.complete(args[2], Material.class, Material::isItem);
-                    case "block":
-                        return Util.complete(args[2], Material.class, Material::isBlock);
-                }
-        }
-        return Collections.emptyList();
+        return switch (args.length) {
+            case 2 -> Util.complete(args[1], "text", "item", "block");
+            case 3 -> switch (args[1].toLowerCase(Locale.ENGLISH)) {
+                case "item" -> Util.complete(args[2], Material.class, Material::isItem);
+                case "block" -> Util.complete(args[2], Material.class, Material::isBlock);
+                default -> Collections.emptyList();
+            };
+            default -> Collections.emptyList();
+        };
     }
 
 

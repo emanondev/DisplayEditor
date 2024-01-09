@@ -19,6 +19,7 @@ public class C {
     public static double SCALE_FINE = 0.025;
     public static double ROTATE_COARSE = 22.5;
     public static double ROTATE_FINE = 1.25;
+    public static boolean EXIT_ON_HIT = true;
 
     public static void reload() {
         MAX_EDIT_RADIUS = Math.max(8, DisplayEditor.get().getConfig().loadDouble("editor.max_edit_distance", 64D));
@@ -31,5 +32,6 @@ public class C {
         SCALE_FINE = Math.max(0.001, DisplayEditor.get().getConfig().loadDouble("editor.scale.fine", 0.025D));
         ROTATE_COARSE = Math.max(0.001, DisplayEditor.get().getConfig().loadDouble("editor.rotation.coarse_degrees", 22.5D));
         ROTATE_FINE = Math.max(0.001, DisplayEditor.get().getConfig().loadDouble("editor.rotation.fine_degrees", 1.25D));
+        EXIT_ON_HIT = DisplayEditor.get().getConfig().loadBoolean("editor.exit_editormode_when_hit", true);
     }
 }

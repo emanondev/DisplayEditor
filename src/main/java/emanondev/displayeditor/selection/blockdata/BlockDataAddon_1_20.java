@@ -11,7 +11,7 @@ import java.util.List;
 
 class BlockDataAddon_1_20 {
 
-    public static void add(List<BlockDataIntractor> values, BlockData data){
+    public static void add(List<BlockDataIntractor> values, BlockData data) {
 
         if (data instanceof Hatchable && !(data instanceof TurtleEgg)) {
             values.add(new NumericInteractor("hatch", Material.TURTLE_EGG,
@@ -19,7 +19,7 @@ class BlockDataAddon_1_20 {
                     (d, v) -> ((Hatchable) d).setHatch(v),
                     (d) -> ((Hatchable) d).getMaximumHatch()));
         }
-        if (data instanceof Brushable){
+        if (data instanceof Brushable) {
             values.add(new NumericInteractor("dusted", Material.BRUSH,
                     (d) -> ((Brushable) d).getDusted(),
                     (d, v) -> ((Brushable) d).setDusted(v),

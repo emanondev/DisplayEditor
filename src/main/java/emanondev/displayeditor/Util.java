@@ -254,43 +254,25 @@ public class Util {
     }
 
     private static Byte getData(DyeColor color) {
-        switch (color.name()) { //Silver
-            case "BLACK":
-                return 0;
-            case "BLUE":
-                return 4;
-            case "BROWN":
-                return 3;
-            case "CYAN":
-                return 6;
-            case "GRAY":
-                return 8;
-            case "GREEN":
-                return 2;
-            case "LIGHT_BLUE":
-                return 12;
-            case "LIME":
-                return 10;
-            case "MAGENTA":
-                return 13;
-            case "ORANGE":
-                return 14;
-            case "PINK":
-                return 9;
-            case "PURPLE":
-                return 5;
-            case "RED":
-                return 1;
-            case "SILVER":
-            case "LIGHT_GRAY":
-                return 7;
-            case "WHITE":
-                return 15;
-            case "YELLOW":
-                return 11;
-            default:
-                throw new IllegalStateException();
-        }
+        return switch (color.name()) { //Silver
+            case "BLACK" -> 0;
+            case "BLUE" -> 4;
+            case "BROWN" -> 3;
+            case "CYAN" -> 6;
+            case "GRAY" -> 8;
+            case "GREEN" -> 2;
+            case "LIGHT_BLUE" -> 12;
+            case "LIME" -> 10;
+            case "MAGENTA" -> 13;
+            case "ORANGE" -> 14;
+            case "PINK" -> 9;
+            case "PURPLE" -> 5;
+            case "RED" -> 1;
+            case "SILVER", "LIGHT_GRAY" -> 7;
+            case "WHITE" -> 15;
+            case "YELLOW" -> 11;
+            default -> throw new IllegalStateException();
+        };
     }
 
     public static boolean isAirOrNull(ItemStack item) {
@@ -369,7 +351,7 @@ public class Util {
             return true;
 
         List<String> values = DisplayEditor.get().getConfig().getStringList("blocked.type-blocked-lore");
-        if (values == null || values.isEmpty())
+        if (values.isEmpty())
             return true;
         String id = type.name();
         for (String name : values)

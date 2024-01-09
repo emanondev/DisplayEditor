@@ -57,7 +57,7 @@ public enum EditorMode {
 
         String[] holders;
         switch (this) {
-            case POSITION: {
+            case POSITION -> {
                 Location loc = display.getLocation();
                 holders = new String[]{"%x_offset%", optional3Digit.format(loc.getX() - loc.getBlockX()),
                         "%y_offset%", optional3Digit.format(loc.getY() - loc.getBlockY()),
@@ -70,9 +70,8 @@ public enum EditorMode {
                 inv.setItem(4, setDesc(craftItem(Material.ENDER_PEARL), player, "editor.position.teleport"));
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.position.reset"));
-                return;
             }
-            case ROTATION: {
+            case ROTATION -> {
                 Vector3f vect = display.getTransformation().getRightRotation().getEulerAnglesXYZ(new Vector3f());
                 double x = vect.x;
                 x = (x / Math.PI + (x < 0 ? 2 : 0)) * 180;
@@ -92,9 +91,8 @@ public enum EditorMode {
                         "%value%", display.getBillboard().name().toLowerCase(Locale.ENGLISH)));
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.rotation.reset"));
-                return;
             }
-            case SCALE: {
+            case SCALE -> {
                 Vector3f scale = display.getTransformation().getScale();
                 holders = new String[]{"%x_scale%", optional3Digit.format(scale.x),
                         "%y_scale%", optional3Digit.format(scale.y),
@@ -106,9 +104,8 @@ public enum EditorMode {
                 inv.setItem(4, setDesc(craftItem(Material.GRAY_DYE), player, "editor.scale.all", holders));
                 inv.setItem(5, null);
                 inv.setItem(6, setDesc(craftItem(Material.ANVIL), player, "editor.scale.reset"));
-                return;
             }
-            case SHADOW: {
+            case SHADOW -> {
                 Display.Brightness brightness = display.getBrightness();
                 if (brightness == null) {
                     inv.setItem(0, setDesc(craftItem(Material.BLACK_CONCRETE_POWDER), player, "editor.shadow.skylight"));
@@ -133,9 +130,8 @@ public enum EditorMode {
                 inv.setItem(4, null);
                 inv.setItem(5, null);
                 inv.setItem(6, null);
-                return;
             }
-            case ENTITY_SPECIFIC:
+            case ENTITY_SPECIFIC -> {
                 if (display instanceof TextDisplay) {
                     TextDisplay textDisplay = (TextDisplay) display;
                     Color backGround = textDisplay.getBackgroundColor();
@@ -194,13 +190,13 @@ public enum EditorMode {
                         DecimalFormat format = new DecimalFormat("###,###");
                         int val = (int) Math.pow(10, 2 * (i - 1));
                         inv.setItem(1 + i, setDesc(craftItem(Material.PAINTING, i * 2 - 1), player,
-                                "editor.entity_specific.item_modeldata", "%value%",format.format(val)
-                                , "%shift-value%", format.format((int) val*10), "%current%", format.format(current)));
+                                "editor.entity_specific.item_modeldata", "%value%", format.format(val)
+                                , "%shift-value%", format.format((int) val * 10), "%current%", format.format(current)));
                     }
                     return;
                 }
-                return;
-            case COPY_PASTE:
+            }
+            case COPY_PASTE -> {
                 inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.copy_paste.select"));
                 inv.setItem(1, setDesc(craftItem(Material.SPONGE), player, "editor.copy_paste.copypaste_soon"));
                 inv.setItem(2, null);
@@ -208,7 +204,7 @@ public enum EditorMode {
                 inv.setItem(4, null);
                 inv.setItem(5, null);
                 inv.setItem(6, null);
-                return;
+            }
         }
     }
 

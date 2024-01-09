@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +40,6 @@ public class Editormode extends SubCmd {
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
-        return Util.complete(args[1], EditorMode.class);
+        return (args.length == 2) ? Util.complete(args[1], EditorMode.class) : Collections.emptyList();
     }
 }

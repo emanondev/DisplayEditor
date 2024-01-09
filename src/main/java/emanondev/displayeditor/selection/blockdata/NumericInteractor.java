@@ -55,11 +55,11 @@ public class NumericInteractor extends BlockDataIntractor {
 
     @Override
     public int getAmount(BlockData data) {
-        return Math.max(1,Math.min(127,getCurrentValue.apply(data)));
+        return Math.max(1, Math.min(127, getCurrentValue.apply(data)));
     }
 
     @Override
     public String[] getHolders(BlockData data) {
-        return new String[]{"%value%",String.valueOf(getCurrentValue.apply(data))};
+        return new String[]{"%value%", String.valueOf(getCurrentValue.apply(data))};
     }
 }

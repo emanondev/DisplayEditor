@@ -14,7 +14,7 @@ public class BooleanInteractor extends BlockDataIntractor {
     private final Function<BlockData, Boolean> getCurrentValue;
     private final BiConsumer<BlockData, Boolean> applyValue;
 
-    public BooleanInteractor(@NotNull String pathEnd,@NotNull  Material mat,@NotNull Function<BlockData, Boolean> getCurrentValue,
+    public BooleanInteractor(@NotNull String pathEnd, @NotNull Material mat, @NotNull Function<BlockData, Boolean> getCurrentValue,
                              @NotNull BiConsumer<BlockData, Boolean> applyValue) {
         super(pathEnd, mat);
         this.getCurrentValue = getCurrentValue;
@@ -30,6 +30,6 @@ public class BooleanInteractor extends BlockDataIntractor {
 
     @Override
     public String[] getHolders(BlockData data) {
-        return new String[]{"%value%",String.valueOf(getCurrentValue.apply(data))};
+        return new String[]{"%value%", String.valueOf(getCurrentValue.apply(data))};
     }
 }

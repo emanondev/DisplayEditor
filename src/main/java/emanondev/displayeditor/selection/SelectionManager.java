@@ -154,9 +154,8 @@ public class SelectionManager {
         EditorMode mode = getEditorMode(player);
         if (mode == null)
             setEditorMode(player, EditorMode.POSITION);
-        else {
+        else
             setEditorMode(player, EditorMode.values()[(EditorMode.values().length + mode.ordinal() + amount) % EditorMode.values().length]);
-        }
     }
 
 
