@@ -6,7 +6,7 @@
 
     <groupId>emanondev.displayeditor</groupId>
     <artifactId>DisplayEditor</artifactId>
-    <version>1.9</version>
+    <version>1.10</version>
     <packaging>jar</packaging>
 
     <name>DisplayEditor</name>
@@ -51,9 +51,38 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <!-- MythicMobs -->
+        <repository>
+            <id>lumine-repo</id>
+            <url>https://mvn.lumine.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
+        <!-- MythicMobs -->
+        <dependency>
+            <groupId>io.lumine</groupId>
+            <artifactId>Mythic-Dist</artifactId>
+            <version>5.2.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- MiniMessage -->
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-legacy</artifactId>
+            <version>4.15.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- SuperVanish -->
         <dependency>
             <groupId>com.github.LeonMangler</groupId>
@@ -65,7 +94,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.1-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- JetBrains Annotations -->

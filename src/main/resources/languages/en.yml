@@ -55,6 +55,32 @@ displayeditor:
     success-enabled: '&9[&fDisplayEditor&9] &aEnabled EditorMode'
     success-disabled: '&9[&fDisplayEditor&9] &aDisabled EditorMode'
     wrong-type: '&4[&cDisplayEditor&4] &cInvalid EditorMode'
+  setitem:
+    description:
+      - '&b&lSet Item for ItemDisplays'
+      - ''
+      - '&e[material] &b- Item type'
+      - '&bif item type is not specified item in'
+      - '&byour hand is used'
+    params: '[material]'
+    wrong-type: '&4[&cDisplayEditor&4] &cSelected display is not a Item Display'
+    none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
+    not-existing-material: '&4[&cDisplayEditor&4] &cMaterial &6%material% &cdo not exist'
+    invalid-material: '&4[&cDisplayEditor&4] &cMaterial &6%material% &cis not an item'
+    success: '&9[&fDisplayEditor&9] &aItem Updated'
+  setblock:
+    description:
+      - '&b&lSet Block for BlockDisplays'
+      - ''
+      - '&e[material] &b- Block type'
+      - '&bif block type is not specified the block'
+      - '&byou are looking at is used'
+    params: '[material]'
+    wrong-type: '&4[&cDisplayEditor&4] &cSelected display is not a Block Display'
+    none-selected: '&4[&cDisplayEditor&4] &cNo Display is selected'
+    not-existing-material: '&4[&cDisplayEditor&4] &cMaterial &6%material% &cdo not exist'
+    invalid-material: '&4[&cDisplayEditor&4] &cMaterial &6%material% &cis not a block'
+    success: '&9[&fDisplayEditor&9] &aBlock Updated'
   settext:
     description:
       - '&b&lSet Text for TextDisplays'

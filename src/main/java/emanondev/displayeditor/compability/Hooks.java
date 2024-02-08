@@ -27,9 +27,9 @@ public class Hooks {
         return Bukkit.getPluginManager().isPluginEnabled(pluginName);
     }
 
-    /*public static boolean isMythicMobsEnabled() {
+    public static boolean isMythicMobsEnabled() {
         return isEnabled("MythicMobs");
-    }
+    }/*
 
     public static boolean isItemBridgeEnabled() {
         return isEnabled("ItemBridge");

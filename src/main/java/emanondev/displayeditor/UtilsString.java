@@ -1,6 +1,7 @@
 package emanondev.displayeditor;
 
 import emanondev.displayeditor.compability.Hooks;
+import emanondev.displayeditor.compability.MiniMessageUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -133,6 +134,10 @@ public class UtilsString {
         // papi
         if (player != null && Hooks.isPAPIEnabled())
             text = PlaceholderAPI.setPlaceholders(player, text);
+
+        //minimessage
+        if (MiniMessageUtil.hasMiniMessage())
+            text= MiniMessageUtil.getInstance().fromMiniToText(text);
 
         // color
         if (color)

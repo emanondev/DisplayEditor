@@ -16,6 +16,8 @@ public class DisplayEditorCommand extends AbstractCommand {
         this.registerSubCommand(new Editormode(this));
         this.registerSubCommand(new Delete(this));
         this.registerSubCommand(new Settext(this));
+        this.registerSubCommand(new Setitem(this));
+        this.registerSubCommand(new Setblock(this));
     }
 
     public static DisplayEditorCommand get() {

@@ -1,5 +1,6 @@
 package emanondev.displayeditor;
 
+import emanondev.displayeditor.compability.MiniMessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,7 +35,8 @@ public class Util {
                             Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
                     .split("_")[2].substring(1));
 
-    public static <T extends Enum<T>> @NotNull List<String> complete(String prefix, @NotNull Class<T> enumClass) {
+    @NotNull
+    public static <T extends Enum<T>> List<String> complete(String prefix, @NotNull Class<T> enumClass) {
         prefix = prefix.toUpperCase();
         ArrayList<String> results = new ArrayList<>();
         int c = 0;
@@ -373,6 +375,6 @@ public class Util {
     }
 
     public static boolean hasMiniMessageAPI() {
-        return hasPaperAPI() && Util.isVersionAfter(1, 18, 2);//TODO
+        return MiniMessageUtil.hasMiniMessage();
     }
 }
