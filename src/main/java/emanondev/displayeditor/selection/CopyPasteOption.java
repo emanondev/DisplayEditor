@@ -79,7 +79,7 @@ public class CopyPasteOption {
         copiedEntitiesOffsets.forEach((offset) -> {
             Location to = offset.clone().subtract(from);
             if (rotationDegreesY != 0) {
-                Vector toVector = to.toVector().rotateAroundY(Math.PI * rotationDegreesY / 180D);
+                Vector toVector = to.toVector().rotateAroundY(Math.PI * -rotationDegreesY / 180D);
                 to = new Location(null, toVector.getX(), toVector.getY(), toVector.getZ(),
                         (float) (to.getYaw() + rotationDegreesY), to.getPitch());
             }
@@ -88,8 +88,11 @@ public class CopyPasteOption {
             locations.add(to);
         });
         List<Entity> results = new ArrayList<>();
-        for (int i = 0; i < copiedEntities.size(); i++)
-            results.add(copiedEntities.get(i).createEntity(locations.get(i)));
+        for (int i = 0; i < copiedEntities.size(); i++) {
+            Entity en = copiedEntities.get(i).createEntity(locations.get(i));
+            en.teleport(locations.get(i));
+            results.add(en);
+        }
         lastPasted.add(results);
         if (lastPasted.size() > MAX_HISTORY)
             lastPasted.remove(0);

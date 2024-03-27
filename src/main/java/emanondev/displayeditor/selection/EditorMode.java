@@ -198,14 +198,15 @@ public enum EditorMode {
                 inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.copy_paste.select"));
                 if (Util.isVersionAfter(1, 20, 2)) {
                     CopyPasteOption option = SelectionManager.getCopyPasteOption(player);
-                    inv.setItem(1, setDesc(craftItem(Material.CAULDRON), player, "editor.copy_paste.copy"));
-                    inv.setItem(2, setDesc(craftItem(Material.CAULDRON, 2), player, "editor.copy_paste.copyrange",
+                    inv.setItem(1, setDesc(craftItem(Material.BUCKET), player, "editor.copy_paste.copy"));
+                    inv.setItem(2, setDesc(craftItem(Material.BUCKET, 2), player, "editor.copy_paste.copyrange",
                             "%radius%", String.valueOf(option.getCopyRadius())));
-                    inv.setItem(3, setDesc(craftItem(Material.WATER_CAULDRON, option.getCopiedEntitiesSize()), player, "editor.copy_paste.paste",
-                            "%copied%", String.valueOf(option.getCopiedEntitiesSize())));
-                    inv.setItem(4, setDesc(craftItem(Material.LAVA_CAULDRON, option.getAvailableUndo()), player, "editor.copy_paste.undo"));
+                    inv.setItem(3, setDesc(craftItem(Material.WATER_BUCKET, option.getCopiedEntitiesSize()), player, "editor.copy_paste.paste",
+                            "%value%", String.valueOf(option.getCopiedEntitiesSize())));
+                    inv.setItem(4, setDesc(craftItem(Material.LAVA_BUCKET, option.getAvailableUndo()), player, "editor.copy_paste.undo"));
                     inv.setItem(5, setDesc(craftItem(Material.MUSIC_DISC_5, option.getYRotation() / 10), player, "editor.copy_paste.paste_rotate",
                             "%value%", String.valueOf(option.getYRotation())));
+                    inv.setItem(6, null);
                 }
             }
         }
