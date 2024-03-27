@@ -9,7 +9,6 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +21,7 @@ public class Settext extends SubCmd {
 
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
-        @Nullable Display sel = SelectionManager.getSelection((Player) sender);
+        Display sel = SelectionManager.getSelection((Player) sender);
         if (sel == null) {
             sendLanguageString("none-selected", null, sender);
             return;

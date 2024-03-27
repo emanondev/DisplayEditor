@@ -8,13 +8,14 @@ public interface PagedGui extends Gui {
 
     int getPage();
 
-    default @NotNull ItemStack getPreviousPageItem() {
+    @NotNull
+    default ItemStack getPreviousPageItem() {
         return this.loadLanguageDescription(getGuiItem("buttons.previous-page", Material.BARRIER),
                 "gui.previous-page.description", "%page%", String.valueOf(getPage()), "%target_page%", String.valueOf(getPage() - 1));
     }
 
-
-    default @NotNull ItemStack getNextPageItem() {
+    @NotNull
+    default ItemStack getNextPageItem() {
         return this.loadLanguageDescription(getGuiItem("buttons.next-page", Material.BARRIER),
                 "gui.next-page.description", "%page%", String.valueOf(getPage()), "%target_page%", String.valueOf(getPage() + 1));
     }

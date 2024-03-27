@@ -1,7 +1,6 @@
 package emanondev.displayeditor;
 
 import emanondev.displayeditor.compability.Hooks;
-import emanondev.displayeditor.compability.MiniMessageUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -88,7 +87,8 @@ public class UtilsString {
      * @return a new list with fixed text, or null if list was null
      */
     @Contract("!null, _, _, _ -> !null")
-    public static @Nullable ArrayList<String> fix(@Nullable List<String> list, @Nullable Player player, boolean color, String... holders) {
+    @Nullable
+    public static ArrayList<String> fix(@Nullable List<String> list, @Nullable Player player, boolean color, String... holders) {
         if (list == null)
             return null;
         ArrayList<String> newList = new ArrayList<>();
@@ -136,8 +136,8 @@ public class UtilsString {
             text = PlaceholderAPI.setPlaceholders(player, text);
 
         //minimessage
-        if (MiniMessageUtil.hasMiniMessage())
-            text= MiniMessageUtil.getInstance().fromMiniToText(text);
+        if (Hooks.hasMiniMessage())
+            text = Hooks.getMiniMessageUtil().fromMiniToText(text);
 
         // color
         if (color)
@@ -151,7 +151,8 @@ public class UtilsString {
      * @return a string with original colors and formats but with &amp; instead of §
      */
     @Contract("!null -> !null")
-    public static @Nullable String revertColors(@Nullable String text) {
+    @Nullable
+    public static String revertColors(@Nullable String text) {
         if (text == null)
             return null;
         return text.replace("§", "&");
@@ -162,7 +163,8 @@ public class UtilsString {
      * @return a string with no colors and no formats
      */
     @Contract("!null -> !null")
-    public static @Nullable String clearColors(@Nullable String text) {
+    @Nullable
+    public static String clearColors(@Nullable String text) {
         if (text == null)
             return null;
         return ChatColor.stripColor(text);

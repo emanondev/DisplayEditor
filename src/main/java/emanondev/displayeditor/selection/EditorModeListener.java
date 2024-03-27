@@ -1,6 +1,7 @@
 package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.C;
+import emanondev.displayeditor.Util;
 import emanondev.displayeditor.selection.blockdata.BlockDataIntractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Color;
@@ -23,14 +24,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class EditorModeListener implements Listener {
 
@@ -192,11 +191,57 @@ public class EditorModeListener implements Listener {
     }
 
     private void copyPasteHandleClick(Player player, int slot, boolean isLeftClick, Display sel, boolean sneak, EditorMode editorMode) {
+        if (slot == 0) {
+            selectNearest(player, slot, isLeftClick, sel, sneak);
+        }
+        if (!Util.isVersionAfter(1, 20, 2))
+            return;
+        CopyPasteOption option = SelectionManager.getCopyPasteOption(player);
         switch (slot) {
-            case 0 -> selectNearest(player, slot, isLeftClick, sel, sneak);
-            case 1 ->//TODO clone
-                    {
-                    }
+            case 1 -> {
+                Display disp = SelectionManager.getSelection(player);
+                if (disp != null) {
+                    option.copy(List.of(disp), player.getLocation());
+                    clickSound(player);
+                    editorMode.setup(player);
+                    Util.flashEntities(player, disp);
+                } else {
+                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                }
+            }
+            case 2 -> {
+                BoundingBox box = new BoundingBox().shift(player.getLocation()).expand(option.getCopyRadius());
+                Collection<Entity> list = player.getWorld().getNearbyEntities(box, (en) -> !(en instanceof Player));
+                if (!option.copy(list, player.getLocation())) {
+                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    return;
+                }
+                clickSound(player);
+                editorMode.setup(player);
+                Util.flashEntities(player, list);
+            }
+            case 3 -> {
+                if (!option.paste(player.getLocation(), !sneak)) {
+                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    return;
+                }
+                clickSound(player);
+                editorMode.setup(player);
+                Util.flashEntities(player, option.getLastPasted());
+            }
+            case 4 -> {
+                if (!option.undoPaste()) {
+                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    return;
+                }
+                clickSound(player);
+                editorMode.setup(player);
+            }
+            case 5 -> {
+                option.addYRotation((isLeftClick ? -1 : 1) * (sneak ? 5 : 90));
+                clickSound(player);
+                editorMode.setup(player);
+            }
         }
     }
 

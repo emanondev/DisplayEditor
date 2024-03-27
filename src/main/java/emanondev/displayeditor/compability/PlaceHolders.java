@@ -26,7 +26,8 @@ public class PlaceHolders extends PlaceholderExpansion {
      * @return The name of the author as a String.
      */
     @Override
-    public @NotNull String getAuthor() {
+    @NotNull
+    public String getAuthor() {
         return "emanon";
     }
 
@@ -39,7 +40,8 @@ public class PlaceHolders extends PlaceholderExpansion {
      * @return The identifier in {@code %<identifier>_<value>%} as String.
      */
     @Override
-    public @NotNull String getIdentifier() {
+    @NotNull
+    public String getIdentifier() {
         return "itemedit";
     }
 
@@ -66,7 +68,8 @@ public class PlaceHolders extends PlaceholderExpansion {
      * @return The version as a String.
      */
     @Override
-    public @NotNull String getVersion() {
+    @NotNull
+    public String getVersion() {
         return "1.0";
     }
 

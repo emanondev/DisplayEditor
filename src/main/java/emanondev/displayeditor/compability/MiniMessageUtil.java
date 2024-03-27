@@ -1,11 +1,8 @@
 package emanondev.displayeditor.compability;
 
-import emanondev.displayeditor.Util;
-
 public interface MiniMessageUtil {
 
-    String fromMiniToText(String text);
-    static boolean hasMiniMessage(){
+    /*static boolean hasMiniMessage() {
         return getInstance() != null;
     }
 
@@ -15,10 +12,12 @@ public interface MiniMessageUtil {
                 return MiniMessagePaper.getInstance();
             if (Hooks.isMythicMobsEnabled())
                 return MiniMessageMM.getInstance();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
+
+    String fromMiniToText(String text);
 
 }

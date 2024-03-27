@@ -433,5 +433,19 @@ editor:
       - '&bAny &9➤ &bSelect nearest Display'
     copypaste_soon:
       - '&6Copy and Paste (Coming soon)'
+    copy:
+      - '&6Copy selected Display'
+    copyrange:
+      - '&6Copy all entities in a radius of %radius% blocks'
+    paste:
+      - '&6Paste copied entities to your location (Copied: &e%value%&6)'
+      - '&bLeft/Right &9➤ &bPaste to your block location'
+      - '&bShift Left/Right &9➤ &bPaste to your exact location'
+    undo:
+      - '&6Undo your last paste'
+    paste_rotate:
+      - '&6Change paste rotation degrees (Current: &e%value%&6°)'
+      - '&bLeft/Right &9➤ &bRotate by 90°'
+      - '&bShift Left/Right &9➤ &bRotate by 5°'
 displayeditorreload:
   success: '&9[&fDisplayEditor&9] &aReloaded'

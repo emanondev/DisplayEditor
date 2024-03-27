@@ -18,7 +18,8 @@ public final class DisplayEditor extends APlugin {
     private static final int BSTATS_PLUGIN_ID = 19646;
     private static DisplayEditor plugin = null;
 
-    public static @NotNull DisplayEditor get() {
+    @NotNull
+    public static DisplayEditor get() {
         return plugin;
     }
 
@@ -27,7 +28,8 @@ public final class DisplayEditor extends APlugin {
     }
 
     @Override
-    public @NotNull Integer getProjectId() {
+    @NotNull
+    public Integer getProjectId() {
         return PROJECT_ID;
     }
 

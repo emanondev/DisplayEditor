@@ -1,7 +1,6 @@
 package emanondev.displayeditor.command.displayeditor;
 
 import emanondev.displayeditor.Util;
-import emanondev.displayeditor.UtilsString;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.selection.SelectionManager;
@@ -10,12 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +23,7 @@ public class Setitem extends SubCmd {
 
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
-        @Nullable Display sel = SelectionManager.getSelection((Player) sender);
+        Display sel = SelectionManager.getSelection((Player) sender);
         if (sel == null) {
             sendLanguageString("none-selected", null, sender);
             return;
@@ -41,16 +37,15 @@ public class Setitem extends SubCmd {
             try {
                 Material mat = Material.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                 if (!mat.isItem()) {
-                    sendLanguageString("invalid-material", null, sender,"%material%",args[1]);
+                    sendLanguageString("invalid-material", null, sender, "%material%", args[1]);
                     return;
                 }
                 item = new ItemStack(mat);
-            } catch (Exception e){
-                sendLanguageString("not-existing-material", null, sender,"%material%",args[1]);
+            } catch (Exception e) {
+                sendLanguageString("not-existing-material", null, sender, "%material%", args[1]);
                 return;
             }
-        }
-        else {
+        } else {
             item = ((Player) sender).getInventory().getItemInMainHand();
         }
         ((ItemDisplay) sel).setItemStack(item);
@@ -59,8 +54,8 @@ public class Setitem extends SubCmd {
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
-        if (args.length==2)
-            return Util.complete(args[1],Material.class, Material::isItem);
+        if (args.length == 2)
+            return Util.complete(args[1], Material.class, Material::isItem);
         return Collections.emptyList();
     }
 }

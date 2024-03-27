@@ -31,11 +31,13 @@ public abstract class AbstractCommand implements TabExecutor {
         config = plugin.getConfig("commands.yml");
     }
 
-    public final @NotNull String getName() {
+    @NotNull
+    public final String getName() {
         return name;
     }
 
-    public final @NotNull APlugin getPlugin() {
+    @NotNull
+    public final APlugin getPlugin() {
         return plugin;
     }
 

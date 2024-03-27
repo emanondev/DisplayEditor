@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +22,7 @@ public class Delete extends SubCmd {
 
         Player player = (Player) sender;
         //TODO check permissions
-        @Nullable Display sel = SelectionManager.getSelection(player);
+        Display sel = SelectionManager.getSelection(player);
         if (sel != null) {
             sel.remove();
             SelectionManager.deselect(player);

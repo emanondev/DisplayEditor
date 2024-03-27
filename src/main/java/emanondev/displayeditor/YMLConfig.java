@@ -135,7 +135,8 @@ public class YMLConfig extends YamlConfiguration {
      *
      * @return the file associated to the config
      */
-    public @NotNull File getFile() {
+    public @NotNull
+    File getFile() {
         return file;
     }
 
@@ -145,7 +146,8 @@ public class YMLConfig extends YamlConfiguration {
      * @param path yaml path on file
      * @return sub-keys at selected path
      */
-    public @NotNull Set<String> getKeys(@NotNull String path) {
+    public @NotNull
+    Set<String> getKeys(@NotNull String path) {
         ConfigurationSection section = this.getConfigurationSection(path);
         if (section == null)
             return new LinkedHashSet<>();
@@ -218,13 +220,15 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Double loadDouble(@NotNull String path, @Nullable Double def) {
+    public @Nullable
+    Double loadDouble(@NotNull String path, @Nullable Double def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.doubleValue();
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Boolean loadBoolean(@NotNull String path, @Nullable Boolean def) {
+    public @Nullable
+    Boolean loadBoolean(@NotNull String path, @Nullable Boolean def) {
         return load(path, def, Boolean.class);
     }
 
@@ -244,19 +248,22 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Integer loadInteger(@NotNull String path, @Nullable Integer def) {
+    public @Nullable
+    Integer loadInteger(@NotNull String path, @Nullable Integer def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.intValue();
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Integer getInteger(@NotNull String path, @Nullable Integer def) {
+    public @Nullable
+    Integer getInteger(@NotNull String path, @Nullable Integer def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.intValue();
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Long loadLong(@NotNull String path, @Nullable Long def) {
+    public @Nullable
+    Long loadLong(@NotNull String path, @Nullable Long def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.longValue();
     }
@@ -275,7 +282,8 @@ public class YMLConfig extends YamlConfiguration {
      * @see #load(String, Object, Class)
      */
     @Contract("_, !null, _, _ -> !null")
-    public @Nullable String loadMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
+    public @Nullable
+    String loadMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
         return loadMessage(path, def, null, color, args);
     }
 
@@ -292,7 +300,8 @@ public class YMLConfig extends YamlConfiguration {
      * @see #load(String, Object, Class)
      */
     @Contract("_, !null, _ -> !null")
-    public @Nullable String loadMessage(@NotNull String path, @Nullable String def, String... args) {
+    public @Nullable
+    String loadMessage(@NotNull String path, @Nullable String def, String... args) {
         return loadMessage(path, def, null, true, args);
     }
 
@@ -308,8 +317,9 @@ public class YMLConfig extends YamlConfiguration {
      * @see #load(String, Object, Class)
      */
     @Contract("_, !null, _, _, _ -> !null")
-    public @Nullable String loadMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
-                                        boolean color, String... args) {
+    public @Nullable
+    String loadMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
+                       boolean color, String... args) {
         if (args.length > 0) {
             if (Util.isVersionAfter(1, 18, 1)) {
                 if (getComments(path).isEmpty()) {
@@ -338,8 +348,9 @@ public class YMLConfig extends YamlConfiguration {
      * @see #get(String, Object, Class)
      */
     @Contract("_, !null, _, _, _ -> !null")
-    public @Nullable String getMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
-                                       boolean color, String... args) {
+    public @Nullable
+    String getMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
+                      boolean color, String... args) {
         if (args.length > 0) {
             if (Util.isVersionAfter(1, 18, 1)) {
                 if (getComments(path).isEmpty()) {
@@ -370,7 +381,8 @@ public class YMLConfig extends YamlConfiguration {
      * @see #get(String, Object, Class)
      */
     @Contract("_, !null, _, _ -> !null")
-    public @Nullable String getMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
+    public @Nullable
+    String getMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
         return this.getMessage(path, def, null, color, args);
     }
 
@@ -387,7 +399,8 @@ public class YMLConfig extends YamlConfiguration {
      * @see #get(String, Object, Class)
      */
     @Contract("_, !null, _ -> !null")
-    public @Nullable String getMessage(@NotNull String path, @Nullable String def, String... args) {
+    public @Nullable
+    String getMessage(@NotNull String path, @Nullable String def, String... args) {
         return this.getMessage(path, def, null, true, args);
     }
 
@@ -401,7 +414,8 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _ -> !null")
-    public @Nullable List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
+    public @Nullable
+    List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
         return loadMultiMessage(path, def, null, true, holders);
     }
 
@@ -415,7 +429,8 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _, _ -> !null")
-    public @Nullable List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
+    public @Nullable
+    List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
         return loadMultiMessage(path, def, null, color, holders);
     }
 
@@ -429,8 +444,9 @@ public class YMLConfig extends YamlConfiguration {
      */
     @SuppressWarnings("unchecked")
     @Contract("_, !null, _, _, _ -> !null")
-    public @Nullable List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def,
-                                                   @Nullable Player target, boolean color, String... holders) {
+    public @Nullable
+    List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def,
+                                  @Nullable Player target, boolean color, String... holders) {
         if (holders.length > 0) {
             if (Util.isVersionAfter(1, 18, 1)) {
                 if (getComments(path).isEmpty()) {
@@ -461,7 +477,8 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _ -> !null")
-    public @Nullable List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
+    public @Nullable
+    List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
         return getMultiMessage(path, def, null, true, holders);
     }
 
@@ -475,7 +492,8 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _, _ -> !null")
-    public @Nullable List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
+    public @Nullable
+    List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
         return getMultiMessage(path, def, null, color, holders);
     }
 
@@ -489,8 +507,9 @@ public class YMLConfig extends YamlConfiguration {
      */
     @SuppressWarnings("unchecked")
     @Contract("_, !null, _, _, _ -> !null")
-    public @Nullable List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def,
-                                                  @Nullable Player target, boolean color, String... holders) {
+    public @Nullable
+    List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def,
+                                 @Nullable Player target, boolean color, String... holders) {
         if (holders.length > 0) {
             if (Util.isVersionAfter(1, 18, 1)) {
                 if (getComments(path).isEmpty()) {
@@ -513,7 +532,8 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable ItemStack loadItemStack(@NotNull String path, @Nullable ItemStack def) {
+    public @Nullable
+    ItemStack loadItemStack(@NotNull String path, @Nullable ItemStack def) {
         return load(path, def, ItemStack.class);
     }
 
@@ -528,18 +548,21 @@ public class YMLConfig extends YamlConfiguration {
      * the string is empty return def
      */
     @Contract("_, !null, _ -> !null")
-    public @Nullable <T extends Enum<T>> T loadEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
+    public @Nullable
+    <T extends Enum<T>> T loadEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
         return stringToEnum(loadMessage(path, def == null ? null : def.name(), false), def, clazz, path);
     }
 
     @Contract("_, !null, _ -> !null")
-    public @Nullable <T extends Enum<T>> T getEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
+    public @Nullable
+    <T extends Enum<T>> T getEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
         return stringToEnum(getString(path, def == null ? null : def.name()), def, clazz, path);
     }
 
     @Contract("_, !null, _, _ -> !null")
-    private @Nullable <T extends Enum<T>> T stringToEnum(@Nullable String value, @Nullable T def,
-                                                         @NotNull Class<T> clazz, @NotNull String errorPath) {
+    private @Nullable
+    <T extends Enum<T>> T stringToEnum(@Nullable String value, @Nullable T def,
+                                       @NotNull Class<T> clazz, @NotNull String errorPath) {
         try {
             if (value == null || value.isEmpty())
                 return def;
@@ -566,14 +589,16 @@ public class YMLConfig extends YamlConfiguration {
      * @param def   default value
      * @return the value found or default if none
      */
-    public @NotNull <T extends Enum<T>> List<T> loadEnumList(@NotNull String path, @Nullable Collection<T> def,
-                                                             @NotNull Class<T> clazz) {
+    public @NotNull
+    <T extends Enum<T>> List<T> loadEnumList(@NotNull String path, @Nullable Collection<T> def,
+                                             @NotNull Class<T> clazz) {
         return stringListToEnumCollection(new ArrayList<>(),
                 loadMultiMessage(path, enumCollectionToStringList(def), false), clazz, path);
     }
 
-    public @NotNull <T extends Enum<T>> EnumSet<T> loadEnumSet(@NotNull String path, @Nullable Collection<T> def,
-                                                               @NotNull Class<T> clazz) {
+    public @NotNull
+    <T extends Enum<T>> EnumSet<T> loadEnumSet(@NotNull String path, @Nullable Collection<T> def,
+                                               @NotNull Class<T> clazz) {
         return stringListToEnumCollection(EnumSet.noneOf(clazz),
                 loadMultiMessage(path, enumCollectionToStringList(def), false), clazz, path);
     }
@@ -602,7 +627,8 @@ public class YMLConfig extends YamlConfiguration {
 
     @SuppressWarnings("unchecked")
     @Contract("_, !null -> !null")
-    public @Nullable <T> Map<String, T> loadMap(@NotNull String path, @Nullable Map<String, T> def) {
+    @Nullable
+    public <T> Map<String, T> loadMap(@NotNull String path, @Nullable Map<String, T> def) {
         try {
             if (!this.contains(path)) {
                 this.set(path, def);
@@ -632,33 +658,40 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Sound loadSound(@NotNull String path, @Nullable Sound def) {
+    @Nullable
+    public Sound loadSound(@NotNull String path, @Nullable Sound def) {
         return loadEnum(path, def, Sound.class);
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Sound getSound(@NotNull String path, @Nullable Sound def) {
+    @Nullable
+    public Sound getSound(@NotNull String path, @Nullable Sound def) {
         return getEnum(path, def, Sound.class);
     }
 
     @Contract("_, !null -> !null")
-    public @Nullable Material loadMaterial(@NotNull String path, @Nullable Material def) {
+    @Nullable
+    public Material loadMaterial(@NotNull String path, @Nullable Material def) {
         return loadEnum(path, def, Material.class);
     }
 
-    public @NotNull List<Material> loadMaterialList(@NotNull String path, @Nullable Collection<Material> def) {
+    @NotNull
+    public List<Material> loadMaterialList(@NotNull String path, @Nullable Collection<Material> def) {
         return loadEnumList(path, def, Material.class);
     }
 
-    public @NotNull EnumSet<Material> loadMaterialSet(@NotNull String path, @Nullable Collection<Material> def) {
+    @NotNull
+    public EnumSet<Material> loadMaterialSet(@NotNull String path, @Nullable Collection<Material> def) {
         return loadEnumSet(path, def, Material.class);
     }
 
-    public @NotNull ItemFlag[] loadItemFlags(@NotNull String path, ItemFlag[] def) {
+    @NotNull
+    public ItemFlag[] loadItemFlags(@NotNull String path, ItemFlag[] def) {
         return loadEnumSet(path, def == null ? null : Arrays.asList(def), ItemFlag.class).toArray(new ItemFlag[0]);
     }
 
-    private @NotNull String getError(String path) {
+    @NotNull
+    private String getError(String path) {
         return "Value has wrong type or wrong value at '" + path + ":' on file " + file.getName();
     }
 }

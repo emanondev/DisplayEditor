@@ -10,7 +10,6 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +52,7 @@ public class Select extends SubCmd {
         }
 
         SelectionManager.select(player, target);
-        @Nullable EditorMode mode = SelectionManager.getEditorMode(player);
+        EditorMode mode = SelectionManager.getEditorMode(player);
         if (mode == null)
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         else

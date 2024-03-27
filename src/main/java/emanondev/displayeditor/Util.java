@@ -1,14 +1,15 @@
 package emanondev.displayeditor;
 
-import emanondev.displayeditor.compability.MiniMessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class Util {
+
     private static final int MAX_COMPLETES = 100;
     private static final int GAME_MAIN_VERSION = Integer.parseInt(
             Bukkit.getServer().getClass().getPackage().getName().substring(
@@ -34,6 +36,32 @@ public class Util {
             Bukkit.getServer().getClass().getPackage().getName().substring(
                             Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
                     .split("_")[2].substring(1));
+
+    public static void flashEntities(@NotNull Player player, @NotNull Entity entity) {
+        flashEntities(player, List.of(entity));
+    }
+
+    public static void flashEntities(@NotNull Player player, @NotNull Collection<Entity> entities) {
+        if (entities.isEmpty())
+            return;
+        new BukkitRunnable() {
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i > 10 || !player.isValid())
+                    this.cancel();
+                entities.forEach((en -> {
+                    if (en.isValid())
+                        if (i % 2 != 0)
+                            player.showEntity(DisplayEditor.get(), en);
+                        else
+                            player.hideEntity(DisplayEditor.get(), en);
+                }));
+                i++;
+            }
+        }.runTaskTimer(DisplayEditor.get(), 2L, 2L);
+    }
 
     @NotNull
     public static <T extends Enum<T>> List<String> complete(String prefix, @NotNull Class<T> enumClass) {
@@ -50,8 +78,9 @@ public class Util {
         return results;
     }
 
-    public static @NotNull <T extends Enum<T>> List<String> complete(String prefix, @NotNull Class<T> type,
-                                                                     @NotNull Predicate<T> predicate) {
+    @NotNull
+    public static <T extends Enum<T>> List<String> complete(String prefix, @NotNull Class<T> type,
+                                                            @NotNull Predicate<T> predicate) {
         prefix = prefix.toUpperCase();
         ArrayList<String> results = new ArrayList<>();
         int c = 0;
@@ -374,7 +403,4 @@ public class Util {
         }
     }
 
-    public static boolean hasMiniMessageAPI() {
-        return MiniMessageUtil.hasMiniMessage();
-    }
 }

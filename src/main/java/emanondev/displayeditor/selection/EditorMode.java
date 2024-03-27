@@ -2,6 +2,7 @@ package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.C;
 import emanondev.displayeditor.DisplayEditor;
+import emanondev.displayeditor.Util;
 import emanondev.displayeditor.selection.blockdata.BlockDataIntractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Bukkit;
@@ -33,8 +34,7 @@ public enum EditorMode {
     ROTATION,
     SHADOW,
     ENTITY_SPECIFIC,
-    COPY_PASTE,
-    ;
+    COPY_PASTE;
 
     private final DecimalFormat optional3Digit = new DecimalFormat("0.###");
 
@@ -124,7 +124,7 @@ public enum EditorMode {
                     itemStack2.setItemMeta(meta2);
                     inv.setItem(1, setDesc(itemStack2, player, "editor.shadow.blocklight"));
                 }
-                inv.setItem(2, setDesc(craftItem(Material.ENDER_EYE, Math.max(1, Math.min(127, (int) (display.getViewRange() * 64)))), player,
+                inv.setItem(2, setDesc(craftItem(Material.ENDER_EYE, (int) (display.getViewRange() * 64)), player,
                         "editor.shadow.see_distance", "%value%", String.valueOf((int) (display.getViewRange() * 64))));
                 inv.setItem(3, null);
                 inv.setItem(4, null);
@@ -132,20 +132,19 @@ public enum EditorMode {
                 inv.setItem(6, null);
             }
             case ENTITY_SPECIFIC -> {
-                if (display instanceof TextDisplay) {
-                    TextDisplay textDisplay = (TextDisplay) display;
+                if (display instanceof TextDisplay textDisplay) {
                     Color backGround = textDisplay.getBackgroundColor();
                     inv.setItem(0, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.RED_STAINED_GLASS_PANE, Math.min(127, backGround.getRed() / 2 + 1)), player,
+                                    craftItem(Material.RED_STAINED_GLASS_PANE, backGround.getRed() / 2 + 1), player,
                             "editor.entity_specific.text_background_red", "%value%", backGround == null ? "?" : String.valueOf(backGround.getRed())));
                     inv.setItem(1, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.LIME_STAINED_GLASS_PANE, Math.min(127, backGround.getGreen() / 2 + 1)), player,
+                                    craftItem(Material.LIME_STAINED_GLASS_PANE, backGround.getGreen() / 2 + 1), player,
                             "editor.entity_specific.text_background_green", "%value%", backGround == null ? "?" : String.valueOf(backGround.getGreen())));
                     inv.setItem(2, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.BLUE_STAINED_GLASS_PANE, Math.min(127, backGround.getBlue() / 2 + 1)), player,
+                                    craftItem(Material.BLUE_STAINED_GLASS_PANE, backGround.getBlue() / 2 + 1), player,
                             "editor.entity_specific.text_background_blue", "%value%", backGround == null ? "?" : String.valueOf(backGround.getBlue())));
                     inv.setItem(3, setDesc(backGround == null ? craftItem(Material.GRAY_STAINED_GLASS_PANE) :
-                                    craftItem(Material.GRAY_STAINED_GLASS_PANE, Math.min(127, backGround.getAlpha() / 2 + 1)), player,
+                                    craftItem(Material.GRAY_STAINED_GLASS_PANE, backGround.getAlpha() / 2 + 1), player,
                             "editor.entity_specific.text_background_alpha", "%value%", backGround == null ? "?" : String.valueOf(backGround.getAlpha())));
                     inv.setItem(4, setDesc(craftItem(Material.GLOBE_BANNER_PATTERN), player,
                             "editor.entity_specific.text_alignment", "%value%",
@@ -172,8 +171,7 @@ public enum EditorMode {
                         DisplayEditor.get().log("BlockData require more than 6 slots, report this message to the developer &e" + ((BlockDisplay) display).getBlock().getAsString(false));
                     return;
                 }
-                if (display instanceof ItemDisplay) {
-                    ItemDisplay itemDisplay = (ItemDisplay) display;
+                if (display instanceof ItemDisplay itemDisplay) {
                     int current = 0;
                     ItemStack item = ((ItemDisplay) display).getItemStack();
                     if (item != null) {
@@ -198,12 +196,17 @@ public enum EditorMode {
             }
             case COPY_PASTE -> {
                 inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.copy_paste.select"));
-                inv.setItem(1, setDesc(craftItem(Material.SPONGE), player, "editor.copy_paste.copypaste_soon"));
-                inv.setItem(2, null);
-                inv.setItem(3, null);
-                inv.setItem(4, null);
-                inv.setItem(5, null);
-                inv.setItem(6, null);
+                if (Util.isVersionAfter(1, 20, 2)) {
+                    CopyPasteOption option = SelectionManager.getCopyPasteOption(player);
+                    inv.setItem(1, setDesc(craftItem(Material.CAULDRON), player, "editor.copy_paste.copy"));
+                    inv.setItem(2, setDesc(craftItem(Material.CAULDRON, 2), player, "editor.copy_paste.copyrange",
+                            "%radius%", String.valueOf(option.getCopyRadius())));
+                    inv.setItem(3, setDesc(craftItem(Material.WATER_CAULDRON, option.getCopiedEntitiesSize()), player, "editor.copy_paste.paste",
+                            "%copied%", String.valueOf(option.getCopiedEntitiesSize())));
+                    inv.setItem(4, setDesc(craftItem(Material.LAVA_CAULDRON, option.getAvailableUndo()), player, "editor.copy_paste.undo"));
+                    inv.setItem(5, setDesc(craftItem(Material.MUSIC_DISC_5, option.getYRotation() / 10), player, "editor.copy_paste.paste_rotate",
+                            "%value%", String.valueOf(option.getYRotation())));
+                }
             }
         }
     }
@@ -238,7 +241,7 @@ public enum EditorMode {
     }
 
     private ItemStack craftItem(Material mat, int amount) {
-        ItemStack item = new ItemStack(mat, amount);
+        ItemStack item = new ItemStack(mat, Math.max(1, Math.min(127, amount)));
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.addItemFlags(ItemFlag.values());

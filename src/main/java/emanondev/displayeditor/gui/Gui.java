@@ -85,11 +85,13 @@ public interface Gui extends InventoryHolder {
     /**
      * @return button at slot position
      */
-    @NotNull Inventory getInventory();
+    @NotNull
+    Inventory getInventory();
 
     Player getTargetPlayer();
 
-    @NotNull APlugin getPlugin();
+    @NotNull
+    APlugin getPlugin();
 
     default String getLanguageMessage(@NotNull String fullPath, String... holders) {
         return getPlugin().getLanguageConfig(getTargetPlayer()).loadMessage(fullPath, "", null, true, holders);
@@ -122,11 +124,13 @@ public interface Gui extends InventoryHolder {
         return meta;
     }
 
-    default @NotNull ItemStack getGuiItem(@NotNull String path, @NotNull Material defMaterial) {
+    @NotNull
+    default ItemStack getGuiItem(@NotNull String path, @NotNull Material defMaterial) {
         return getGuiItem(path, defMaterial, 0);
     }
 
-    default @NotNull ItemStack getGuiItem(@NotNull String path, @NotNull Material defMaterial, int defDurability) {
+    @NotNull
+    default ItemStack getGuiItem(@NotNull String path, @NotNull Material defMaterial, int defDurability) {
         YMLConfig config = getPlugin().getConfig("gui.yml");
         ItemStack item = new ItemStack(config.loadMaterial(path + ".material", defMaterial));
         ItemMeta meta = item.getItemMeta();
@@ -141,7 +145,8 @@ public interface Gui extends InventoryHolder {
         return item;
     }
 
-    default @NotNull ItemStack getBackItem() {
+    @NotNull
+    default ItemStack getBackItem() {
         return this.loadLanguageDescription(getGuiItem("buttons.back", Material.BARRIER), "gui.back.description");
     }
 }

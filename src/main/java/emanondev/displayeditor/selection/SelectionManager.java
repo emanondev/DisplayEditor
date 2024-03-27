@@ -1,6 +1,7 @@
 package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.DisplayEditor;
+import emanondev.displayeditor.Util;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Color;
@@ -19,11 +20,7 @@ import java.util.HashMap;
 public class SelectionManager {
 
     private static final HashMap<Player, Display> selections = new HashMap<>();
-    /* TODO coming soon
-    private static final HashMap<Player, BoundingBox> copyArea = new HashMap<>();
-    private static final HashMap<Player, Vector> copyOffset = new HashMap<>();
-    private static final HashMap<Player, World> copyWorld = new HashMap<>();
-    private static final HashMap<Player, List<Display>> copyDisplays = new HashMap<>();*/
+    private static final HashMap<Player, CopyPasteOption> pasteOptions = new HashMap<>();
     private static final HashMap<Player, EditorMode> editorMode = new HashMap<>();
     private static final HashMap<Player, ItemStack[]> inventoryBackup = new HashMap<>();
     private static final HashMap<Player, ItemStack[]> offhandBackup = new HashMap<>();
@@ -36,22 +33,7 @@ public class SelectionManager {
         if (mode != null)
             mode.setup(player);
         player.playSound(player, Sound.UI_BUTTON_CLICK, 1F, 0.9F);
-        new BukkitRunnable() {
-            int i = 0;
-
-            @Override
-            public void run() {
-                if (!display.isValid() || i > 10)
-                    this.cancel();
-                if (i % 2 != 0)
-                    player.showEntity(DisplayEditor.get(), display);
-                else
-                    player.hideEntity(DisplayEditor.get(), display);
-
-                i++;
-            }
-
-        }.runTaskTimer(DisplayEditor.get(), 2L, 2L);
+        Util.flashEntities(player, display);
     }
 
     public static boolean deselect(@NotNull Player player) {
@@ -66,7 +48,8 @@ public class SelectionManager {
         return false;
     }
 
-    public static @Nullable Display getSelection(@NotNull Player player) {
+    @Nullable
+    public static Display getSelection(@NotNull Player player) {
         return selections.get(player);
     }
 
@@ -126,22 +109,30 @@ public class SelectionManager {
                                     DisplayEditor.get().getLanguageConfig(p).getMessage("editor.reminder",
                                             "&6You are on (Display) Editor Mode")).create());
                     });
+                    //if (counter % 3 == 0)
                     selections.forEach((p, disp) -> {
                         if (!(p.isValid() && p.isOnline()))
                             return;
                         if (disp.isValid() && p.getWorld().equals(disp.getWorld()))
                             p.spawnParticle(Particle.REDSTONE, disp.getLocation(),
-                                    4, 0, 0, 0, 0,
-                                    new Particle.DustOptions(Color.RED, 1));
-
+                                    1, 0, 0, 0, 0,
+                                    new Particle.DustOptions(Color.RED, 0.5F));
                     });
+                    /*pastePreview.forEach((p, disp) -> {
+                                if (counter % 5 != 0)
+                                    disp.forEach((d) -> player.showEntity(DisplayEditor.get(), d));
+                                else
+                                    disp.forEach((d) -> player.hideEntity(DisplayEditor.get(), d));
+                            }
+                    );*/
                 }
             }.runTaskTimer(DisplayEditor.get(), 2L, 2L);
         }
 
     }
 
-    public static @Nullable EditorMode getEditorMode(@NotNull Player player) {
+    @Nullable
+    public static EditorMode getEditorMode(@NotNull Player player) {
         return editorMode.get(player);
     }
 
@@ -158,5 +149,9 @@ public class SelectionManager {
             setEditorMode(player, EditorMode.values()[(EditorMode.values().length + mode.ordinal() + amount) % EditorMode.values().length]);
     }
 
+    public static CopyPasteOption getCopyPasteOption(@NotNull Player player) {
+        pasteOptions.putIfAbsent(player, new CopyPasteOption());
+        return pasteOptions.get(player);
+    }
 
 }

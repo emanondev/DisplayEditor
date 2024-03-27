@@ -33,7 +33,8 @@ public abstract class APlugin extends JavaPlugin {
      * @return Plugin config file
      * @see #getConfig(String) getConfig("config.yml");
      */
-    public @NotNull YMLConfig getConfig() {
+    @NotNull
+    public YMLConfig getConfig() {
         return getConfig("config.yml");
     }
 
@@ -46,7 +47,8 @@ public abstract class APlugin extends JavaPlugin {
      * @param fileName might contains folder separator for file inside folders
      * @return config file at specified path inside plugin folder.
      */
-    public @NotNull YMLConfig getConfig(String fileName) {
+    @NotNull
+    public YMLConfig getConfig(String fileName) {
         fileName = YMLConfig.fixName(fileName);
         if (configs.containsKey(fileName))
             return configs.get(fileName);
@@ -65,7 +67,8 @@ public abstract class APlugin extends JavaPlugin {
                 + ChatColor.WHITE + this.getName() + ChatColor.DARK_BLUE + "] " + ChatColor.WHITE + log));
     }
 
-    public abstract @Nullable Integer getProjectId();
+    @Nullable
+    public abstract Integer getProjectId();
 
     /**
      * Print on console with '[(PluginName)] (prefix) (log)' format
