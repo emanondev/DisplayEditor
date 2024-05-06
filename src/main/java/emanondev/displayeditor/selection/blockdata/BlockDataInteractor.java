@@ -5,11 +5,11 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 
-public abstract class BlockDataIntractor {
+public abstract class BlockDataInteractor {
     protected final String pathEnd;
     private final Material mat;
 
-    protected BlockDataIntractor(String pathEnd, Material mat) {
+    protected BlockDataInteractor(String pathEnd, Material mat) {
         this.pathEnd = pathEnd;
         this.mat = mat;
     }

@@ -11,7 +11,7 @@ import java.util.List;
 
 class BlockDataAddon_1_20 {
 
-    public static void add(List<BlockDataIntractor> values, BlockData data) {
+    public static void add(List<BlockDataInteractor> values, BlockData data) {
 
         if (data instanceof Hatchable && !(data instanceof TurtleEgg)) {
             values.add(new NumericInteractor("hatch", Material.TURTLE_EGG,

@@ -449,3 +449,12 @@ editor:
       - '&bShift Left/Right &9➤ &bRotate by 5°'
 displayeditorreload:
   success: '&9[&fDisplayEditor&9] &aReloaded'
+gui:
+  select_item:
+    title: "&9Select Item"
+    info:
+      - "&6&lInstructions"
+      - "&bClick the item you want to set from the above inventory"
+      - "&babove inventory contains the items in your inventory"
+      - "&b(offhand and equipment not included)"
+      - "&bbefore entering on display editor mode"

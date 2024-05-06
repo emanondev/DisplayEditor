@@ -23,9 +23,9 @@ import java.util.List;
 
 public interface Gui extends InventoryHolder {
 
-    void onClose(InventoryCloseEvent event);
+    void onClose(@NotNull InventoryCloseEvent event);
 
-    void onClick(InventoryClickEvent event);
+    void onClick(@NotNull InventoryClickEvent event);
 
     /**
      * This event is called when the player drags an item in their cursor across the
@@ -75,12 +75,12 @@ public interface Gui extends InventoryHolder {
      *
      * @param event - the event
      */
-    void onDrag(InventoryDragEvent event);
+    void onDrag(@NotNull InventoryDragEvent event);
 
     /**
      * @param event - the event
      */
-    void onOpen(InventoryOpenEvent event);
+    void onOpen(@NotNull InventoryOpenEvent event);
 
     /**
      * @return button at slot position

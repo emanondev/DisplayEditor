@@ -1,8 +1,9 @@
 package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.C;
+import emanondev.displayeditor.SoundUtil;
 import emanondev.displayeditor.Util;
-import emanondev.displayeditor.selection.blockdata.BlockDataIntractor;
+import emanondev.displayeditor.selection.blockdata.BlockDataInteractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -121,14 +122,6 @@ public class EditorModeListener implements Listener {
         }
     }
 
-    private void clickSound(Player player) {
-        clickSound(player, Sound.UI_BUTTON_CLICK, 0.5F, 2F);
-    }
-
-    private void clickSound(Player player, Sound sound, float volume, float pitch) {
-        player.playSound(player.getLocation(), sound, volume, pitch);
-    }
-
 
     private void handleClick(PlayerInteractEvent event, EditorMode editorMode) {
         int slot = event.getPlayer().getInventory().getHeldItemSlot();
@@ -137,23 +130,13 @@ public class EditorModeListener implements Listener {
             SelectionManager.setEditorMode(event.getPlayer(), null);
             return;
         }
+        boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
         if (slot == 7) {
-            switch (event.getAction()) {
-                case LEFT_CLICK_AIR, LEFT_CLICK_BLOCK -> {
-                    SelectionManager.swapEditorMode(event.getPlayer(), -1);
-                    clickSound(event.getPlayer(), Sound.ITEM_BOOK_PAGE_TURN, 1F, 1F);
-                    return;
-                }
-                case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> {
-                    SelectionManager.swapEditorMode(event.getPlayer());
-                    clickSound(event.getPlayer(), Sound.ITEM_BOOK_PAGE_TURN, 1F, 1F);
-                    return;
-                }
-            }
+            SelectionManager.swapEditorMode(event.getPlayer(), isLeftClick ? -1 : 1);
+            SoundUtil.playSoundPageTurn(event.getPlayer());
             return;
         }
         boolean sneak = event.getPlayer().isSneaking();
-        boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
         if (sel == null || !sel.isValid()) {
             if (editorMode == EditorMode.COPY_PASTE) {
                 copyPasteHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
@@ -202,44 +185,44 @@ public class EditorModeListener implements Listener {
                 Display disp = SelectionManager.getSelection(player);
                 if (disp != null) {
                     option.copy(List.of(disp), player.getLocation());
-                    clickSound(player);
+                    SoundUtil.playSoundUIClick(player);
                     editorMode.setup(player);
                     Util.flashEntities(player, disp);
                 } else {
-                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    SoundUtil.playSoundNo(player);
                 }
             }
             case 2 -> {
                 BoundingBox box = new BoundingBox().shift(player.getLocation()).expand(option.getCopyRadius());
                 Collection<Entity> list = player.getWorld().getNearbyEntities(box, (en) -> !(en instanceof Player));
                 if (!option.copy(list, player.getLocation())) {
-                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    SoundUtil.playSoundNo(player);
                     return;
                 }
-                clickSound(player);
+                SoundUtil.playSoundUIClick(player);
                 editorMode.setup(player);
                 Util.flashEntities(player, list);
             }
             case 3 -> {
                 if (!option.paste(player.getLocation(), !sneak)) {
-                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    SoundUtil.playSoundNo(player);
                     return;
                 }
-                clickSound(player);
+                SoundUtil.playSoundUIClick(player);
                 editorMode.setup(player);
                 Util.flashEntities(player, option.getLastPasted());
             }
             case 4 -> {
                 if (!option.undoPaste()) {
-                    clickSound(player, Sound.ENTITY_VILLAGER_NO, 1, 2);
+                    SoundUtil.playSoundNo(player);
                     return;
                 }
-                clickSound(player);
+                SoundUtil.playSoundUIClick(player);
                 editorMode.setup(player);
             }
             case 5 -> {
                 option.addYRotation((isLeftClick ? -1 : 1) * (sneak ? 5 : 90));
-                clickSound(player);
+                SoundUtil.playSoundUIClick(player);
                 editorMode.setup(player);
             }
         }
@@ -264,7 +247,7 @@ public class EditorModeListener implements Listener {
         }
         if (sel instanceof BlockDisplay) {
             BlockData data = ((BlockDisplay) sel).getBlock();
-            List<BlockDataIntractor> values = BlockDataUtil.getBlockDataValues(data);
+            List<BlockDataInteractor> values = BlockDataUtil.getBlockDataValues(data);
             if (values.size() > slot)
                 edit(sel, player, () -> values.get(slot).handleClick((BlockDisplay) sel, player, isLeftClick), editorMode);
             return;
@@ -463,7 +446,7 @@ public class EditorModeListener implements Listener {
             return;
         }
         consumer.run();
-        clickSound(player);
+        SoundUtil.playSoundUIClick(player);
         if (reloadBar)
             mode.setup(player);
     }

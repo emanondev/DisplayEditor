@@ -12,8 +12,8 @@ import java.util.List;
 
 public class BlockDataUtil {
 
-    public static List<BlockDataIntractor> getBlockDataValues(BlockData data) {
-        List<BlockDataIntractor> values = new ArrayList<>();
+    public static List<BlockDataInteractor> getBlockDataValues(BlockData data) {
+        List<BlockDataInteractor> values = new ArrayList<>();
         if (data instanceof Ageable) {
             values.add(new NumericInteractor("ageable", Material.WHEAT_SEEDS,
                     (d) -> ((Ageable) d).getAge(),

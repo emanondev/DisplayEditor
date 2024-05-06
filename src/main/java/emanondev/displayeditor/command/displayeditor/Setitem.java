@@ -3,6 +3,7 @@ package emanondev.displayeditor.command.displayeditor;
 import emanondev.displayeditor.Util;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
+import emanondev.displayeditor.gui.SelectItemGui;
 import emanondev.displayeditor.selection.SelectionManager;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,8 @@ public class Setitem extends SubCmd {
 
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
-        Display sel = SelectionManager.getSelection((Player) sender);
+        Player player = ((Player) sender);
+        Display sel = SelectionManager.getSelection(player);
         if (sel == null) {
             sendLanguageString("none-selected", null, sender);
             return;
@@ -41,15 +43,18 @@ public class Setitem extends SubCmd {
                     return;
                 }
                 item = new ItemStack(mat);
+                ((ItemDisplay) sel).setItemStack(item);
+                sendLanguageString("success", null, sender);
             } catch (Exception e) {
                 sendLanguageString("not-existing-material", null, sender, "%material%", args[1]);
                 return;
             }
+            return;
         } else {
-            item = ((Player) sender).getInventory().getItemInMainHand();
+            new SelectItemGui(player);
+            item = player.getInventory().getItemInMainHand();
         }
         ((ItemDisplay) sel).setItemStack(item);
-        sendLanguageString("success", null, sender);
     }
 
     @Override

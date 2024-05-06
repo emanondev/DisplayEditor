@@ -10,7 +10,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class EnumInteractor<E extends Enum<E>> extends BlockDataIntractor {
+public class EnumInteractor<E extends Enum<E>> extends BlockDataInteractor {
 
     private final Function<BlockData, E> getCurrentValue;
     private final Class<E> enumClass;

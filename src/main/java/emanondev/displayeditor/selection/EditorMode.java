@@ -3,7 +3,7 @@ package emanondev.displayeditor.selection;
 import emanondev.displayeditor.C;
 import emanondev.displayeditor.DisplayEditor;
 import emanondev.displayeditor.Util;
-import emanondev.displayeditor.selection.blockdata.BlockDataIntractor;
+import emanondev.displayeditor.selection.blockdata.BlockDataInteractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -155,12 +155,12 @@ public enum EditorMode {
                 }
                 if (display instanceof BlockDisplay) {
                     BlockData data = ((BlockDisplay) display).getBlock();
-                    List<BlockDataIntractor> datas = BlockDataUtil.getBlockDataValues(data);
+                    List<BlockDataInteractor> datas = BlockDataUtil.getBlockDataValues(data);
                     for (int i = 0; i < 7; i++) {
                         if (i >= datas.size())
                             inv.setItem(i, null);
                         else {
-                            BlockDataIntractor value = datas.get(i);
+                            BlockDataInteractor value = datas.get(i);
                             inv.setItem(i,
                                     setDesc(craftItem(value.getMaterial(data), value.getAmount(data)), player,
                                             value.getLanguagePath(data), value.getHolders(data)));

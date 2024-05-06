@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class BooleanInteractor extends BlockDataIntractor {
+public class BooleanInteractor extends BlockDataInteractor {
 
     private final Function<BlockData, Boolean> getCurrentValue;
     private final BiConsumer<BlockData, Boolean> applyValue;

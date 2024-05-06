@@ -27,6 +27,11 @@ public class SelectionManager {
     private static final HashMap<Player, ItemStack[]> equipmentBackup = new HashMap<>();
     private static BukkitTask cornerFlash;
 
+    @Nullable
+    public static ItemStack[] getInventoryBackup(@NotNull Player player){
+        return inventoryBackup.get(player);
+    }
+
     public static void select(@NotNull Player player, @NotNull Display display) {
         selections.put(player, display);
         EditorMode mode = SelectionManager.getEditorMode(player);
