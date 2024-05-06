@@ -6,7 +6,7 @@
 
     <groupId>emanondev.displayeditor</groupId>
     <artifactId>DisplayEditor</artifactId>
-    <version>2.1</version>
+    <version>2.2</version>
     <packaging>jar</packaging>
 
     <name>DisplayEditor</name>

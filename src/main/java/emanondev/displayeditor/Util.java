@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class Util {
 
     private static final int MAX_COMPLETES = 100;
-    private static final int GAME_MAIN_VERSION = Integer.parseInt(
+    /*private static final int GAME_MAIN_VERSION = Integer.parseInt(
             Bukkit.getServer().getClass().getPackage().getName().substring(
                             Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
                     .split("_")[0].substring(1));
@@ -35,7 +35,7 @@ public class Util {
     private static final int GAME_SUB_VERSION = Integer.parseInt(
             Bukkit.getServer().getClass().getPackage().getName().substring(
                             Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[2].substring(1));
+                    .split("_")[2].substring(1));*/
 
     public static void flashEntities(@NotNull Player player, @NotNull Entity entity) {
         flashEntities(player, List.of(entity));
@@ -262,11 +262,7 @@ public class Util {
      */
     @SuppressWarnings("deprecation")
     public static ItemStack getDyeItemFromColor(DyeColor color) {
-        try {
             return new ItemStack(Material.valueOf(color.name() + "_DYE"));
-        } catch (Exception e) {
-            return new ItemStack(Material.valueOf("INK_SACK"), 1, (short) 0, getData(color));
-        }
     }
 
     /**
@@ -277,121 +273,85 @@ public class Util {
      */
     @SuppressWarnings("deprecation")
     public static ItemStack getWoolItemFromColor(DyeColor color) {
-        try {
             return new ItemStack(Material.valueOf(color.name() + "_WOOL"));
-        } catch (Exception e) {
-            return new ItemStack(Material.valueOf("WOOL"), 1, (short) 0, getData(color));
-        }
-    }
-
-    private static Byte getData(DyeColor color) {
-        return switch (color.name()) { //Silver
-            case "BLACK" -> 0;
-            case "BLUE" -> 4;
-            case "BROWN" -> 3;
-            case "CYAN" -> 6;
-            case "GRAY" -> 8;
-            case "GREEN" -> 2;
-            case "LIGHT_BLUE" -> 12;
-            case "LIME" -> 10;
-            case "MAGENTA" -> 13;
-            case "ORANGE" -> 14;
-            case "PINK" -> 9;
-            case "PURPLE" -> 5;
-            case "RED" -> 1;
-            case "SILVER", "LIGHT_GRAY" -> 7;
-            case "WHITE" -> 15;
-            case "YELLOW" -> 11;
-            default -> throw new IllegalStateException();
-        };
     }
 
     public static boolean isAirOrNull(ItemStack item) {
         return item == null || item.getType() == Material.AIR;
     }
 
+
+    private static final int GAME_MAIN_VERSION = Integer.parseInt(
+            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[0]);
+    private static final int GAME_VERSION = Integer.parseInt(
+            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+    private static final int GAME_SUB_VERSION = Bukkit.getBukkitVersion().split("-")[0].split("\\.").length<3?0:Integer.parseInt(
+            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[2]);
+
     /**
      * Inclusive
      * isVersionUpTo(1,9) on 1.9.0 is true
      */
-    public static boolean isVersionUpTo(int mainGameVersion, int gameVersion) {
-        return isVersionUpTo(mainGameVersion, gameVersion, 99);
+    public static boolean isVersionUpTo(int mainVersion, int version) {
+        return isVersionUpTo(mainVersion, version, 99);
     }
 
     /**
-     * Inclusive<br>
-     * isVersionUpTo(1,9,4) on 1.9.4 is true<br>
-     * isVersionUpTo(1,9,4) on 1.10.0 is false
+     * Inclusive
+     * isVersionUpTo(1,9,4) on 1.9.4 is true
      */
-    public static boolean isVersionUpTo(int mainGameVersion, int gameVersion, int gameSubVersion) {
-        if (GAME_MAIN_VERSION > mainGameVersion)
+    public static boolean isVersionUpTo(int mainVersion, int version, int subVersion) {
+        if (GAME_MAIN_VERSION > mainVersion)
             return false;
-        if (GAME_MAIN_VERSION < mainGameVersion)
+        if (GAME_MAIN_VERSION < mainVersion)
             return true;
-        if (GAME_VERSION > gameVersion)
+        if (GAME_VERSION > version)
             return false;
-        if (GAME_VERSION < gameVersion)
+        if (GAME_VERSION < version)
             return true;
-        return GAME_SUB_VERSION <= gameSubVersion;
+        return GAME_SUB_VERSION <= subVersion;
     }
 
     /**
      * Inclusive
      * isVersionAfter(1,9) on 1.9.0 is true
      */
-    public static boolean isVersionAfter(int mainGameVersion, int gameVersion) {
-        return isVersionAfter(mainGameVersion, gameVersion, 0);
+    public static boolean isVersionAfter(int mainVersion, int version) {
+        return isVersionAfter(mainVersion, version, 0);
     }
 
     /**
      * Inclusive
      * isVersionAfter(1,9,4) on 1.9.4 is true
      */
-    public static boolean isVersionAfter(int mainGameVersion, int gameVersion, int gameSubVersion) {
-        if (GAME_MAIN_VERSION < mainGameVersion)
+    public static boolean isVersionAfter(int mainVersion, int version, int subVersion) {
+        if (GAME_MAIN_VERSION < mainVersion)
             return false;
-        if (GAME_MAIN_VERSION > mainGameVersion)
+        if (GAME_MAIN_VERSION > mainVersion)
             return true;
-        if (GAME_VERSION < gameVersion)
+        if (GAME_VERSION < version)
             return false;
-        if (GAME_VERSION > gameVersion)
+        if (GAME_VERSION > version)
             return true;
-        return GAME_SUB_VERSION >= gameSubVersion;
+        return GAME_SUB_VERSION >= subVersion;
     }
 
     /**
      * Inclusive
      */
-    public static boolean isVersionInRange(int mainGameVersionMin, int gameVersionMin,
-                                           int mainGameVersionMax, int gameVersionMax) {
-        return isVersionInRange(mainGameVersionMin, gameVersionMin, 0,
-                mainGameVersionMax, gameVersionMax, 99);
+    public static boolean isVersionInRange(int mainVersionMin, int versionMin,
+                                           int mainVersionMax, int versionMax) {
+        return isVersionInRange(mainVersionMin, versionMin, 0,
+                mainVersionMax, versionMax, 99);
     }
 
     /**
      * Inclusive
      */
-    public static boolean isVersionInRange(int mainGameVersionMin, int gameVersionMin, int gameSubVersionMin,
-                                           int mainGameVersionMax, int gameVersionMax, int gameSubVersionMax) {
-        return isVersionAfter(mainGameVersionMin, gameVersionMin, gameSubVersionMin)
-                && isVersionUpTo(mainGameVersionMax, gameVersionMax, gameSubVersionMax);
-    }
-
-    public static boolean isAllowedChangeLore(CommandSender sender, Material type) {
-        if (sender.hasPermission("itemedit.bypass.lore_type_restriction"))
-            return true;
-
-        List<String> values = DisplayEditor.get().getConfig().getStringList("blocked.type-blocked-lore");
-        if (values.isEmpty())
-            return true;
-        String id = type.name();
-        for (String name : values)
-            if (id.equalsIgnoreCase(name)) {
-                sendMessage(sender,
-                        DisplayEditor.get().getLanguageConfig(sender).loadMessage("blocked-by-type-restriction-lore", "", null, true));
-                return false;
-            }
-        return true;
+    public static boolean isVersionInRange(int mainVersionMin, int versionMin, int subVersionMin,
+                                           int mainVersionMax, int versionMax, int subVersionMax) {
+        return isVersionAfter(mainVersionMin, versionMin, subVersionMin)
+                && isVersionUpTo(mainVersionMax, versionMax, subVersionMax);
     }
 
     public static boolean hasPaperAPI() {

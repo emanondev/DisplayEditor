@@ -263,7 +263,7 @@ public class EditorModeListener implements Listener {
                         item = new ItemStack(Material.STONE);
 
                     if (item.getEnchantments().isEmpty())
-                        item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                        item.addUnsafeEnchantment(Enchantment.LURE, 1);
                     else
                         item.getEnchantments().keySet().forEach(item::removeEnchantment);
                     display.setItemStack(item);
