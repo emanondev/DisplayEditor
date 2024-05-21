@@ -13,6 +13,9 @@ language:
   default: 'en'
   #When true the plugin will use the client language if a language file exist for that client
   use_multilanguage: true
+  # Regenerate language files on version change?
+  # if true delete the files and replace them with latest version when game version change is detected
+  regen_files: true
 editor:
   #Exit editor mode when hit by a player or a mob
   exit_editormode_when_hit: true

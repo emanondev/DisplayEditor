@@ -176,16 +176,35 @@ public abstract class APlugin extends JavaPlugin {
                 return;
             }
 
-            String[] version = Bukkit.getServer().getBukkitVersion().split("\\.");
-            if (Integer.parseInt(version[0]) == 1 && Integer.parseInt(version[1]) < 19) {
+
+            //String[] version = Bukkit.getServer().getBukkitVersion().split("\\.");
+            if (!Util.isVersionAfter(1,19,4)) {
                 enableWithError(Bukkit.getServer().getBukkitVersion() + " is not supported!!! use 1.19.4+");
                 log(ChatColor.GREEN, "#", "Enabled (took &e" + (System.currentTimeMillis() - now) + "&f ms)");
                 return;
             }
 
-            getConfig(); //force load the config.yml file
+            //getConfig(); //force load the config.yml file
             this.useMultiLanguage = getConfig().getBoolean("language.use_multilanguage", true);
             this.defaultLanguage = getConfig().getString("language.default", "en");
+            if (getConfig().getBoolean("language.regen_files", true)) {
+                YMLConfig version = getConfig("version.yml");
+                if (!getDescription().getVersion().equals(version.loadMessage("previous_version", "1"))) {
+                    version.set("previous_version", getDescription().getVersion());
+                    version.save();
+                    File langFolder = new File(getDataFolder(), "languages");
+                    if (langFolder.exists()) {
+                        File[] list = langFolder.listFiles();
+                        if (list != null) {
+                            log(ChatColor.GREEN, "#", "Enabled (took &e" + (System.currentTimeMillis() - now) + "&f ms)");
+                            for (File file : list)
+                                if (getResource("languages/" + file.getName()) != null) {
+                                    saveResource("languages/" + file.getName(), true);
+                                }
+                        }
+                    }
+                }
+            }
             getLanguageConfig(null);
             if (getProjectId() != null && getConfig().getBoolean("check-updates", true))
                 new UpdateChecker(this, getProjectId()).logUpdates();
