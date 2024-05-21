@@ -24,7 +24,7 @@ public class SelectItemGui implements Gui {
     private final Player player;
 
     public SelectItemGui(@NotNull Player player) {
-        inv = Bukkit.createInventory(getTargetPlayer(), 5 * 9,getLanguageMessage("gui.select_item.title"));
+        inv = Bukkit.createInventory(getTargetPlayer(), 5 * 9, getLanguageMessage("gui.select_item.title"));
         this.player = player;
     }
 
@@ -76,8 +76,8 @@ public class SelectItemGui implements Gui {
         if (items != null)
             for (int i = 0; i < items.length; i++)
                 inv.setItem(i, items[i]);
-        inv.setItem(40,this.loadLanguageDescription(
-                getGuiItem("select_item.info",Material.PAPER),"gui.select_item.info"));
+        inv.setItem(40, this.loadLanguageDescription(
+                getGuiItem("select_item.info", Material.PAPER), "gui.select_item.info"));
     }
 
     @NotNull

@@ -178,7 +178,7 @@ public abstract class APlugin extends JavaPlugin {
 
 
             //String[] version = Bukkit.getServer().getBukkitVersion().split("\\.");
-            if (!Util.isVersionAfter(1,19,4)) {
+            if (!Util.isVersionAfter(1, 19, 4)) {
                 enableWithError(Bukkit.getServer().getBukkitVersion() + " is not supported!!! use 1.19.4+");
                 log(ChatColor.GREEN, "#", "Enabled (took &e" + (System.currentTimeMillis() - now) + "&f ms)");
                 return;

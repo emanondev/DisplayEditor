@@ -8,7 +8,6 @@ import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -150,7 +149,8 @@ public class EditorModeListener implements Listener {
             case ROTATION -> rotationHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
             case SCALE -> scaleHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
             case SHADOW -> shadowHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
-            case ENTITY_SPECIFIC -> entitySpecificHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
+            case ENTITY_SPECIFIC ->
+                    entitySpecificHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
             case COPY_PASTE -> copyPasteHandleClick(event.getPlayer(), slot, isLeftClick, sel, sneak, editorMode);
         }
     }
@@ -234,14 +234,17 @@ public class EditorModeListener implements Listener {
             switch (slot) {
                 case 0 -> edit(display, player, () -> display.setBackgroundColor(color.setRed(Math.max(0, Math.min(255,
                         color.getRed() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
-                case 1 -> edit(display, player, () -> display.setBackgroundColor(color.setGreen(Math.max(0, Math.min(255,
-                        color.getGreen() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
+                case 1 ->
+                        edit(display, player, () -> display.setBackgroundColor(color.setGreen(Math.max(0, Math.min(255,
+                                color.getGreen() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
                 case 2 -> edit(display, player, () -> display.setBackgroundColor(color.setBlue(Math.max(0, Math.min(255,
                         color.getBlue() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
-                case 3 -> edit(display, player, () -> display.setBackgroundColor(color.setAlpha(Math.max(0, Math.min(255,
-                        color.getAlpha() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
-                case 4 -> edit(display, player, () -> display.setAlignment(TextDisplay.TextAlignment.values()[(TextDisplay.TextAlignment.values().length
-                        + display.getAlignment().ordinal() + (isLeftClick ? -1 : 1)) % TextDisplay.TextAlignment.values().length]), editorMode);
+                case 3 ->
+                        edit(display, player, () -> display.setBackgroundColor(color.setAlpha(Math.max(0, Math.min(255,
+                                color.getAlpha() + (isLeftClick ? -1 : 1) * (sneak ? 1 : 16))))), editorMode);
+                case 4 ->
+                        edit(display, player, () -> display.setAlignment(TextDisplay.TextAlignment.values()[(TextDisplay.TextAlignment.values().length
+                                + display.getAlignment().ordinal() + (isLeftClick ? -1 : 1)) % TextDisplay.TextAlignment.values().length]), editorMode);
             }
             return;
         }
@@ -254,8 +257,9 @@ public class EditorModeListener implements Listener {
         }
         if (sel instanceof ItemDisplay display) {
             switch (slot) {
-                case 0 -> edit(display, player, () -> display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.values()[(ItemDisplay.ItemDisplayTransform.values().length
-                        + display.getItemDisplayTransform().ordinal() + (isLeftClick ? -1 : 1)) % ItemDisplay.ItemDisplayTransform.values().length]), editorMode);
+                case 0 ->
+                        edit(display, player, () -> display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.values()[(ItemDisplay.ItemDisplayTransform.values().length
+                                + display.getItemDisplayTransform().ordinal() + (isLeftClick ? -1 : 1)) % ItemDisplay.ItemDisplayTransform.values().length]), editorMode);
 
                 case 1 -> edit(display, player, () -> {
                     ItemStack item = display.getItemStack();

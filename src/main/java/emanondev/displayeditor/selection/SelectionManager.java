@@ -28,7 +28,7 @@ public class SelectionManager {
     private static BukkitTask cornerFlash;
 
     @Nullable
-    public static ItemStack[] getInventoryBackup(@NotNull Player player){
+    public static ItemStack[] getInventoryBackup(@NotNull Player player) {
         return inventoryBackup.get(player);
     }
 
@@ -119,7 +119,8 @@ public class SelectionManager {
                         if (!(p.isValid() && p.isOnline()))
                             return;
                         if (disp.isValid() && p.getWorld().equals(disp.getWorld()))
-                            p.spawnParticle(Particle.REDSTONE, disp.getLocation(),
+                            p.spawnParticle(Util.isVersionAfter(1,20,5)?
+                                            Particle.DUST:Particle.valueOf("REDSTONE"), disp.getLocation(),
                                     1, 0, 0, 0, 0,
                                     new Particle.DustOptions(Color.RED, 0.5F));
                     });

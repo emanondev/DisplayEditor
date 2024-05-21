@@ -24,18 +24,13 @@ import java.util.regex.Pattern;
 public class Util {
 
     private static final int MAX_COMPLETES = 100;
-    /*private static final int GAME_MAIN_VERSION = Integer.parseInt(
-            Bukkit.getServer().getClass().getPackage().getName().substring(
-                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[0].substring(1));
+    private static final int GAME_MAIN_VERSION = Integer.parseInt(
+            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[0]);
     private static final int GAME_VERSION = Integer.parseInt(
-            Bukkit.getServer().getClass().getPackage().getName().substring(
-                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[1]);
-    private static final int GAME_SUB_VERSION = Integer.parseInt(
-            Bukkit.getServer().getClass().getPackage().getName().substring(
-                            Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)
-                    .split("_")[2].substring(1));*/
+            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+    private static final int GAME_SUB_VERSION = Bukkit.getBukkitVersion().split("-")[0].split("\\.").length < 3 ? 0 : Integer.parseInt(
+            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[2]);
+
 
     public static void flashEntities(@NotNull Player player, @NotNull Entity entity) {
         flashEntities(player, List.of(entity));
@@ -94,6 +89,7 @@ public class Util {
         return results;
     }
 
+    @NotNull
     public static List<String> complete(String prefix, String... list) {
         prefix = prefix.toLowerCase(Locale.ENGLISH);
         ArrayList<String> results = new ArrayList<>();
@@ -237,32 +233,14 @@ public class Util {
 
     }
 
-    public static boolean isAllowedRenameItem(CommandSender sender, Material type) {
-        if (sender.hasPermission("itemedit.bypass.rename_type_restriction"))
-            return true;
-
-        List<String> values = DisplayEditor.get().getConfig().getStringList("blocked.type-blocked-rename");
-        if (values.isEmpty())
-            return true;
-        String id = type.name();
-        for (String name : values)
-            if (id.equalsIgnoreCase(name)) {
-                sendMessage(sender,
-                        DisplayEditor.get().getLanguageConfig(sender).loadMessage("blocked-by-type-restriction", "", null, true));
-                return false;
-            }
-        return true;
-    }
-
     /**
      * for pre 1.13 compatibility
      *
      * @param color color
      * @return An ItemStack of selected Dye
      */
-    @SuppressWarnings("deprecation")
     public static ItemStack getDyeItemFromColor(DyeColor color) {
-            return new ItemStack(Material.valueOf(color.name() + "_DYE"));
+        return new ItemStack(Material.valueOf(color.name() + "_DYE"));
     }
 
     /**
@@ -271,22 +249,13 @@ public class Util {
      * @param color color
      * @return An ItemStack of selected Dyed wool
      */
-    @SuppressWarnings("deprecation")
     public static ItemStack getWoolItemFromColor(DyeColor color) {
-            return new ItemStack(Material.valueOf(color.name() + "_WOOL"));
+        return new ItemStack(Material.valueOf(color.name() + "_WOOL"));
     }
 
     public static boolean isAirOrNull(ItemStack item) {
         return item == null || item.getType() == Material.AIR;
     }
-
-
-    private static final int GAME_MAIN_VERSION = Integer.parseInt(
-            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[0]);
-    private static final int GAME_VERSION = Integer.parseInt(
-            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
-    private static final int GAME_SUB_VERSION = Bukkit.getBukkitVersion().split("-")[0].split("\\.").length<3?0:Integer.parseInt(
-            Bukkit.getBukkitVersion().split("-")[0].split("\\.")[2]);
 
     /**
      * Inclusive
