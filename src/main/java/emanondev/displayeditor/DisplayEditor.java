@@ -5,10 +5,18 @@ import emanondev.displayeditor.command.DisplayEditorInfoCommand;
 import emanondev.displayeditor.command.ReloadCommand;
 import emanondev.displayeditor.gui.Gui;
 import emanondev.displayeditor.gui.GuiHandler;
+import emanondev.displayeditor.gui.SelectItemGui;
 import emanondev.displayeditor.selection.EditorModeListener;
 import emanondev.displayeditor.selection.SelectionManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;

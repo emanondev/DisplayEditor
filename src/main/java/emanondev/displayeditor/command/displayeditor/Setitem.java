@@ -34,7 +34,7 @@ public class Setitem extends SubCmd {
             sendLanguageString("wrong-type", null, sender);
             return;
         }
-        ItemStack item;
+        //ItemStack item;
         if (args.length > 1) {
             try {
                 Material mat = Material.valueOf(args[1].toUpperCase(Locale.ENGLISH));
@@ -42,7 +42,7 @@ public class Setitem extends SubCmd {
                     sendLanguageString("invalid-material", null, sender, "%material%", args[1]);
                     return;
                 }
-                item = new ItemStack(mat);
+                ItemStack item = new ItemStack(mat);
                 ((ItemDisplay) sel).setItemStack(item);
                 sendLanguageString("success", null, sender);
             } catch (Exception e) {
@@ -51,10 +51,10 @@ public class Setitem extends SubCmd {
             }
             return;
         } else {
-            new SelectItemGui(player);
-            item = player.getInventory().getItemInMainHand();
+            //item = player.getInventory().getItemInMainHand();
+            player.openInventory(new SelectItemGui(player).getInventory());
         }
-        ((ItemDisplay) sel).setItemStack(item);
+        //((ItemDisplay) sel).setItemStack(item);
     }
 
     @Override

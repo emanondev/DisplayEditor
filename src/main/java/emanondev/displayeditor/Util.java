@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -82,6 +83,22 @@ public class Util {
         for (T el : type.getEnumConstants())
             if (predicate.test(el) && el.toString().startsWith(prefix)) {
                 results.add(el.toString().toLowerCase(Locale.ENGLISH));
+                c++;
+                if (c > MAX_COMPLETES)
+                    return results;
+            }
+        return results;
+    }
+
+    @NotNull
+    public static <T> List<String> complete(String prefix, @NotNull Collection<T> values, @NotNull Function<T,String> converter,
+                                                            @NotNull Predicate<T> predicate) {
+        prefix = prefix.toLowerCase(Locale.ENGLISH);
+        ArrayList<String> results = new ArrayList<>();
+        int c = 0;
+        for (T el : values)
+            if (predicate.test(el) && converter.apply(el).toLowerCase(Locale.ENGLISH).startsWith(prefix)) {
+                results.add(converter.apply(el).toLowerCase(Locale.ENGLISH));
                 c++;
                 if (c > MAX_COMPLETES)
                     return results;

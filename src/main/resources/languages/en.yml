@@ -33,10 +33,13 @@ displayeditor:
       - '&b&lSelect Display Entity'
       - ''
       - '&bSelect closest display entity'
-      - '&e[radius] &b- radius around you to search'
-      - '  &b8 by default'
-    params: '[radius]'
+      - '&e[radius/id] &b- radius around you to search or the id of the entity'
+      - '&bdefault radius is 8'
+      - '&bid of the entity is the entity uuid (suggested by tab completer)'
+    params: '[radius/id]'
     invalid-radius: '&4[&cDisplayEditor&4] &cInvalid Radius, must be a positive number'
+    invalid-radius-or-uuid: '&4[&cDisplayEditor&4] &cInvalid Radius or Id argument'
+    entity-uuid-not-found: '&4[&cDisplayEditor&4] &cNo matching entity with selected Id'
     none-found: '&4[&cDisplayEditor&4] &cNo Display was found around you'
     success: '&9[&fDisplayEditor&9] &aSelected entity'
   deselect:
@@ -430,13 +433,16 @@ editor:
   copy_paste:
     select:
       - '&6Select Nearest Display'
-      - '&bAny &9➤ &bSelect nearest Display'
+      - '&bLeft &9➤ &bSelect nearest Display'
+      - '&bRight &9➤ &bOpen a gui for nearest entities'
     copypaste_soon:
       - '&6Copy and Paste (Coming soon)'
     copy:
       - '&6Copy selected Display'
     copyrange:
       - '&6Copy all entities in a radius of %radius% blocks'
+      - '&bLeft &9➤ &bSelect all near entities'
+      - '&bRight &9➤ &bOpen a gui of near entities'
     paste:
       - '&6Paste copied entities to your location (Copied: &e%value%&6)'
       - '&bLeft/Right &9➤ &bPaste to your block location'
@@ -458,3 +464,37 @@ gui:
       - "&babove inventory contains the items in your inventory"
       - "&b(offhand and equipment not included)"
       - "&bbefore entering on display editor mode"
+  select_entity:
+    title: "&9Select Entity"
+    info_copy:
+      - "&6&lID: &e&l%uuid%"
+      - "&bName: &e%customname%"
+      - "&bType: &e%type%"
+      - ""
+      - "&6Selected? &e%selected%"
+      - "&bClick to select/deselect this Entity"
+    info_select:
+      - "&6&lID: &e&l%uuid%"
+      - "&bName: &e%customname%"
+      - "&bType: &e%type%"
+      - ""
+      - "&6Selected? &e%selected%"
+      - "&bClick to select this Display"
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '&6&lPrevious Page'
+      - ''
+      - '&7[&fClick&7]&b Go to page &e%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '&6&lNext Page'
+      - ''
+      - '&7[&fClick&7]&b Go to page &e%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '&6&lGo Back'
+      - ''
+      - '&7[&fClick&7]&b Go to previous gui'

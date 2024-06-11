@@ -187,7 +187,7 @@ public abstract class APlugin extends JavaPlugin {
             //getConfig(); //force load the config.yml file
             this.useMultiLanguage = getConfig().getBoolean("language.use_multilanguage", true);
             this.defaultLanguage = getConfig().getString("language.default", "en");
-            if (getConfig().getBoolean("language.regen_files", true)) {
+            if (getConfig().loadBoolean("language.regen_files", true)) {
                 YMLConfig version = getConfig("version.yml");
                 if (!getDescription().getVersion().equals(version.loadMessage("previous_version", "1"))) {
                     version.set("previous_version", getDescription().getVersion());

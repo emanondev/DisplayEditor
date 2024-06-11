@@ -1,0 +1,21 @@
+select_entity:
+  info_item_display:
+    material: BRUSH
+    durability: 0
+  info_block_display:
+    material: STONE
+    durability: 0
+  info_text_display:
+    material: OAK_SIGN
+    durability: 0
+select_item:
+  info:
+    material: PAPER
+    durability: 0
+buttons:
+  next-page:
+    material: ARROW
+    durability: 0
+  previous-page:
+    material: ARROW
+    durability: 0

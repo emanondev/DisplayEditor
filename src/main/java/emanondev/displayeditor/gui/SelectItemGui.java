@@ -24,7 +24,7 @@ public class SelectItemGui implements Gui {
     private final Player player;
 
     public SelectItemGui(@NotNull Player player) {
-        inv = Bukkit.createInventory(getTargetPlayer(), 5 * 9, getLanguageMessage("gui.select_item.title"));
+        inv = Bukkit.createInventory(this, 5 * 9, getLanguageMessage("gui.select_item.title"));
         this.player = player;
     }
 
@@ -35,7 +35,7 @@ public class SelectItemGui implements Gui {
 
     @Override
     public void onClick(@NotNull InventoryClickEvent event) {
-        if (event.getClickedInventory() != inv) {
+        if (event.getClickedInventory() != inv || event.getSlot()>=45) {
             SoundUtil.playSoundNo(player);
             return;
         }
