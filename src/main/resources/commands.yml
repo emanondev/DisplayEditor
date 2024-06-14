@@ -11,3 +11,7 @@ displayeditor:
     name: 'delete'
   settext:
     name: 'settext'
+  setitem:
+    name: 'setitem'
+  setblock:
+    name: 'setblock'

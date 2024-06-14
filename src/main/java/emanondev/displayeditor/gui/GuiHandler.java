@@ -14,7 +14,6 @@ public class GuiHandler implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     private static void onOpen(InventoryOpenEvent event) {
-        DisplayEditor.get().log("InventoryOpenEvent");
         if (!(event.getView().getTopInventory().getHolder() instanceof Gui holder))
             return;
         if (!(event.getPlayer() instanceof Player))
