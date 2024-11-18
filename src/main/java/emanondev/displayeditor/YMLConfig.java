@@ -1,7 +1,6 @@
 package emanondev.displayeditor;
 
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -654,18 +653,6 @@ public class YMLConfig extends YamlConfiguration {
             e.printStackTrace();
             return def;
         }
-    }
-
-    @Contract("_, !null -> !null")
-    @Nullable
-    public Sound loadSound(@NotNull String path, @Nullable Sound def) {
-        return loadEnum(path, def, Sound.class);
-    }
-
-    @Contract("_, !null -> !null")
-    @Nullable
-    public Sound getSound(@NotNull String path, @Nullable Sound def) {
-        return getEnum(path, def, Sound.class);
     }
 
     @Contract("_, !null -> !null")
