@@ -464,7 +464,7 @@ public class EntityProperties {
     }, () -> null);
     @SuppressWarnings("UnstableApiUsage")
     public static Property<Entity, EntitySnapshot> ENTITY_SNAPSHOT = new SimpleProperty<>(
-            "ENTITY_TYPE", Entity.class, EntitySnapshot.class,
+            "ENTITY_SNAPSHOT", Entity.class, EntitySnapshot.class,
             Entity::createSnapshot, (e, v) -> {
     }, () -> null,
             (snap, map) -> map.put("entity_type".toLowerCase(Locale.ENGLISH), snap == null ? null : snap.getAsString()),
