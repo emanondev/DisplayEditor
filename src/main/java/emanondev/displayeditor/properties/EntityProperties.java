@@ -601,7 +601,7 @@ public class EntityProperties {
             org.bukkit.entity.AbstractArrow::getWeapon, org.bukkit.entity.AbstractArrow::setWeapon,
             () -> new ItemStack(Material.BOW));
     public static Property<AbstractArrow, AbstractArrow.PickupStatus> ARROW_PICKUP_STATUS =
-            new EnumProperty<>("ARROW_WEAPON", AbstractArrow.class, AbstractArrow.PickupStatus.class,
+            new EnumProperty<>("ARROW_PICKUP_STATUS", AbstractArrow.class, AbstractArrow.PickupStatus.class,
                     org.bukkit.entity.AbstractArrow::getPickupStatus,
                     org.bukkit.entity.AbstractArrow::setPickupStatus,
                     () -> AbstractArrow.PickupStatus.ALLOWED);

@@ -234,7 +234,6 @@ public class Registries {
                 VILLAGER_LEVEL,
                 VILLAGER_TYPE,
                 VINDICATOR_JOHNNY,
-                INVENTORYHOLDER_CONTENTS,
                 DAMAGEABLE_HEALTH,
                 DAMAGEABLE_ABSORPTION,
                 WANDERINGTRADER_DESPAWN_DELAY,
