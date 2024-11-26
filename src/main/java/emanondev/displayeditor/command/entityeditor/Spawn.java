@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Spawn extends SubCmd {
     public Spawn(EntityEditorCommand cmd) {
-        super("copy",cmd,true,false);
+        super("spawn",cmd,true,false);
     }
 
     @Override
