@@ -1,10 +1,10 @@
 package emanondev.displayeditor.properties.impl;
 
 import emanondev.displayeditor.properties.Context;
-import io.lumine.mythic.bukkit.utils.functions.TriConsumer;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
@@ -20,7 +20,6 @@ public abstract class AProperty<E, S> implements Property<E, S>, Keyed {
     private final BiConsumer<E, S> setter;
     private final Supplier<S> defaultProvider;
     private final NamespacedKey key;
-    private final TriConsumer<E, Map<String, Object>, Context> mapToEntity;
 
     public AProperty(@NotNull String name,
                      @NotNull Class<E> entityClass,
@@ -34,12 +33,6 @@ public abstract class AProperty<E, S> implements Property<E, S>, Keyed {
         this.getter = getter;
         this.setter = setter;
         this.defaultProvider = defaultProvider;
-        this.mapToEntity = (e, map, context) -> {
-            if (context != null && context.isPresent(this))
-                setter.accept(e, context.getValue(this, e));
-            else
-                setter.accept(e, getFromMap().apply(map));
-        };
     }
 
     @SuppressWarnings("UnstableApiUsage")
@@ -67,24 +60,46 @@ public abstract class AProperty<E, S> implements Property<E, S>, Keyed {
         return valueClass;
     }
 
-    @Override
     public @NotNull Function<E, S> getGetter() {
         return getter;
     }
 
-    @Override
     public @NotNull BiConsumer<E, S> getSetter() {
         return setter;
     }
 
-    @Override
     public @NotNull Supplier<S> getDefaultProvider() {
         return defaultProvider;
     }
 
     @Override
-    public @NotNull TriConsumer<E, Map<String, Object>, Context> getMapToEntity() {
-        return mapToEntity;
+    @Nullable
+    public S getFromEntity(@NotNull E e) {
+        return this.getter.apply(e);
+    }
+
+    @Override
+    public void setToEntity(@NotNull E e, @Nullable S s) {
+        this.setter.accept(e, s);
+    }
+
+    @Override
+    @Nullable
+    public S getDefault() {
+        return defaultProvider.get();
+    }
+
+    @Override
+    public void applyToEntity(@NotNull E e, @NotNull Map<String, Object> valueContainer, @Nullable Context context) {
+        if (context != null && context.isPresent(this))
+            setter.accept(e, context.getValue(this, e));
+        else
+            setter.accept(e, this.getFromMap(valueContainer));
+    }
+
+    @Override
+    public void applyToMap(@NotNull E e, @NotNull Map<String, Object> valueContainer) {
+        this.setToMap(valueContainer, this.getFromEntity(e));
     }
 
 }

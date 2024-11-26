@@ -1,6 +1,7 @@
 package emanondev.displayeditor.properties.impl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
@@ -35,14 +36,23 @@ public class UuidProperty<E> extends AProperty<E, UUID> {
         };
     }
 
-    @Override
-    public @NotNull Function<Map<String, Object>, UUID> getFromMap() {
+    protected @NotNull Function<Map<String, Object>, UUID> getFromMap() {
         return fromMap;
     }
 
-    @Override
-    public @NotNull BiConsumer<UUID, Map<String, Object>> getToMap() {
+    protected @NotNull BiConsumer<UUID, Map<String, Object>> setToMap() {
         return toMap;
+    }
+
+    @Nullable
+    @Override
+    public UUID getFromMap(@NotNull Map<String, Object> map) {
+        return fromMap.apply(map);
+    }
+
+    @Override
+    public void setToMap(@NotNull Map<String, Object> map, @Nullable UUID value) {
+        toMap.accept(value, map);
     }
 
 }

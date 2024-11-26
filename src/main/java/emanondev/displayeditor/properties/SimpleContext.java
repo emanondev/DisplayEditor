@@ -12,8 +12,8 @@ public class SimpleContext implements Context {
     private final Map<Property<?, ?>, Function<?, ?>> properties = new HashMap<>();
 
     @Override
-    public <E, S> void register(@NotNull Property<E, S> property, @NotNull Function<E, S> defaultProvider) {
-        properties.put(property, defaultProvider);
+    public <E, S> void register(@NotNull Property<E, S> property, @NotNull Function<E, S> provider) {
+        properties.put(property, provider);
     }
 
     @SuppressWarnings("unchecked")
@@ -27,7 +27,7 @@ public class SimpleContext implements Context {
         } catch (ClassCastException ex) {
             ex.printStackTrace();
         }
-        return property.getDefaultProvider().get();
+        return property.getDefault();
     }
 
     @Override

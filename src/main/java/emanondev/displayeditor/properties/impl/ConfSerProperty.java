@@ -2,6 +2,7 @@ package emanondev.displayeditor.properties.impl;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -30,14 +31,24 @@ public class ConfSerProperty<E, S extends ConfigurationSerializable> extends APr
         };
     }
 
-    @Override
-    public @NotNull Function<Map<String, Object>, S> getFromMap() {
+
+    protected @NotNull Function<Map<String, Object>, S> getFromMap() {
         return fromMap;
     }
 
-    @Override
-    public @NotNull BiConsumer<S, Map<String, Object>> getToMap() {
+    protected @NotNull BiConsumer<S, Map<String, Object>> setToMap() {
         return toMap;
+    }
+
+    @Nullable
+    @Override
+    public S getFromMap(@NotNull Map<String, Object> map) {
+        return fromMap.apply(map);
+    }
+
+    @Override
+    public void setToMap(@NotNull Map<String, Object> map, @Nullable S value) {
+        toMap.accept(value, map);
     }
 
 }

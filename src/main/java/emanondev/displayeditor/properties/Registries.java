@@ -282,9 +282,8 @@ public class Registries {
                     propertiesByEntityType.get(clazz).add(property);
         }
 
-        @SuppressWarnings("unchecked")
-        public <E extends Entity> List<Property<E, ?>> getAllByEntity(Class<E> clazz) {
-            return Collections.unmodifiableList((List<? extends Property<E, ?>>) propertiesByEntityType.get(clazz));
+        public <E extends Entity> List<Property<?, ?>> getAllByEntity(Class<E> clazz) {
+            return Collections.unmodifiableList(propertiesByEntityType.get(clazz));
         }
 
         public void registerProperties(Collection<Property<?, ?>> properties) {

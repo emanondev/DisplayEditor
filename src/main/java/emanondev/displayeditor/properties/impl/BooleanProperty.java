@@ -1,6 +1,7 @@
 package emanondev.displayeditor.properties.impl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -27,14 +28,22 @@ public class BooleanProperty<E> extends AProperty<E, Boolean> {
         };
     }
 
-    @Override
-    public @NotNull Function<Map<String, Object>, Boolean> getFromMap() {
+    protected @NotNull Function<Map<String, Object>, Boolean> getFromMap() {
         return fromMap;
     }
 
-    @Override
-    public @NotNull BiConsumer<Boolean, Map<String, Object>> getToMap() {
+    protected @NotNull BiConsumer<Boolean, Map<String, Object>> setToMap() {
         return toMap;
     }
 
+    @Nullable
+    @Override
+    public Boolean getFromMap(@NotNull Map<String, Object> map) {
+        return fromMap.apply(map);
+    }
+
+    @Override
+    public void setToMap(@NotNull Map<String, Object> map, @Nullable Boolean value) {
+        toMap.accept(value, map);
+    }
 }

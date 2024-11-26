@@ -27,10 +27,10 @@ public class AttributeProperties {
                         AttributeInstance inst = att.getAttribute(attribute);
                         return inst == null ? null : inst.getBaseValue();
                     }, (Attributable att, Double value) -> {
-                AttributeInstance inst = att.getAttribute(attribute);
-                if (inst != null)
-                    inst.setBaseValue(value);
-            }, () -> 1D));
+                        AttributeInstance inst = att.getAttribute(attribute);
+                        if (inst != null)
+                            inst.setBaseValue(value);
+                    }, () -> 1D));
 
             modifiers.put(attribute, new ConfSerCollProperty<>(
                     "ATTRIBUTABLE_" + attribute.getKey().getKey().toUpperCase(Locale.ENGLISH) + "_MODIFIERS",
