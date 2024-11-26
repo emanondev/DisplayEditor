@@ -10,7 +10,6 @@ public class EntityEditorCommand extends AbstractCommand {
     public EntityEditorCommand() {
         super("EntityEditor", DisplayEditor.get());
         instance = this;
-
         this.registerSubCommand(new Copy(this));
     }
 

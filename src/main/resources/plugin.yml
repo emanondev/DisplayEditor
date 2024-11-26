@@ -18,6 +18,10 @@ commands:
     description: allows to edit item in hand
     usage: /displayeditor
     aliases: [ de ]
+  entityeditor:
+    description: allows to edit item in hand
+    usage: /entityeditor
+    aliases: [ ee ]
   displayeditorinfo:
     description: display info of displayeditor
     usage: /displayeditorinfo

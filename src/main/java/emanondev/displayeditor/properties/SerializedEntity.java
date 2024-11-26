@@ -4,6 +4,8 @@ import emanondev.displayeditor.properties.impl.Property;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntitySnapshot;
+import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
@@ -42,9 +44,23 @@ public class SerializedEntity implements ConfigurationSerializable {
         p.setToMap(values, value);
     }
 
+    public EntityType getEntityType() {
+        return EntityProperties.ENTITY_TYPE.getFromMap(values);
+    }
+
+    public EntitySnapshot getEntitySnapshot() {
+        return EntityProperties.ENTITY_SNAPSHOT.getFromMap(values);
+    }
+
     @NotNull
     @Override
     public Map<String, Object> serialize() {
         return new LinkedHashMap<>(values);
+    }
+
+    public void applyToEntity(Entity e) {
+        for (Property p:properties){
+            p.applyToEntity(e,values,null);
+        }
     }
 }

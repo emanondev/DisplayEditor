@@ -2,6 +2,7 @@ package emanondev.displayeditor;
 
 import emanondev.displayeditor.command.DisplayEditorCommand;
 import emanondev.displayeditor.command.DisplayEditorInfoCommand;
+import emanondev.displayeditor.command.EntityEditorCommand;
 import emanondev.displayeditor.command.ReloadCommand;
 import emanondev.displayeditor.gui.Gui;
 import emanondev.displayeditor.gui.GuiHandler;
@@ -50,6 +51,7 @@ public final class DisplayEditor extends APlugin {
         Bukkit.getPluginManager().registerEvents(new EditorModeListener(), this);
 
         registerCommand(new DisplayEditorCommand(), Collections.singletonList("de"));
+        registerCommand(new EntityEditorCommand(), Collections.singletonList("ee"));
         new DisplayEditorInfoCommand().register();
         new ReloadCommand(this).register();
 
