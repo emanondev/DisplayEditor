@@ -26,6 +26,7 @@ public class Copy extends SubCmd {
                 values.add(new SerializedEntity(e));
         }
         config.set("entities" , values);
+        config.save();
     }
 
     @Override

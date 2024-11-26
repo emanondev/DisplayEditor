@@ -9,6 +9,7 @@ import org.bukkit.entity.minecart.CommandMinecart;
 import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.PoweredMinecart;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTables;
@@ -152,6 +153,8 @@ public class EntityProperties {
             "MOB_TARGET", Mob.class,
             (Mob mob) -> mob.getTarget() == null ? null : mob.getTarget().getUniqueId(),
             (Mob mob, UUID value) -> {
+                if (value == null)
+                    return;
                 Entity target = Bukkit.getEntity(value);
                 mob.setTarget(target instanceof LivingEntity liv ? liv : null);
             });
@@ -375,11 +378,72 @@ public class EntityProperties {
             "VINDICATOR_JOHNNY", Vindicator.class,
             Vindicator::isJohnny, Vindicator::setJohnny, () -> false);
     @SuppressWarnings("unchecked")
+    public static final Property<LivingEntity, List<ItemStack>> EQUIPMENT_CONTENTS = new ConfSerCollProperty<>(
+            "EQUIPMENT_CONTENTS", LivingEntity.class,
+            (Class<List<ItemStack>>) (Class<?>) List.class, ItemStack.class,
+            (LivingEntity i) -> i.getEquipment() == null ? null : Arrays.stream(i.getEquipment().getArmorContents()).toList(),
+            (LivingEntity i, List<ItemStack> v) -> {
+                if (v != null && i.getEquipment()!=null)
+                    i.getEquipment().setArmorContents(v.toArray(new ItemStack[0]));
+            },
+            Collections::emptyList);
+    public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_MAINHAND = NumberProperty.fromFloat(
+            "EQUIPMENT_DROPCHANCE_MAINHAND", LivingEntity.class,
+            liv->liv.getEquipment()==null?null: liv.getEquipment().getItemInMainHandDropChance(),
+            (liv,v)->{
+                EntityEquipment equip = liv.getEquipment();
+                if (equip!=null)
+                    equip.setItemInMainHandDropChance(v);
+            }, () -> 0.0f);
+    public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_OFFHAND = NumberProperty.fromFloat(
+            "EQUIPMENT_DROPCHANCE_OFFHAND", LivingEntity.class,
+            liv->liv.getEquipment()==null?null: liv.getEquipment().getItemInOffHandDropChance(),
+            (liv,v)->{
+                EntityEquipment equip = liv.getEquipment();
+                if (equip!=null)
+                    equip.setItemInOffHandDropChance(v);
+            }, () -> 0.0f);
+    public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_LEGS = NumberProperty.fromFloat(
+            "EQUIPMENT_DROPCHANCE_LEGS", LivingEntity.class,
+            liv->liv.getEquipment()==null?null: liv.getEquipment().getLeggingsDropChance(),
+            (liv,v)->{
+                EntityEquipment equip = liv.getEquipment();
+                if (equip!=null)
+                    equip.setLeggingsDropChance(v);
+            }, () -> 0.0f);
+    public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_CHEST = NumberProperty.fromFloat(
+            "EQUIPMENT_DROPCHANCE_CHEST", LivingEntity.class,
+            liv->liv.getEquipment()==null?null: liv.getEquipment().getChestplateDropChance(),
+            (liv,v)->{
+                EntityEquipment equip = liv.getEquipment();
+                if (equip!=null)
+                    equip.setChestplateDropChance(v);
+            }, () -> 0.0f);
+    public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_HEAD = NumberProperty.fromFloat(
+            "EQUIPMENT_DROPCHANCE_HEAD", LivingEntity.class,
+            liv->liv.getEquipment()==null?null: liv.getEquipment().getHelmetDropChance(),
+            (liv,v)->{
+                EntityEquipment equip = liv.getEquipment();
+                if (equip!=null)
+                    equip.setHelmetDropChance(v);
+            }, () -> 0.0f);
+    public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_FEET = NumberProperty.fromFloat(
+            "EQUIPMENT_DROPCHANCE_FOOT", LivingEntity.class,
+            liv->liv.getEquipment()==null?null: liv.getEquipment().getBootsDropChance(),
+            (liv,v)->{
+                EntityEquipment equip = liv.getEquipment();
+                if (equip!=null)
+                    equip.setBootsDropChance(v);
+            }, () -> 0.0f);
+    @SuppressWarnings("unchecked")
     public static final Property<InventoryHolder, List<ItemStack>> INVENTORYHOLDER_CONTENTS = new ConfSerCollProperty<>(
             "INVENTORYHOLDER_CONTENTS", InventoryHolder.class,
             (Class<List<ItemStack>>) (Class<?>) List.class, ItemStack.class,
-            (InventoryHolder i) -> List.of(i.getInventory().getContents()),
-            (InventoryHolder i, List<ItemStack> v) -> i.getInventory().setContents(v.toArray(new ItemStack[0])),
+            (InventoryHolder i) -> Arrays.stream(i.getInventory().getContents()).toList(),
+            (InventoryHolder i, List<ItemStack> v) -> {
+                if (v != null)
+                    i.getInventory().setContents(v.toArray(new ItemStack[0]));
+            },
             Collections::emptyList);
     public static final Property<Damageable, Double> DAMAGEABLE_HEALTH = NumberProperty.fromDouble(
             "DAMAGEABLE_HEALTH", Damageable.class,
@@ -467,8 +531,8 @@ public class EntityProperties {
             "ENTITY_SNAPSHOT", Entity.class, EntitySnapshot.class,
             Entity::createSnapshot, (e, v) -> {
     }, () -> null,
-            (snap, map) -> map.put("entity_type".toLowerCase(Locale.ENGLISH), snap == null ? null : snap.getAsString()),
-            (map) -> map.get("entity_type") instanceof String raw ? Bukkit.getEntityFactory().createEntitySnapshot(raw) : null);
+            (snap, map) -> map.put("entity_snapshot".toLowerCase(Locale.ENGLISH), snap == null ? null : snap.getAsString()),
+            (map) -> map.get("entity_snapshot") instanceof String raw ? Bukkit.getEntityFactory().createEntitySnapshot(raw) : null);
     public static Property<Nameable, String> CUSTOM_NAME = new StringProperty<>(
             "CUSTOM_NAME", Nameable.class,
             Nameable::getCustomName, Nameable::setCustomName, () -> null);

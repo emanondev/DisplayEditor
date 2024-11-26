@@ -15,19 +15,20 @@ import java.util.Map;
 @SerializableAs("SerializedEntity")
 public class SerializedEntity implements ConfigurationSerializable {
 
-    public List<Property> properties;
+    public final List<Property<?, ?>> properties;
     private final Map<String, Object> values;
 
     public SerializedEntity(Entity e) {
-        List<Property<?, ?>> list = Registries.PROPERTIES.getAllByEntity(e.getClass());
+        properties = Registries.PROPERTIES.getAllByEntity(e.getClass());
         values = new LinkedHashMap<>();
-        for (Property p : list) {
+        for (Property p : properties) {
             p.applyToMap(e, values);
         }
     }
 
     public SerializedEntity(Map<String, Object> values) {
         this.values = new LinkedHashMap<>(values);
+        properties = Registries.PROPERTIES.getAllByEntity(getEntityType().getEntityClass());
     }
 
     public void removeProperty(Property<?, ?> p) {

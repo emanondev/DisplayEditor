@@ -4,7 +4,6 @@ import emanondev.displayeditor.properties.impl.Property;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +27,14 @@ public class Registries {
         PROPERTIES.registerProperties(
                 ENTITY_SNAPSHOT,
                 ENTITY_TYPE,
-                INVENTORYHOLDER_CONTENTS);
+                INVENTORYHOLDER_CONTENTS,
+                EQUIPMENT_CONTENTS,
+                EQUIPMENT_DROPCHANCE_MAINHAND,
+                EQUIPMENT_DROPCHANCE_OFFHAND,
+                EQUIPMENT_DROPCHANCE_HEAD,
+                EQUIPMENT_DROPCHANCE_CHEST,
+                EQUIPMENT_DROPCHANCE_LEGS,
+                EQUIPMENT_DROPCHANCE_FEET);
         AttributeProperties.ATTRIBUTABLE_BASE_VALUES.values().forEach(PROPERTIES::registerProperty);
         AttributeProperties.ATTRIBUTABLE_MODIFIERS.values().forEach(PROPERTIES::registerProperty);
         PROPERTIES.registerProperties(
@@ -138,7 +144,6 @@ public class Registries {
                 HOPPERMINECART_ENABLED,
                 HORSE_COLOR,
                 HORSE_STYLE,
-                ZOMBIE_CONVERSION_TIME,
                 INTERACTION_HEIGHT,
                 INTERACTION_WIDTH,
                 INTERACTION_RESPONSIVE,
@@ -263,7 +268,7 @@ public class Registries {
     public static class PropertyRegistry implements Registry<Property<?, ?>> {
 
         private final Map<NamespacedKey, Property<?, ?>> properties = new LinkedHashMap<>();
-        private final Map<Class<? extends Entity>, List<Property<?, ?>>> propertiesByEntityType = new LinkedHashMap<>();
+        private final Map<Class<? extends Entity>, List<Property<?, ?>>> propertiesByEntityTypeCache = new LinkedHashMap<>();
 
         private PropertyRegistry() {
         }
@@ -272,17 +277,22 @@ public class Registries {
             if (properties.containsKey(property.getKey()))
                 throw new IllegalArgumentException("duplicated key " + property.getKey());
             properties.put(property.getKey(), property);
-            if (propertiesByEntityType.isEmpty())
-                for (EntityType type : EntityType.values())
-                    if (type.isSpawnable())
-                        propertiesByEntityType.put(type.getEntityClass(), new ArrayList<>());
-            for (Class<? extends Entity> clazz : propertiesByEntityType.keySet())
+            propertiesByEntityTypeCache.forEach((clazz,list)->{
                 if (property.getEntityClass().isAssignableFrom(clazz))
-                    propertiesByEntityType.get(clazz).add(property);
+                    list.add(property);
+            });
         }
 
         public <E extends Entity> List<Property<?, ?>> getAllByEntity(Class<E> clazz) {
-            return Collections.unmodifiableList(propertiesByEntityType.get(clazz));
+            if (propertiesByEntityTypeCache.containsKey(clazz))
+                return Collections.unmodifiableList(propertiesByEntityTypeCache.get(clazz));
+            List<Property<?, ?>> list = new ArrayList<>();
+            propertiesByEntityTypeCache.put(clazz, list);
+            for (Property p : properties.values()) {
+                if (p.getEntityClass().isAssignableFrom(clazz))
+                    list.add(p);
+            }
+            return Collections.unmodifiableList(list);
         }
 
         public void registerProperties(Collection<Property<?, ?>> properties) {

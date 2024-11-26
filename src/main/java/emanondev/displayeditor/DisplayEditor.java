@@ -7,9 +7,12 @@ import emanondev.displayeditor.command.ReloadCommand;
 import emanondev.displayeditor.gui.Gui;
 import emanondev.displayeditor.gui.GuiHandler;
 import emanondev.displayeditor.gui.SelectItemGui;
+import emanondev.displayeditor.properties.SerializedEntity;
 import emanondev.displayeditor.selection.EditorModeListener;
 import emanondev.displayeditor.selection.SelectionManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -44,7 +47,7 @@ public final class DisplayEditor extends APlugin {
 
     @Override
     public void enable() {
-
+        ConfigurationSerialization.registerClass(SerializedEntity.class);
         ConfigurationUpdater.update();
         C.reload();
         Bukkit.getPluginManager().registerEvents(new GuiHandler(), this);
