@@ -340,7 +340,7 @@ public class EntityProperties {
     public static final Property<Lootable, LootTables> LOOT_TABLE = new KeyedProperty<>(
             "LOOT_TABLE", Lootable.class,
             (Lootable l) -> l.getLootTable() == null ? null : Registry.LOOT_TABLES.get(l.getLootTable().getKey()),
-            (Lootable l, LootTables t) -> l.setLootTable(t.getLootTable()), () -> null, Registry.LOOT_TABLES);
+            (Lootable l, LootTables t) -> l.setLootTable(t==null?null:t.getLootTable()), () -> null, Registry.LOOT_TABLES);
     public static final Property<Lootable, Long> LOOT_SEED = NumberProperty.fromLong(
             "LOOT_SEED", Lootable.class,
             Lootable::getSeed, Lootable::setSeed, () -> 0L);

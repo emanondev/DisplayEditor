@@ -3,6 +3,7 @@ package emanondev.displayeditor.command;
 import emanondev.displayeditor.DisplayEditor;
 import emanondev.displayeditor.command.displayeditor.*;
 import emanondev.displayeditor.command.entityeditor.Copy;
+import emanondev.displayeditor.command.entityeditor.Edit;
 import emanondev.displayeditor.command.entityeditor.Spawn;
 
 public class EntityEditorCommand extends AbstractCommand {
@@ -13,6 +14,7 @@ public class EntityEditorCommand extends AbstractCommand {
         instance = this;
         this.registerSubCommand(new Copy(this));
         this.registerSubCommand(new Spawn(this));
+        this.registerSubCommand(new Edit(this));
     }
 
     public static EntityEditorCommand get() {

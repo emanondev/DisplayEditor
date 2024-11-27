@@ -135,9 +135,9 @@ public class UtilsString {
         if (player != null && Hooks.isPAPIEnabled())
             text = PlaceholderAPI.setPlaceholders(player, text);
 
-        //minimessage
-        if (Hooks.hasMiniMessage())
-            text = Hooks.getMiniMessageUtil().fromMiniToText(text);
+        //minimessage //TODO temp removed
+        //if (Hooks.hasMiniMessage())
+        //    text = Hooks.getMiniMessageUtil().fromMiniToText(text);
 
         // color
         if (color)

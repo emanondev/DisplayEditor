@@ -1,7 +1,8 @@
-package emanondev.displayeditor.properties.impl;
+package emanondev.displayeditor.properties;
 
-import emanondev.displayeditor.properties.Context;
 import org.bukkit.Keyed;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,5 +37,15 @@ public interface Property<E, S> extends Keyed {
 
     void setToMap(@NotNull Map<String, Object> map, @Nullable S s);
 
+    PropertyEditor getPropertyEditor(E entity, Player player);
+
+    default PropertyEditor getPropertyEditorRaw(Entity entity, Player player){
+        try {
+            return getPropertyEditor((E) entity, player);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 

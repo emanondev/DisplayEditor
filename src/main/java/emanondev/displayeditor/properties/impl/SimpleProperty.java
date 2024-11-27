@@ -1,5 +1,7 @@
 package emanondev.displayeditor.properties.impl;
 
+import emanondev.displayeditor.properties.PropertyEditor;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,6 +45,11 @@ public class SimpleProperty<E, S> extends AProperty<E, S> {
     @Override
     public void setToMap(@NotNull Map<String, Object> map, @Nullable S value) {
         toMap.accept(value, map);
+    }
+
+    @Override
+    public PropertyEditor getPropertyEditor(E entity, Player player) {
+        return null;
     }
 
 }

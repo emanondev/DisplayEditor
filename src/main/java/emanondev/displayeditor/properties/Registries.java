@@ -1,6 +1,5 @@
 package emanondev.displayeditor.properties;
 
-import emanondev.displayeditor.properties.impl.Property;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.entity.Entity;

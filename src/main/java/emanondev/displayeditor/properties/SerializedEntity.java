@@ -1,6 +1,5 @@
 package emanondev.displayeditor.properties;
 
-import emanondev.displayeditor.properties.impl.Property;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Entity;

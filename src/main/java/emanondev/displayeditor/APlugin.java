@@ -2,6 +2,7 @@ package emanondev.displayeditor;
 
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.compability.Metrics;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,6 +12,7 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +28,15 @@ public abstract class APlugin extends JavaPlugin {
     private final HashMap<String, YMLConfig> languageConfigs = new HashMap<>();
     private boolean useMultiLanguage;
     private String defaultLanguage;
+    private BukkitAudiences adventure;
+
+
+    public @NonNull BukkitAudiences adventure() {
+        if (this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
 
     /**
      * Gets plugin Config file.
@@ -168,6 +179,7 @@ public abstract class APlugin extends JavaPlugin {
     public void onEnable() {
         try {
             long now = System.currentTimeMillis();
+            this.adventure = BukkitAudiences.create(this);
             try {
                 Class.forName("org.spigotmc.SpigotConfig");
             } catch (Throwable t) {
@@ -251,6 +263,10 @@ public abstract class APlugin extends JavaPlugin {
 
     public void onDisable() {
         disable();
+        if (this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
 
     public abstract void disable();

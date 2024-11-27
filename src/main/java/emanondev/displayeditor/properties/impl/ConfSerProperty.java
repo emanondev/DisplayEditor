@@ -1,6 +1,8 @@
 package emanondev.displayeditor.properties.impl;
 
+import emanondev.displayeditor.properties.PropertyEditor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,4 +53,8 @@ public class ConfSerProperty<E, S extends ConfigurationSerializable> extends APr
         toMap.accept(value, map);
     }
 
+    @Override
+    public PropertyEditor getPropertyEditor(E entity, Player player) {
+        return null;
+    }
 }

@@ -19,3 +19,212 @@ buttons:
   previous-page:
     material: ARROW
     durability: 0
+
+property:
+  entity_type:
+    material: CREEPER_BANNER_PATTERN
+  equipment_dropchance_mainhand:
+    material: BUNDLE
+  equipment_dropchance_offhand:
+    material: BUNDLE
+  equipment_dropchance_head:
+    material: BUNDLE
+  equipment_dropchance_chest:
+    material: BUNDLE
+  equipment_dropchance_legs:
+    material: BUNDLE
+  equipment_dropchance_foot:
+    material: BUNDLE
+  attributable_generic:
+    max_health_base_value:
+      material: STONE
+    follow_range_base_value:
+      material: STONE
+    knockback_resistance_base_value:
+      material: STONE
+    movement_speed_base_value:
+      material: STONE
+    flying_speed_base_value:
+      material: STONE
+    attack_damage_base_value:
+      material: STONE
+    attack_knockback_base_value:
+      material: STONE
+    attack_speed_base_value:
+      material: STONE
+    armor_base_value:
+      material: STONE
+    armor_toughness_base_value:
+      material: STONE
+    fall_damage_multiplier_base_value:
+      material: STONE
+    luck_base_value:
+      material: STONE
+    max_absorption_base_value:
+      material: STONE
+    safe_fall_distance_base_value:
+      material: STONE
+    scale_base_value:
+      material: STONE
+    step_height_base_value:
+      material: STONE
+    gravity_base_value:
+      material: STONE
+    jump_strength_base_value:
+      material: STONE
+    burning_time_base_value:
+      material: STONE
+    explosion_knockback_resistance_base_value:
+      material: STONE
+    movement_efficiency_base_value:
+      material: STONE
+    oxygen_bonus_base_value:
+      material: STONE
+    water_movement_efficiency_base_value:
+      material: STONE
+  attributable_player:
+    block_interaction_range_base_value:
+      material: STONE
+    entity_interaction_range_base_value:
+      material: STONE
+    block_break_speed_base_value:
+      material: STONE
+    mining_efficiency_base_value:
+      material: STONE
+    sneaking_speed_base_value:
+      material: STONE
+    submerged_mining_speed_base_value:
+      material: STONE
+    sweeping_damage_ratio_base_value:
+      material: STONE
+  attributable_zombie:
+    spawn_reinforcements_base_value:
+      material: STONE
+  custom_name_visible:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  falling_distance:
+    material: STONE
+  glowing:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  gravity:
+    'true':
+      material: LIME_BANNER
+    'false':
+      material: RED_BANNER
+  fire_ticks:
+    material: STONE
+  freeze_ticks:
+    material: STONE
+  visual_fire:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  invulnerable:
+    'false':
+      material: RED_BANNER
+  persistent:
+    'true':
+      material: LIME_BANNER
+    'false':
+      material: RED_BANNER
+  portal_cooldown:
+    material: STONE
+  silent:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  ticks_lived:
+    material: STONE
+  visible_by_default:
+    'true':
+      material: LIME_BANNER
+    'false':
+      material: RED_BANNER
+  op:
+    'false':
+      material: RED_BANNER
+  ai:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  arrow_cooldown:
+    material: STONE
+  arrows_in_body:
+    material: STONE
+  can_pickup_items:
+    'true':
+      material: LIME_BANNER
+    'false':
+      material: RED_BANNER
+  collidable:
+    'true':
+      material: LIME_BANNER
+  gliding:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  item_in_use_ticks:
+    material: STONE
+  maximum_air:
+    material: STONE
+  maximum_no_damage_ticks:
+    material: STONE
+  no_damage_ticks:
+    material: STONE
+  no_action_ticks:
+    material: STONE
+  last_damage:
+    material: STONE
+  remove_when_far_away:
+    'true':
+      material: LIME_BANNER
+  swimming:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  remaining_air:
+    material: STONE
+  ageable_age:
+    material: STONE
+  breedable_age_lock:
+    'false':
+      material: RED_BANNER
+    'true':
+      material: LIME_BANNER
+  breedable_breed:
+    'true':
+      material: LIME_BANNER
+    'false':
+      material: RED_BANNER
+  mob_aware:
+    'true':
+      material: LIME_BANNER
+    'false':
+      material: RED_BANNER
+  loot_table:
+    material: STONE
+  loot_seed:
+    material: STONE
+  villager_profession:
+    material: STONE
+  villager_experience:
+    material: STONE
+  villager_level:
+    material: STONE
+  villager_type:
+    material: STONE
+  damageable_health:
+    material: STONE
+  damageable_absorption:
+    material: STONE

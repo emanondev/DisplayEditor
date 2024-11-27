@@ -2,7 +2,6 @@ package emanondev.displayeditor.properties;
 
 import emanondev.displayeditor.properties.impl.ConfSerCollProperty;
 import emanondev.displayeditor.properties.impl.NumberProperty;
-import emanondev.displayeditor.properties.impl.Property;
 import org.bukkit.Registry;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
@@ -20,6 +19,8 @@ public class AttributeProperties {
         Map<Attribute, Property<Attributable, Double>> baseValues = new LinkedHashMap<>();
         Map<Attribute, Property<Attributable, Collection<AttributeModifier>>> modifiers = new LinkedHashMap<>();
         for (Attribute attribute : Registry.ATTRIBUTE.stream().toList()) {
+            if (attribute.getKey().getKey().split("\\.")[0].equals("attributable_player"))
+                continue;
             baseValues.put(attribute, NumberProperty.fromDouble(
                     "ATTRIBUTABLE_" + attribute.getKey().getKey().toUpperCase(Locale.ENGLISH) + "_BASE_VALUE",
                     Attributable.class,

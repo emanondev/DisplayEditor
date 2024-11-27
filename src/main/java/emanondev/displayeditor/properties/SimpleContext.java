@@ -1,6 +1,5 @@
 package emanondev.displayeditor.properties;
 
-import emanondev.displayeditor.properties.impl.Property;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
