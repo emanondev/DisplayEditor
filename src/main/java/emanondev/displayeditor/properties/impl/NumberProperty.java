@@ -20,7 +20,7 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
     private final Function<Map<String, Object>, S> fromMap;
 
     @SuppressWarnings("unchecked")
-    private NumberProperty(@NotNull String name,
+    protected NumberProperty(@NotNull String name,
                            @NotNull Class<E> entityClass,
                            @NotNull Class<S> valueClass,
                            @NotNull Function<E, S> getter,

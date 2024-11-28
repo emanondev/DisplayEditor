@@ -565,7 +565,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 <aqua>1</aqua> is 100% and <aqua>0</aqua> is 0%</gray>"
-  attributable_generic.max_health_base_value:
+  attributable_generic_max_health_base_value:
     description:
       - "<#3388ff><bold>Attribute Max Health base value"
       - "<blue>Value: %value_color%%value%"
@@ -576,7 +576,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 <aqua>2</aqua> is 1 full <red>♥"
-  attributable_generic.follow_range_base_value:
+  attributable_generic_follow_range_base_value:
     description:
       - "<#3388ff><bold>Attribute Follow Range base value"
       - "<blue>Value: %value_color%%value%"
@@ -586,9 +586,9 @@ property:
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
-      - "<gray>Distance (blocks) where the entity is still"
-      - "<gray>able to follow or see it's target"
-  attributable_generic.knockback_resistance_base_value:
+      - "<gray>🛈 Distance (blocks) where the entity is still"
+      - "<gray>  able to follow or see it's target"
+  attributable_generic_knockback_resistance_base_value:
     description:
       - "<#3388ff><bold>Attribute Knockback Resistance base value"
       - "<blue>Value: %value_color%%value%"
@@ -599,7 +599,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 <aqua>1</aqua> is 100% knockback resistance"
-  attributable_generic.movement_speed_base_value:
+  attributable_generic_movement_speed_base_value:
     description:
       - "<#3388ff><bold>Attribute Movement Speed base value"
       - "<blue>Value: %value_color%%value%"
@@ -608,7 +608,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.flying_speed_base_value:
+  attributable_generic_flying_speed_base_value:
     description:
       - "<#3388ff><bold>Attribute Flying Speed base value"
       - "<blue>Value: %value_color%%value%"
@@ -617,7 +617,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.attack_damage_base_value:
+  attributable_generic_attack_damage_base_value:
     description:
       - "<#3388ff><bold>Attribute Attack Damage base value"
       - "<blue>Value: %value_color%%value%"
@@ -628,7 +628,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 <aqua>2</aqua> is 1 full <red>♥"
-  attributable_generic.attack_knockback_base_value:
+  attributable_generic_attack_knockback_base_value:
     description:
       - "<#3388ff><bold>Attribute Attack Knockback base value"
       - "<blue>Value: %value_color%%value%"
@@ -637,7 +637,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.attack_speed_base_value:
+  attributable_generic_attack_speed_base_value:
     description:
       - "<#3388ff><bold>Attribute Attack Speed base value"
       - "<blue>Value: %value_color%%value%"
@@ -648,8 +648,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 How many attacks per second"
-      - "<gray>🛈 Most entity have this value as null"
-  attributable_generic.armor_base_value:
+  attributable_generic_armor_base_value:
     description:
       - "<#3388ff><bold>Attribute Armor base value"
       - "<blue>Value: %value_color%%value%"
@@ -660,7 +659,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 <aqua>2</aqua> is 1 full 👕"
-  attributable_generic.armor_toughness_base_value:
+  attributable_generic_armor_toughness_base_value:
     description:
       - "<#3388ff><bold>Attribute Armor Toughness base value"
       - "<blue>Value: %value_color%%value%"
@@ -669,7 +668,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.fall_damage_multiplier_base_value:
+  attributable_generic_fall_damage_multiplier_base_value:
     description:
       - "<#3388ff><bold>Attribute Fall Damage Multiplier base value"
       - "<blue>Value: %value_color%%value%"
@@ -678,7 +677,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.luck_base_value:
+  attributable_generic_luck_base_value:
     description:
       - "<#3388ff><bold>Attribute Luck base value"
       - "<blue>Value: %value_color%%value%"
@@ -687,7 +686,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.max_absorption_base_value:
+  attributable_generic_max_absorption_base_value:
     description:
       - "<#3388ff><bold>Attribute Max Absorption base value"
       - "<blue>Value: %value_color%%value%"
@@ -698,7 +697,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 <aqua>2</aqua> is 1 full <yellow>♥"
-  attributable_generic.safe_fall_distance_base_value:
+  attributable_generic_safe_fall_distance_base_value:
     description:
       - "<#3388ff><bold>Attribute Safe Fall Distance base value"
       - "<blue>Value: %value_color%%value%"
@@ -707,7 +706,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.scale_base_value:
+  attributable_generic_scale_base_value:
     description:
       - "<#3388ff><bold>Attribute Scale base value"
       - "<blue>Value: %value_color%%value%"
@@ -718,7 +717,7 @@ property:
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
       - ""
       - "<gray>🛈 Entity size, where <aqua>1</aqua> is default"
-  attributable_generic.step_height_base_value:
+  attributable_generic_step_height_base_value:
     description:
       - "<#3388ff><bold>Attribute Step Height base value"
       - "<blue>Value: %value_color%%value%"
@@ -727,7 +726,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.gravity_base_value:
+  attributable_generic_gravity_base_value:
     description:
       - "<#3388ff><bold>Attribute Gravity base value"
       - "<blue>Value: %value_color%%value%"
@@ -736,7 +735,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.jump_strength_base_value:
+  attributable_generic_jump_strength_base_value:
     description:
       - "<#3388ff><bold>Attribute Jump Strength base value"
       - "<blue>Value: %value_color%%value%"
@@ -745,7 +744,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.burning_time_base_value:
+  attributable_generic_burning_time_base_value:
     description:
       - "<#3388ff><bold>Attribute Burning Time base value"
       - "<blue>Value: %value_color%%value%"
@@ -754,7 +753,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.explosion_knockback_resistance_base_value:
+  attributable_generic_explosion_knockback_resistance_base_value:
     description:
       - "<#3388ff><bold>Attribute Explosion Knockback Resistance base value"
       - "<blue>Value: %value_color%%value%"
@@ -763,7 +762,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.movement_efficiency_base_value:
+  attributable_generic_movement_efficiency_base_value:
     description:
       - "<#3388ff><bold>Attribute Movement Efficiency base value"
       - "<blue>Value: %value_color%%value%"
@@ -772,7 +771,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.oxygen_bonus_base_value:
+  attributable_generic_oxygen_bonus_base_value:
     description:
       - "<#3388ff><bold>Attribute Oxygen Bonus base value"
       - "<blue>Value: %value_color%%value%"
@@ -781,7 +780,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_generic.water_movement_efficiency_base_value:
+  attributable_generic_water_movement_efficiency_base_value:
     description:
       - "<#3388ff><bold>Attribute Water Movement Efficiency base value"
       - "<blue>Value: %value_color%%value%"
@@ -790,7 +789,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.block_interaction_range_base_value:
+  attributable_player_block_interaction_range_base_value:
     description:
       - "<#3388ff><bold>Attribute Block Interaction Range base value"
       - "<blue>Value: %value_color%%value%"
@@ -799,7 +798,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.entity_interaction_range_base_value:
+  attributable_player_entity_interaction_range_base_value:
     description:
       - "<#3388ff><bold>Attribute Entity Interaction Range base value"
       - "<blue>Value: %value_color%%value%"
@@ -808,7 +807,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.block_break_speed_base_value:
+  attributable_player_block_break_speed_base_value:
     description:
       - "<#3388ff><bold>Attribute Block Break Speed base value"
       - "<blue>Value: %value_color%%value%"
@@ -817,7 +816,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.mining_efficiency_base_value:
+  attributable_player_mining_efficiency_base_value:
     description:
       - "<#3388ff><bold>Attribute Mining Efficiency base value"
       - "<blue>Value: %value_color%%value%"
@@ -826,7 +825,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.sneaking_speed_base_value:
+  attributable_player_sneaking_speed_base_value:
     description:
       - "<#3388ff><bold>Attribute Sneaking Speed base value"
       - "<blue>Value: %value_color%%value%"
@@ -835,7 +834,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.submerged_mining_speed_base_value:
+  attributable_player_submerged_mining_speed_base_value:
     description:
       - "<#3388ff><bold>Attribute Submerged Mining Speed base value"
       - "<blue>Value: %value_color%%value%"
@@ -844,7 +843,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_player.sweeping_damage_ratio_base_value:
+  attributable_player_sweeping_damage_ratio_base_value:
     description:
       - "<#3388ff><bold>Attribute Sweeping Damage Ratio base value"
       - "<blue>Value: %value_color%%value%"
@@ -853,7 +852,7 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
-  attributable_zombie.spawn_reinforcements_base_value:
+  attributable_zombie_spawn_reinforcements_base_value:
     description:
       - "<#3388ff><bold>Attribute Spawn Reinforcements base value"
       - "<blue>Value: %value_color%%value%"
@@ -1015,6 +1014,42 @@ property:
       - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
       - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  ageable_age:
+    description:
+      - "<#3388ff><bold>Age"
+      - "<blue>Value: %value_color%%value%"
+      - "<blue>Change amount: <gold>%change%"
+      - ""
+      - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
+      - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  villager_experience:
+    description:
+      - "<#3388ff><bold>Villager experience"
+      - "<blue>Value: %value_color%%value%"
+      - "<blue>Change amount: <gold>%change%"
+      - ""
+      - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
+      - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  villager_level:
+    description:
+      - "<#3388ff><bold>Villager level"
+      - "<blue>Value: %value_color%%value%"
+      - "<blue>Change amount: <gold>%change%"
+      - ""
+      - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
+      - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  animals_love_mode_ticks:
+    description:
+      - "<#3388ff><bold>Love mode ticks"
+      - "<blue>Value: %value_color%%value%"
+      - "<blue>Change amount: <gold>%change%"
+      - ""
+      - "<blue>[<white>Left/Right 🖰<blue>] %value_color%%value% <#3388ff>+/- <gold>%change%"
+      - "<blue>[<white>Shift + Left/Right 🖰<blue>] <gold>%change% <#3388ff>x/: 10"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
   custom_name_visible:
     description:
       - "<#3388ff><bold>Custom Name Visible"
@@ -1126,4 +1161,27 @@ property:
       - "<blue>Value: %value_color%%value%"
       - ""
       - "<blue>[<white>🖰<blue>] <#3388ff>Toggle value"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  breedable_age_lock:
+    description:
+      - "<#3388ff><bold>Mob Age Lock"
+      - "<blue>Value: %value_color%%value%"
+      - ""
+      - "<blue>[<white>🖰<blue>] <#3388ff>Toggle value"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  breedable_breed:
+    description:
+      - "<#3388ff><bold>Breedable"
+      - "<blue>Value: %value_color%%value%"
+      - ""
+      - "<blue>[<white>🖰<blue>] <#3388ff>Toggle value"
+      - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"
+  painting_art:
+    description:
+      - "<#3388ff><bold>Painting"
+      - "<blue>Value: <aqua>%value%"
+      - "<blue>Index: <aqua>%index% <blue>of <aqua>%total%"
+      - ""
+      - "<blue>[<white>Left/Right 🖰<blue>] <#3388ff>Previous/Next"
+      - "<blue>[<white>Shift + Left/Right 🖰<blue>] <#3388ff>Previous/Next by 10"
       - "<blue>[<white><key:key.drop><blue>] <#3388ff>Reset value to default"

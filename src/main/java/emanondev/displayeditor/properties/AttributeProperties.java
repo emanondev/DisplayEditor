@@ -1,14 +1,16 @@
 package emanondev.displayeditor.properties;
 
-import emanondev.displayeditor.properties.impl.ConfSerCollProperty;
-import emanondev.displayeditor.properties.impl.NumberProperty;
+import emanondev.displayeditor.properties.impl.AttributeBaseValueProperty;
+import emanondev.displayeditor.properties.impl.AttributeModifierProperty;
 import org.bukkit.Registry;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AttributeProperties {
 
@@ -21,32 +23,8 @@ public class AttributeProperties {
         for (Attribute attribute : Registry.ATTRIBUTE.stream().toList()) {
             if (attribute.getKey().getKey().split("\\.")[0].equals("attributable_player"))
                 continue;
-            baseValues.put(attribute, NumberProperty.fromDouble(
-                    "ATTRIBUTABLE_" + attribute.getKey().getKey().toUpperCase(Locale.ENGLISH) + "_BASE_VALUE",
-                    Attributable.class,
-                    (Attributable att) -> {
-                        AttributeInstance inst = att.getAttribute(attribute);
-                        return inst == null ? null : inst.getBaseValue();
-                    }, (Attributable att, Double value) -> {
-                        AttributeInstance inst = att.getAttribute(attribute);
-                        if (inst != null)
-                            inst.setBaseValue(value);
-                    }, () -> 1D));
-
-            modifiers.put(attribute, new ConfSerCollProperty<>(
-                    "ATTRIBUTABLE_" + attribute.getKey().getKey().toUpperCase(Locale.ENGLISH) + "_MODIFIERS",
-                    Attributable.class, (Class<Collection<AttributeModifier>>) (Class<?>) Collection.class,
-                    AttributeModifier.class,
-                    (Attributable att) -> {
-                        AttributeInstance inst = att.getAttribute(attribute);
-                        return inst == null ? null : inst.getModifiers();
-                    }, (Attributable att, Collection<AttributeModifier> value) -> {
-                AttributeInstance inst = att.getAttribute(attribute);
-                if (inst != null && value != null) {
-                    inst.getModifiers().forEach(inst::removeModifier);
-                    value.forEach(inst::addModifier);
-                }
-            }, Collections::emptyList));
+            baseValues.put(attribute, new AttributeBaseValueProperty(attribute));
+            modifiers.put(attribute, new AttributeModifierProperty(attribute));
         }
         ATTRIBUTABLE_BASE_VALUES = Collections.unmodifiableMap(baseValues);
         ATTRIBUTABLE_MODIFIERS = Collections.unmodifiableMap(modifiers);

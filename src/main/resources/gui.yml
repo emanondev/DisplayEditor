@@ -19,212 +19,490 @@ buttons:
   previous-page:
     material: ARROW
     durability: 0
-
 property:
   entity_type:
-    material: CREEPER_BANNER_PATTERN
+    material: PLAYER_HEAD
   equipment_dropchance_mainhand:
-    material: BUNDLE
+    material: IRON_SWORD
   equipment_dropchance_offhand:
-    material: BUNDLE
+    material: SHIELD
   equipment_dropchance_head:
-    material: BUNDLE
+    material: DIAMOND_HELMET
   equipment_dropchance_chest:
-    material: BUNDLE
+    material: DIAMOND_CHESTPLATE
   equipment_dropchance_legs:
-    material: BUNDLE
+    material: DIAMOND_LEGGINGS
   equipment_dropchance_foot:
-    material: BUNDLE
-  attributable_generic:
-    max_health_base_value:
-      material: STONE
-    follow_range_base_value:
-      material: STONE
-    knockback_resistance_base_value:
-      material: STONE
-    movement_speed_base_value:
-      material: STONE
-    flying_speed_base_value:
-      material: STONE
-    attack_damage_base_value:
-      material: STONE
-    attack_knockback_base_value:
-      material: STONE
-    attack_speed_base_value:
-      material: STONE
-    armor_base_value:
-      material: STONE
-    armor_toughness_base_value:
-      material: STONE
-    fall_damage_multiplier_base_value:
-      material: STONE
-    luck_base_value:
-      material: STONE
-    max_absorption_base_value:
-      material: STONE
-    safe_fall_distance_base_value:
-      material: STONE
-    scale_base_value:
-      material: STONE
-    step_height_base_value:
-      material: STONE
-    gravity_base_value:
-      material: STONE
-    jump_strength_base_value:
-      material: STONE
-    burning_time_base_value:
-      material: STONE
-    explosion_knockback_resistance_base_value:
-      material: STONE
-    movement_efficiency_base_value:
-      material: STONE
-    oxygen_bonus_base_value:
-      material: STONE
-    water_movement_efficiency_base_value:
-      material: STONE
-  attributable_player:
-    block_interaction_range_base_value:
-      material: STONE
-    entity_interaction_range_base_value:
-      material: STONE
-    block_break_speed_base_value:
-      material: STONE
-    mining_efficiency_base_value:
-      material: STONE
-    sneaking_speed_base_value:
-      material: STONE
-    submerged_mining_speed_base_value:
-      material: STONE
-    sweeping_damage_ratio_base_value:
-      material: STONE
-  attributable_zombie:
-    spawn_reinforcements_base_value:
-      material: STONE
+    material: DIAMOND_BOOTS
+  attributable_generic_max_health_base_value:
+      material: APPLE
+  attributable_generic_follow_range_base_value:
+      material: LEAD
+  attributable_generic_knockback_resistance_base_value:
+      material: SLIME_BALL
+  attributable_generic_movement_speed_base_value:
+      material: SUGAR
+  attributable_generic_flying_speed_base_value:
+      material: FEATHER
+  attributable_generic_attack_damage_base_value:
+      material: IRON_SWORD
+  attributable_generic_attack_knockback_base_value:
+      material: STICK
+  attributable_generic_attack_speed_base_value:
+      material: CLOCK
+  attributable_generic_armor_base_value:
+      material: IRON_CHESTPLATE
+  attributable_generic_armor_toughness_base_value:
+      material: NETHERITE_CHESTPLATE
+  attributable_generic_fall_damage_multiplier_base_value:
+      material: HAY_BLOCK
+  attributable_generic_luck_base_value:
+      material: RABBIT_FOOT
+  attributable_generic_max_absorption_base_value:
+      material: GOLDEN_APPLE
+  attributable_generic_safe_fall_distance_base_value:
+      material: SLIME_BLOCK
+  attributable_generic_scale_base_value:
+      material: LIME_DYE
+  attributable_generic_step_height_base_value:
+      material: LADDER
+  attributable_generic_gravity_base_value:
+      material: ANVIL
+  attributable_generic_jump_strength_base_value:
+      material: RABBIT_HIDE
+  attributable_generic_burning_time_base_value:
+      material: FLINT_AND_STEEL
+  attributable_generic_explosion_knockback_resistance_base_value:
+      material: TNT
+  attributable_generic_movement_efficiency_base_value:
+      material: OAK_BOAT
+  attributable_generic_oxygen_bonus_base_value:
+      material: WATER_BUCKET
+  attributable_generic_water_movement_efficiency_base_value:
+      material: KELP
+  attributable_player_block_interaction_range_base_value:
+      material: GLASS
+  attributable_player_entity_interaction_range_base_value:
+      material: SPYGLASS
+  attributable_player_block_break_speed_base_value:
+      material: IRON_PICKAXE
+  attributable_player_mining_efficiency_base_value:
+      material: DIAMOND_PICKAXE
+  attributable_player_sneaking_speed_base_value:
+      material: CHAINMAIL_BOOTS
+  attributable_player_submerged_mining_speed_base_value:
+      material: PRISMARINE_SHARD
+  attributable_player_sweeping_damage_ratio_base_value:
+      material: IRON_SWORD
+  attributable_zombie_spawn_reinforcements_base_value:
+      material: ZOMBIE_HEAD
   custom_name_visible:
     'false':
       material: RED_BANNER
     'true':
       material: LIME_BANNER
-  falling_distance:
-    material: STONE
   glowing:
     'false':
-      material: RED_BANNER
+      material: REDSTONE_BLOCK
     'true':
-      material: LIME_BANNER
+      material: GLOWSTONE
   gravity:
     'true':
       material: LIME_BANNER
     'false':
-      material: RED_BANNER
+      material: ANVIL
   fire_ticks:
-    material: STONE
+    material: CAMPFIRE
   freeze_ticks:
-    material: STONE
+    material: PACKED_ICE
   visual_fire:
     'false':
       material: RED_BANNER
     'true':
-      material: LIME_BANNER
+      material: TORCH
   invulnerable:
     'false':
-      material: RED_BANNER
+      material: BARRIER
+    'true':
+      material: BARRIER
   persistent:
     'true':
-      material: LIME_BANNER
+      material: EMERALD
     'false':
-      material: RED_BANNER
+      material: REDSTONE
   portal_cooldown:
-    material: STONE
+    material: OBSIDIAN
   silent:
     'false':
-      material: RED_BANNER
+      material: NOTE_BLOCK
     'true':
-      material: LIME_BANNER
+      material: JUKEBOX
   ticks_lived:
-    material: STONE
+    material: CLOCK
   visible_by_default:
     'true':
-      material: LIME_BANNER
+      material: LIME_DYE
     'false':
-      material: RED_BANNER
+      material: RED_DYE
   op:
     'false':
-      material: RED_BANNER
+      material: BARRIER
+    'true':
+      material: BARRIER
   ai:
     'false':
-      material: RED_BANNER
+      material: BRAIN_CORAL
+      glow: true
     'true':
-      material: LIME_BANNER
+      material: BRAIN_CORAL
   arrow_cooldown:
-    material: STONE
+    material: ARROW
   arrows_in_body:
-    material: STONE
+    material: ARROW
   can_pickup_items:
     'true':
-      material: LIME_BANNER
+      material: CHEST
+      glow: true
     'false':
-      material: RED_BANNER
+      material: CHEST
   collidable:
     'true':
-      material: LIME_BANNER
+      material: SLIME_BLOCK
   gliding:
     'false':
-      material: RED_BANNER
+      material: ELYTRA
     'true':
-      material: LIME_BANNER
+      material: ELYTRA
+      glow: true
   item_in_use_ticks:
-    material: STONE
+    material: CLOCK
   maximum_air:
-    material: STONE
+    material: BUCKET
   maximum_no_damage_ticks:
-    material: STONE
+    material: SHIELD
   no_damage_ticks:
-    material: STONE
+    material: ENDER_PEARL
   no_action_ticks:
-    material: STONE
+    material: CLOCK
   last_damage:
-    material: STONE
+    material: CROSSBOW
   remove_when_far_away:
     'true':
-      material: LIME_BANNER
+      material: COMPASS
+    'false':
+      material: COMPASS
   swimming:
     'false':
-      material: RED_BANNER
+      material: SAND
+      glow: true
     'true':
-      material: LIME_BANNER
+      material: TROPICAL_FISH
   remaining_air:
-    material: STONE
+    material: BUBBLE_CORAL
   ageable_age:
-    material: STONE
+    material: WHEAT_SEEDS
   breedable_age_lock:
     'false':
-      material: RED_BANNER
+      material: RED_DYE
     'true':
-      material: LIME_BANNER
+      material: GREEN_DYE
   breedable_breed:
     'true':
-      material: LIME_BANNER
+      material: WHEAT
+      glow: true
     'false':
-      material: RED_BANNER
+      material: WHEAT
   mob_aware:
     'true':
-      material: LIME_BANNER
+      material: ENDER_EYE
+      glow: true
     'false':
-      material: RED_BANNER
+      material: ENDER_EYE
   loot_table:
-    material: STONE
+    material: CRAFTING_TABLE
   loot_seed:
-    material: STONE
+    material: WHEAT_SEEDS
   villager_profession:
-    material: STONE
+    material: EMERALD
   villager_experience:
-    material: STONE
+    material: EXPERIENCE_BOTTLE
   villager_level:
-    material: STONE
+    material: BOOK
   villager_type:
-    material: STONE
+    material: EMERALD_BLOCK
   damageable_health:
-    material: STONE
+    material: APPLE
   damageable_absorption:
+    material: GOLDEN_APPLE
+  falling_distance:
+    material: FEATHER
+  animals_love_mode_ticks:
+    material: WHEAT
+  raider_can_join_raid:
+    'true':
+      material: BLACK_BANNER
+    'false':
+      material: BLACK_BANNER
+  raider_celebrating:
+    'false':
+      material: RED_WOOL
+    'true':
+      material: RED_WOOL
+  raider_patrol_leader:
+    'false':
+      material: RED_WOOL
+    'true':
+      material: RED_WOOL
+  spellcaster_spell:
+    material: BOOK
+  guardian_laser_activated:
+    'false':
+      material: RED_WOOL
+    'true':
+      material: RED_WOOL
+  guardian_laser_ticks:
+    material: PRISMARINE_CRYSTALS
+  painting_art:
+    material: PAINTING
+  itemframe_fixed:
+    'false':
+      material: RED_WOOL
+    'true':
+      material: RED_WOOL
+  itemframe_item_drop_chance:
+    material: EMERALD
+  itemframe_rotation:
+    material: COMPASS
+  itemframe_visible:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: LIME_WOOL
+  horse_domestication:
+    material: SADDLE
+  horse_max_domestication:
+    material: LEATHER_HORSE_ARMOR
+  horse_eating_haystack:
+    'true':
+      material: HAY_BLOCK
+    'false':
+      material: HAY_BLOCK
+  horse_jump_strength:
+    material: SLIME_BLOCK
+  skeletonhorse_trapped:
+    'false':
+      material: BONE
+    'true':
+      material: BONE
+      glow: true
+  skeletonhorse_trap_time:
+    material: CLOCK
+  tameable_tamed:
+    'false':
+      material: RED_WOOL
+    'true':
+      material: LIME_WOOL
+  chested_horse:
+    'false':
+      material: CHEST
+    'true':
+      material: CHEST
+  minecart_damage:
+    material: TNT_MINECART
+  minecart_display_block_offset:
+    material: RAIL
+  minecart_max_speed:
+    material: MINECART
+  minecart_slow_when_empty:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  powered_minecart_fuel:
+    material: COAL
+  explosiveminecart_fuse_ticks:
+    material: REDSTONE
+  hopperminecart_enabled:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  wither_invulnerability_ticks:
+    material: WITHER_SKELETON_SKULL
+  colorable_color:
+    material: DYE
+  shulker_attached_face:
+    material: SHULKER_BOX
+  shulker_peek:
+    material: END_ROD
+  steerable_boost_ticks:
+    material: CARROT_ON_A_STICK
+  steerable_current_boost_ticks:
+    material: CLOCK
+  steerable_saddled:
+    'false':
+      material: SADDLE
+    'true':
+      material: SADDLE
+  shearable_sheared:
+    'true':
+      material: SHEARS
+    'false':
+      material: SHEARS
+  wolf_angry:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  wolf_collar_color:
+    material: RED_DYE
+  wolf_interested:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  wolf_variant:
+    material: WHITE_WOOL
+  sittable_sitting:
+    'true':
+      material: STONE_STAIRS
+    'false':
+      material: STONE_STAIRS
+  mushroomcow_variant:
+    material: MUSHROOM_STEW
+  snowman_derp:
+    'true':
+      material: PUMPKIN
+    'false':
+      material: PUMPKIN
+  irongolem_player_created:
+    'true':
+      material: IRON_BLOCK
+    'false':
+      material: IRON_BLOCK
+  horse_color:
+    material: LEATHER_HORSE_ARMOR
+  horse_style:
+    material: DIAMOND_HORSE_ARMOR
+  rabbit_type:
+    material: RABBIT_FOOT
+  llama_color:
+    material: WHITE_WOOL
+  llama_strength:
+    material: LEAD
+  parrot_variant:
+    material: PARROT_SPAWN_EGG
+  endercrystal_showing_bottom:
+    'true':
+      material: PURPLE_STAINED_GLASS
+    'false':
+      material: PURPLE_STAINED_GLASS
+  panda_eating:
+    'true':
+      material: BAMBOO
+    'false':
+      material: BAMBOO
+  panda_hidden_gene:
+    material: EMERALD
+  panda_main_gene:
+    material: EMERALD
+  panda_on_back:
+    'true':
+      material: PANDA_SPAWN_EGG
+    'false':
+      material: PANDA_SPAWN_EGG
+  panda_rolling:
+    'true':
+      material: BAMBOO
+    'false':
+      material: BAMBOO
+  panda_sneezing:
+    'true':
+      material: SUGAR
+    'false':
+      material: SUGAR
+  wanderingtrader_despawn_delay:
+    material: CLOCK
+  fox_crouching:
+    'true':
+      material: FOX_SPAWN_EGG
+    'false':
+      material: FOX_SPAWN_EGG
+  fox_sleeping:
+    'true':
+      material: RED_BED
+    'false':
+      material: RED_BED
+  fox_type:
+    material: ORANGE_WOOL
+  bee_anger:
+    material: HONEYCOMB
+  bee_cannot_enter_hive_ticks:
+    material: BEEHIVE
+  bee_has_nectar:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  bee_has_stung:
+    'true':
+      material: BEE_SPAWN_EGG
+    'false':
+      material: BEE_SPAWN_EGG
+  strider_shivering:
+    'true':
+      material: MAGMA_BLOCK
+    'false':
+      material: MAGMA_BLOCK
+  goat_left_horn:
+    'true':
+      material: GOAT_HORN
+  goat_right_horn:
+    'true':
+      material: GOAT_HORN
+  goat_screaming:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  allay_can_duplicate:
+    'true':
+      material: AMETHYST_SHARD
+  allay_duplicate_cooldown:
+    material: CLOCK
+  frog_type:
+    material: SLIME_BALL
+  tadpole_age:
+    material: TADPOLE_SPAWN_EGG
+  camel_dashing:
+    'false':
+      material: SAND
+    'true':
+      material: SAND
+      glow: true
+  interaction_height:
     material: STONE
+  interaction_width:
+    material: STONE
+  interaction_responsive:
+    'true':
+      material: LIME_WOOL
+    'false':
+      material: RED_WOOL
+  sniffer_state:
+    material: ANCIENT_DEBRIS
+  zombie_can_break_doors:
+    'true':
+      material: OAK_DOOR
+    'false':
+      material: IRON_DOOR
+  zombie_conversion_time:
+    material: CLOCK
+  zombievillager_conversion_time:
+    material: CLOCK
+  zombievillager_profession:
+    material: EMERALD
+  zombievillager_type:
+    material: EMERALD
+  pufferfish_puff_state:
+    material: PUFFERFISH

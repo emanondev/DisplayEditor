@@ -95,7 +95,7 @@ public class KeyedProperty<E, S extends Keyed> extends AProperty<E, S> {
                 case LEFT, SHIFT_LEFT -> {
                     S value = KeyedProperty.this.getFromEntity(entity);
                     List<S> list = registry.stream().sorted(Comparator.comparing(k -> k.getKey().toString())).toList();
-                    int index = (list.indexOf(value) - (event.isShiftClick() ? 10 : 1) + list.size()) % list.size();
+                    int index = (list.indexOf(value) - (event.isShiftClick() ? 10 : 1) + list.size() * 10) % list.size();
                     KeyedProperty.this.setToEntity(entity, list.get(index));
                     return true;
                 }
@@ -117,9 +117,12 @@ public class KeyedProperty<E, S extends Keyed> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             S value = KeyedProperty.this.getFromEntity(entity);
-            return new String[]{"%value%", "" + value,
-                    "%value_color%", value == null ? "<yellow>" :  "<aqua>",
-                    "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
+            List<S> list = registry.stream().sorted(Comparator.comparing(k -> k.getKey().toString())).toList();
+
+            return new String[]{"%value%", value == null ? "null" : value.getKey().getKey(),
+                    "%group%", value == null ? "null" : value.getKey().getNamespace(),
+                    "%index%", value == null ? "#" : String.valueOf(list.indexOf(value)),
+                    "%total%", String.valueOf(list.size())};
         }
     }
 

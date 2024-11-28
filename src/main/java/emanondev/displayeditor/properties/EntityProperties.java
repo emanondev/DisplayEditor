@@ -519,98 +519,98 @@ public class EntityProperties {
     public static final Property<ItemFrame, Boolean> ITEMFRAME_VISIBLE = new BooleanProperty<>(
             "ITEMFRAME_VISIBLE", ItemFrame.class,
             ItemFrame::isVisible, ItemFrame::setVisible, () -> true);
-    public static Property<Entity, Boolean> CUSTOM_NAME_VISIBLE = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> CUSTOM_NAME_VISIBLE = new BooleanProperty<>(
             "CUSTOM_NAME_VISIBLE", Entity.class,
             Entity::isCustomNameVisible, Entity::setCustomNameVisible, () -> true);
-    public static Property<Entity, EntityType> ENTITY_TYPE = new EnumProperty<>(
+    public static final Property<Entity, EntityType> ENTITY_TYPE = new EnumProperty<>(
             "ENTITY_TYPE", Entity.class, EntityType.class,
             Entity::getType, (e, v) -> {
     }, () -> null);
     @SuppressWarnings("UnstableApiUsage")
-    public static Property<Entity, EntitySnapshot> ENTITY_SNAPSHOT = new SimpleProperty<>(
+    public static final Property<Entity, EntitySnapshot> ENTITY_SNAPSHOT = new SimpleProperty<>(
             "ENTITY_SNAPSHOT", Entity.class, EntitySnapshot.class,
             Entity::createSnapshot, (e, v) -> {
     }, () -> null,
             (snap, map) -> map.put("entity_snapshot".toLowerCase(Locale.ENGLISH), snap == null ? null : snap.getAsString()),
             (map) -> map.get("entity_snapshot") instanceof String raw ? Bukkit.getEntityFactory().createEntitySnapshot(raw) : null);
-    public static Property<Nameable, String> CUSTOM_NAME = new StringProperty<>(
+    public static final Property<Nameable, String> CUSTOM_NAME = new StringProperty<>(
             "CUSTOM_NAME", Nameable.class,
             Nameable::getCustomName, Nameable::setCustomName, () -> null);
-    public static Property<Entity, Float> FALLING_DISTANCE = NumberProperty.fromFloat(
+    public static final Property<Entity, Float> FALLING_DISTANCE = NumberProperty.fromFloat(
             "FALLING_DISTANCE", Entity.class,
             Entity::getFallDistance, Entity::setFallDistance, () -> 0F);
-    public static Property<Entity, Boolean> GLOWING = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> GLOWING = new BooleanProperty<>(
             "GLOWING", Entity.class,
             Entity::isGlowing, Entity::setGlowing, () -> false);
-    public static Property<Entity, Boolean> GRAVITY = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> GRAVITY = new BooleanProperty<>(
             "GRAVITY", Entity.class,
             Entity::hasGravity, Entity::setGravity, () -> true);
-    public static Property<Entity, Integer> FIRE_TICKS = NumberProperty.fromInt(
+    public static final Property<Entity, Integer> FIRE_TICKS = NumberProperty.fromInt(
             "FIRE_TICKS", Entity.class,
             Entity::getFireTicks, Entity::setFireTicks, () -> 0);
-    public static Property<Entity, Integer> FREEZE_TICKS = NumberProperty.fromInt(
+    public static final Property<Entity, Integer> FREEZE_TICKS = NumberProperty.fromInt(
             "FREEZE_TICKS", Entity.class,
             Entity::getFreezeTicks, Entity::setFreezeTicks, () -> 0);
-    public static Property<Entity, Boolean> VISUAL_FIRE = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> VISUAL_FIRE = new BooleanProperty<>(
             "VISUAL_FIRE", Entity.class,
             Entity::isVisualFire, Entity::setVisualFire, () -> false);
-    public static Property<Entity, Boolean> INVULNERABLE = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> INVULNERABLE = new BooleanProperty<>(
             "INVULNERABLE", Entity.class,
             Entity::isInvulnerable, Entity::setInvulnerable, () -> false);
-    public static Property<Entity, Boolean> PERSISTENT = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> PERSISTENT = new BooleanProperty<>(
             "PERSISTENT", Entity.class,
             Entity::isPersistent, Entity::setPersistent, () -> false);
-    public static Property<Entity, Integer> PORTAL_COOLDOWN = NumberProperty.fromInt(
+    public static final Property<Entity, Integer> PORTAL_COOLDOWN = NumberProperty.fromInt(
             "PORTAL_COOLDOWN", Entity.class,
             Entity::getPortalCooldown, Entity::setPortalCooldown, () -> 0);
-    public static Property<Entity, Boolean> SILENT = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> SILENT = new BooleanProperty<>(
             "SILENT", Entity.class,
             Entity::isSilent, Entity::setSilent, () -> false);
-    public static Property<Entity, Integer> TICKS_LIVED = NumberProperty.fromInt(
+    public static final Property<Entity, Integer> TICKS_LIVED = NumberProperty.fromInt(
             "TICKS_LIVED", Entity.class,
             Entity::getTicksLived, Entity::setTicksLived, () -> 0);
-    public static Property<Entity, Boolean> VISIBLE_BY_DEFAULT = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> VISIBLE_BY_DEFAULT = new BooleanProperty<>(
             "VISIBLE_BY_DEFAULT",
             Entity.class, Entity::isVisibleByDefault, Entity::setVisibleByDefault, () -> true);
-    public static Property<Entity, Vector> DIRECTION = new ConfSerProperty<>(
+    public static final Property<Entity, Vector> DIRECTION = new ConfSerProperty<>(
             "DIRECTION", Entity.class, Vector.class,
             (Entity e) -> e.getLocation().getDirection(),
             (Entity e, Vector value) -> e.teleport(e.getLocation().setDirection(value)),
             () -> new Vector(1, 0, 0));
-    public static Property<Entity, Vector> VELOCITY = new ConfSerProperty<>(
+    public static final Property<Entity, Vector> VELOCITY = new ConfSerProperty<>(
             "VELOCITY", Entity.class, Vector.class,
             Entity::getVelocity, Entity::setVelocity, () -> new Vector(0, 0, 0));
-    public static Property<Entity, Boolean> OP = new BooleanProperty<>(
+    public static final Property<Entity, Boolean> OP = new BooleanProperty<>(
             "OP", Entity.class,
             Entity::isOp, Entity::setOp, () -> false);
-    public static Property<LivingEntity, Boolean> AI = new BooleanProperty<>(
+    public static final Property<LivingEntity, Boolean> AI = new BooleanProperty<>(
             "AI", LivingEntity.class,
             LivingEntity::hasAI, LivingEntity::setAI, () -> true);
-    public static Property<LivingEntity, Integer> ARROW_COOLDOWN = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> ARROW_COOLDOWN = NumberProperty.fromInt(
             "ARROW_COOLDOWN", LivingEntity.class,
             LivingEntity::getArrowCooldown, LivingEntity::setArrowCooldown, () -> 0);
-    public static Property<LivingEntity, Integer> ARROWS_IN_BODY = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> ARROWS_IN_BODY = NumberProperty.fromInt(
             "ARROWS_IN_BODY", LivingEntity.class,
             LivingEntity::getArrowsInBody, LivingEntity::setArrowsInBody, () -> 0);
-    public static Property<LivingEntity, Boolean> CAN_PICKUP_ITEMS = new BooleanProperty<>(
+    public static final Property<LivingEntity, Boolean> CAN_PICKUP_ITEMS = new BooleanProperty<>(
             "CAN_PICKUP_ITEMS", LivingEntity.class,
             LivingEntity::getCanPickupItems, LivingEntity::setCanPickupItems, () -> false);
-    public static Property<LivingEntity, Boolean> COLLIDABLE = new BooleanProperty<>(
+    public static final Property<LivingEntity, Boolean> COLLIDABLE = new BooleanProperty<>(
             "COLLIDABLE", LivingEntity.class,
             LivingEntity::isCollidable, LivingEntity::setCollidable, () -> true);
-    public static Property<LivingEntity, Boolean> GLIDING = new BooleanProperty<>(
+    public static final Property<LivingEntity, Boolean> GLIDING = new BooleanProperty<>(
             "GLIDING", LivingEntity.class,
             LivingEntity::isGliding, LivingEntity::setGliding, () -> false);
-    public static Property<LivingEntity, Integer> ITEM_IN_USE_TICKS = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> ITEM_IN_USE_TICKS = NumberProperty.fromInt(
             "ITEM_IN_USE_TICKS", LivingEntity.class,
             LivingEntity::getItemInUseTicks, LivingEntity::setItemInUseTicks, () -> 0);
-    public static Property<LivingEntity, Integer> MAXIMUM_AIR = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> MAXIMUM_AIR = NumberProperty.fromInt(
             "MAXIMUM_AIR", LivingEntity.class,
             LivingEntity::getMaximumAir, LivingEntity::setMaximumAir, () -> 300);
-    public static Property<LivingEntity, Integer> MAXIMUM_NO_DAMAGE_TICKS = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> MAXIMUM_NO_DAMAGE_TICKS = NumberProperty.fromInt(
             "MAXIMUM_NO_DAMAGE_TICKS", LivingEntity.class,
             LivingEntity::getMaximumNoDamageTicks, LivingEntity::setMaximumNoDamageTicks, () -> 10);
-    public static Property<LivingEntity, Integer> NO_DAMAGE_TICKS = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> NO_DAMAGE_TICKS = NumberProperty.fromInt(
             "NO_DAMAGE_TICKS", LivingEntity.class,
             LivingEntity::getNoDamageTicks, LivingEntity::setNoDamageTicks, () -> 0);
 
@@ -618,21 +618,21 @@ public class EntityProperties {
     public static final Property<Salmon, Salmon.Variant> SALMON_VARIANT = new Property<>(
             "SALMON_VARIANT", Salmon.class, Salmon.Variant.class,
             Salmon::getVariant, Salmon::setVariant, Salmon.Variant.SMALL         );*/
-    public static Property<LivingEntity, Integer> NO_ACTION_TICKS = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> NO_ACTION_TICKS = NumberProperty.fromInt(
             "NO_ACTION_TICKS", LivingEntity.class,
             LivingEntity::getNoActionTicks, LivingEntity::setNoActionTicks, () -> 0);
-    public static Property<LivingEntity, Double> LAST_DAMAGE = NumberProperty.fromDouble(
+    public static final Property<LivingEntity, Double> LAST_DAMAGE = NumberProperty.fromDouble(
             "LAST_DAMAGE", LivingEntity.class,
             LivingEntity::getLastDamage, LivingEntity::setLastDamage, () -> 0D);
-    public static Property<LivingEntity, Boolean> REMOVE_WHEN_FAR_AWAY = new BooleanProperty<>(
+    public static final Property<LivingEntity, Boolean> REMOVE_WHEN_FAR_AWAY = new BooleanProperty<>(
             "REMOVE_WHEN_FAR_AWAY", LivingEntity.class,
             LivingEntity::getRemoveWhenFarAway, LivingEntity::setRemoveWhenFarAway, () -> false);
-    public static Property<LivingEntity, Boolean> SWIMMING = new BooleanProperty<>(
+    public static final Property<LivingEntity, Boolean> SWIMMING = new BooleanProperty<>(
             "SWIMMING", LivingEntity.class,
             LivingEntity::isSwimming,
             LivingEntity::setSwimming, () -> false);
     @SuppressWarnings("unchecked")
-    public static Property<LivingEntity, Collection<PotionEffect>> ACTIVE_POTION_EFFECTS = new ConfSerCollProperty<>(
+    public static final Property<LivingEntity, Collection<PotionEffect>> ACTIVE_POTION_EFFECTS = new ConfSerCollProperty<>(
             "ACTIVE_POTION_EFFECTS", LivingEntity.class,
             (Class<Collection<PotionEffect>>) (Class<?>) Collection.class, PotionEffect.class,
             (LivingEntity l) -> l.getActivePotionEffects().stream()
@@ -643,87 +643,87 @@ public class EntityProperties {
                 if (v != null)
                     l.addPotionEffects(v);
             }, List::of);
-    public static Property<LivingEntity, Integer> REMAINING_AIR = NumberProperty.fromInt(
+    public static final Property<LivingEntity, Integer> REMAINING_AIR = NumberProperty.fromInt(
             "REMAINING_AIR", LivingEntity.class,
             LivingEntity::getRemainingAir, LivingEntity::setRemainingAir, () -> 0);
-    public static Property<AbstractArrow, Boolean> ARROW_CRITICAL = new BooleanProperty<>(
+    public static final Property<AbstractArrow, Boolean> ARROW_CRITICAL = new BooleanProperty<>(
             "ARROW_CRITICAL", AbstractArrow.class,
             org.bukkit.entity.AbstractArrow::isCritical, org.bukkit.entity.AbstractArrow::setCritical,
             () -> false);
-    public static Property<AbstractArrow, Double> ARROW_DAMAGE = NumberProperty.fromDouble(
+    public static final Property<AbstractArrow, Double> ARROW_DAMAGE = NumberProperty.fromDouble(
             "ARROW_DAMAGE", AbstractArrow.class,
             org.bukkit.entity.AbstractArrow::getDamage, org.bukkit.entity.AbstractArrow::setDamage,
             () -> 10D);
     @SuppressWarnings("UnstableApiUsage")
-    public static Property<AbstractArrow, ItemStack> ARROW_ITEM = new ConfSerProperty<>(
+    public static final Property<AbstractArrow, ItemStack> ARROW_ITEM = new ConfSerProperty<>(
             "ARROW_ITEM", AbstractArrow.class, ItemStack.class,
             org.bukkit.entity.AbstractArrow::getItem, org.bukkit.entity.AbstractArrow::setItem,
             () -> new ItemStack(Material.ARROW));
     @SuppressWarnings("UnstableApiUsage")
-    public static Property<AbstractArrow, ItemStack> ARROW_WEAPON = new ConfSerProperty<>(
+    public static final Property<AbstractArrow, ItemStack> ARROW_WEAPON = new ConfSerProperty<>(
             "ARROW_WEAPON", AbstractArrow.class, ItemStack.class,
             org.bukkit.entity.AbstractArrow::getWeapon, org.bukkit.entity.AbstractArrow::setWeapon,
             () -> new ItemStack(Material.BOW));
-    public static Property<AbstractArrow, AbstractArrow.PickupStatus> ARROW_PICKUP_STATUS =
+    public static final Property<AbstractArrow, AbstractArrow.PickupStatus> ARROW_PICKUP_STATUS =
             new EnumProperty<>("ARROW_PICKUP_STATUS", AbstractArrow.class, AbstractArrow.PickupStatus.class,
                     org.bukkit.entity.AbstractArrow::getPickupStatus,
                     org.bukkit.entity.AbstractArrow::setPickupStatus,
                     () -> AbstractArrow.PickupStatus.ALLOWED);
-    public static Property<AbstractHorse, Integer> HORSE_DOMESTICATION = NumberProperty.fromInt(
+    public static final Property<AbstractHorse, Integer> HORSE_DOMESTICATION = NumberProperty.fromInt(
             "HORSE_DOMESTICATION", AbstractHorse.class,
             AbstractHorse::getDomestication, AbstractHorse::setDomestication, () -> 0);
-    public static Property<AbstractHorse, Integer> HORSE_MAX_DOMESTICATION = NumberProperty.fromInt(
+    public static final Property<AbstractHorse, Integer> HORSE_MAX_DOMESTICATION = NumberProperty.fromInt(
             "HORSE_MAX_DOMESTICATION", AbstractHorse.class,
             AbstractHorse::getMaxDomestication, AbstractHorse::setMaxDomestication, () -> 0);
-    public static Property<AbstractHorse, Boolean> HORSE_EATING_HAYSTACK = new BooleanProperty<>(
+    public static final Property<AbstractHorse, Boolean> HORSE_EATING_HAYSTACK = new BooleanProperty<>(
             "HORSE_EATING_HAYSTACK", AbstractHorse.class,
             AbstractHorse::isEatingHaystack, AbstractHorse::setEatingHaystack, () -> true);
-    public static Property<AbstractHorse, Double> HORSE_JUMP_STRENGTH = NumberProperty.fromDouble(
+    public static final Property<AbstractHorse, Double> HORSE_JUMP_STRENGTH = NumberProperty.fromDouble(
             "HORSE_JUMP_STRENGTH", AbstractHorse.class,
             AbstractHorse::getJumpStrength, AbstractHorse::setJumpStrength, () -> 3D);
-    public static Property<Ageable, Integer> AGEABLE_AGE = NumberProperty.fromInt(
+    public static final Property<Ageable, Integer> AGEABLE_AGE = NumberProperty.fromInt(
             "AGEABLE_AGE", Ageable.class,
             Ageable::getAge, Ageable::setAge, () -> 0);
-    public static Property<Allay, Boolean> ALLAY_CAN_DUPLICATE = new BooleanProperty<>(
+    public static final Property<Allay, Boolean> ALLAY_CAN_DUPLICATE = new BooleanProperty<>(
             "ALLAY_CAN_DUPLICATE", Allay.class,
             Allay::canDuplicate, Allay::setCanDuplicate, () -> true);
-    public static Property<Allay, Long> ALLAY_DUPLICATE_COOLDOWN = NumberProperty.fromLong(
+    public static final Property<Allay, Long> ALLAY_DUPLICATE_COOLDOWN = NumberProperty.fromLong(
             "ALLAY_DUPLICATE_COOLDOWN", Allay.class,
             Allay::getDuplicationCooldown, Allay::setDuplicationCooldown, () -> 0L);
-    public static Property<Animals, UUID> ANIMALS_BREED_CAUSE = new UuidProperty<>(
+    public static final Property<Animals, UUID> ANIMALS_BREED_CAUSE = new UuidProperty<>(
             "ANIMALS_BREED_CAUSE", Animals.class,
             Animals::getBreedCause, Animals::setBreedCause);
-    public static Property<Animals, Integer> ANIMALS_LOVE_MODE_TICKS = NumberProperty.fromInt(
+    public static final Property<Animals, Integer> ANIMALS_LOVE_MODE_TICKS = NumberProperty.fromInt(
             "ANIMALS_LOVE_MODE_TICKS", Animals.class,
             Animals::getLoveModeTicks, Animals::setLoveModeTicks, () -> 0);
-    public static Property<Axolotl, Axolotl.Variant> AXOLOTL_VARIANT = new EnumProperty<>(
+    public static final Property<Axolotl, Axolotl.Variant> AXOLOTL_VARIANT = new EnumProperty<>(
             "AXOLOTL_VARIANT", Axolotl.class, Axolotl.Variant.class,
             Axolotl::getVariant, Axolotl::setVariant, () -> Axolotl.Variant.BLUE);
-    public static Property<Axolotl, Boolean> AXOLOTL_PLAYING_DEAD = new BooleanProperty<>(
+    public static final Property<Axolotl, Boolean> AXOLOTL_PLAYING_DEAD = new BooleanProperty<>(
             "AXOLOTL_PLAYING_DEAD", Axolotl.class,
             Axolotl::isPlayingDead, Axolotl::setPlayingDead, () -> false);
-    public static Property<Bat, Boolean> BAT_AWAKE = new BooleanProperty<>(
+    public static final Property<Bat, Boolean> BAT_AWAKE = new BooleanProperty<>(
             "BAT_AWAKE", Bat.class,
             Bat::isAwake, Bat::setAwake, () -> true);
-    public static Property<Bee, Integer> BEE_ANGER = NumberProperty.fromInt(
+    public static final Property<Bee, Integer> BEE_ANGER = NumberProperty.fromInt(
             "BEE_ANGER", Bee.class,
             Bee::getAnger, Bee::setAnger, () -> 0);
-    public static Property<Bee, Integer> BEE_CANNOT_ENTER_HIVE_TICKS = NumberProperty.fromInt(
+    public static final Property<Bee, Integer> BEE_CANNOT_ENTER_HIVE_TICKS = NumberProperty.fromInt(
             "BEE_CANNOT_ENTER_HIVE_TICKS", Bee.class,
             Bee::getCannotEnterHiveTicks, Bee::setCannotEnterHiveTicks, () -> 0);
-    public static Property<Bee, Location> BEE_FLOWER = new ConfSerProperty<>(
+    public static final Property<Bee, Location> BEE_FLOWER = new ConfSerProperty<>(
             "BEE_FLOWER", Bee.class, Location.class,
             Bee::getFlower, Bee::setFlower, () -> null);
-    public static Property<Bee, Location> BEE_HIVE = new ConfSerProperty<>(
+    public static final Property<Bee, Location> BEE_HIVE = new ConfSerProperty<>(
             "BEE_HIVE", Bee.class, Location.class,
             Bee::getHive, Bee::setHive, () -> null);
-    public static Property<Bee, Boolean> BEE_HAS_NECTAR = new BooleanProperty<>(
+    public static final Property<Bee, Boolean> BEE_HAS_NECTAR = new BooleanProperty<>(
             "BEE_HAS_NECTAR", Bee.class,
             Bee::hasNectar, Bee::setHasNectar, () -> false);
-    public static Property<Bee, Boolean> BEE_HAS_STUNG = new BooleanProperty<>(
+    public static final Property<Bee, Boolean> BEE_HAS_STUNG = new BooleanProperty<>(
             "BEE_HAS_STUNG", Bee.class,
             Bee::hasStung, Bee::setHasStung, () -> true);
-    public static Property<BlockDisplay, String> BLOCKDISPLAY_BLOCK_DATA = new StringProperty<>(
+    public static final Property<BlockDisplay, String> BLOCKDISPLAY_BLOCK_DATA = new StringProperty<>(
             "BLOCKDISPLAY_BLOCK_DATA", BlockDisplay.class,
             (BlockDisplay e) -> e.getBlock().getAsString(),
             (BlockDisplay e, String value) -> e.setBlock(Bukkit.createBlockData(value)),
@@ -732,49 +732,49 @@ public class EntityProperties {
     //        (Entity e) -> ((Boat) e).getBoatType(),
     //        (Entity e, Boat.Type value) -> ((Boat) e).setBoatType(value), Boat.Type.OAK,
     //        Boat.Type.class);
-    public static Property<Breedable, Boolean> BREEDABLE_AGE_LOCK = new BooleanProperty<>(
+    public static final Property<Breedable, Boolean> BREEDABLE_AGE_LOCK = new BooleanProperty<>(
             "BREEDABLE_AGE_LOCK", Breedable.class,
             Breedable::getAgeLock, Breedable::setAgeLock, () -> false);
-    public static Property<Breedable, Boolean> BREEDABLE_BREED = new BooleanProperty<>(
+    public static final Property<Breedable, Boolean> BREEDABLE_BREED = new BooleanProperty<>(
             "BREEDABLE_BREED", Breedable.class,
             Breedable::canBreed, Breedable::setBreed, () -> true);
-    public static Property<Camel, Boolean> CAMEL_DASHING = new BooleanProperty<>(
+    public static final Property<Camel, Boolean> CAMEL_DASHING = new BooleanProperty<>(
             "CAMEL_DASHING", Camel.class,
             Camel::isDashing, Camel::setDashing, () -> false);
-    public static Property<Cat, Cat.Type> CAT_TYPE = new KeyedProperty<>(
+    public static final Property<Cat, Cat.Type> CAT_TYPE = new KeyedProperty<>(
             "CAT_TYPE", Cat.class,
             Cat::getCatType, Cat::setCatType, () -> Cat.Type.RED, Registry.CAT_VARIANT);
-    public static Property<Cat, DyeColor> CAT_COLLAR_COLOR = new EnumProperty<>(
+    public static final Property<Cat, DyeColor> CAT_COLLAR_COLOR = new EnumProperty<>(
             "CAT_COLLAR_COLOR", Cat.class, DyeColor.class,
             Cat::getCollarColor, Cat::setCollarColor, () -> DyeColor.RED);
-    public static Property<ChestedHorse, Boolean> CHESTED_HORSE = new BooleanProperty<>(
+    public static final Property<ChestedHorse, Boolean> CHESTED_HORSE = new BooleanProperty<>(
             "CHESTED_HORSE", ChestedHorse.class,
             ChestedHorse::isCarryingChest, ChestedHorse::setCarryingChest, () -> false);
-    public static Property<CommandMinecart, String> COMMANDMINECART_COMMAND = new StringProperty<>(
+    public static final Property<CommandMinecart, String> COMMANDMINECART_COMMAND = new StringProperty<>(
             "COMMANDMINECART_COMMAND", CommandMinecart.class,
             CommandMinecart::getCommand, CommandMinecart::setCommand, () -> null);
-    public static Property<CommandMinecart, String> COMMANDMINECART_NAME = new StringProperty<>(
+    public static final Property<CommandMinecart, String> COMMANDMINECART_NAME = new StringProperty<>(
             "COMMANDMINECART_NAME", CommandMinecart.class,
             Entity::getName, CommandMinecart::setName, () -> null);
-    public static Property<Creeper, Integer> CREEPER_EXPLOSION_RADIUS = NumberProperty.fromInt(
+    public static final Property<Creeper, Integer> CREEPER_EXPLOSION_RADIUS = NumberProperty.fromInt(
             "CREEPER_EXPLOSION_RADIUS", Creeper.class,
             Creeper::getExplosionRadius, Creeper::setExplosionRadius, () -> 3);
-    public static Property<Creeper, Integer> CREEPER_FUSE_TICKS = NumberProperty.fromInt(
+    public static final Property<Creeper, Integer> CREEPER_FUSE_TICKS = NumberProperty.fromInt(
             "CREEPER_FUSE_TICKS", Creeper.class,
             Creeper::getFuseTicks, Creeper::setFuseTicks, () -> 0);
-    public static Property<Creeper, Integer> CREEPER_MAX_FUSE_TICKS = NumberProperty.fromInt(
+    public static final Property<Creeper, Integer> CREEPER_MAX_FUSE_TICKS = NumberProperty.fromInt(
             "CREEPER_MAX_FUSE_TICKS", Creeper.class,
             Creeper::getMaxFuseTicks, Creeper::setMaxFuseTicks, () -> 40);
-    public static Property<Creeper, Boolean> CREEPER_POWERED = new BooleanProperty<>(
+    public static final Property<Creeper, Boolean> CREEPER_POWERED = new BooleanProperty<>(
             "CREEPER_POWERED", Creeper.class,
             Creeper::isPowered, Creeper::setPowered, () -> false);
-    public static Property<EnderCrystal, Location> ENDERCRYSTAL_BEAM_TARGET = new ConfSerProperty<>(
+    public static final Property<EnderCrystal, Location> ENDERCRYSTAL_BEAM_TARGET = new ConfSerProperty<>(
             "ENDERCRYSTAL_BEAM_TARGET", EnderCrystal.class, Location.class,
             EnderCrystal::getBeamTarget, EnderCrystal::setBeamTarget, () -> null);
-    public static Property<EnderCrystal, Boolean> ENDERCRYSTAL_SHOWING_BOTTOM = new BooleanProperty<>(
+    public static final Property<EnderCrystal, Boolean> ENDERCRYSTAL_SHOWING_BOTTOM = new BooleanProperty<>(
             "ENDERCRYSTAL_SHOWING_BOTTOM", EnderCrystal.class,
             EnderCrystal::isShowingBottom, EnderCrystal::setShowingBottom, () -> true);
-    public static Property<Enderman, String> ENDERMAN_CARRIED_BLOCK = new StringProperty<>(
+    public static final Property<Enderman, String> ENDERMAN_CARRIED_BLOCK = new StringProperty<>(
             "ENDERMAN_CARRIED_BLOCK", Enderman.class,
             (Enderman e) -> {
                 BlockData value = e.getCarriedBlock();
@@ -782,63 +782,63 @@ public class EntityProperties {
             },
             (Enderman e, String value) -> e.setCarriedBlock(Bukkit.createBlockData(value)),
             () -> null);
-    public static Property<EnderSignal, Boolean> ENDERSIGNAL_CARRIED_BLOCK = new BooleanProperty<>(
+    public static final Property<EnderSignal, Boolean> ENDERSIGNAL_CARRIED_BLOCK = new BooleanProperty<>(
             "ENDERSIGNAL_CARRIED_BLOCK", EnderSignal.class,
             EnderSignal::getDropItem, EnderSignal::setDropItem, () -> true);
-    public static Property<EnderSignal, Integer> ENDERSIGNAL_DESPAWN_TIMER = NumberProperty.fromInt(
+    public static final Property<EnderSignal, Integer> ENDERSIGNAL_DESPAWN_TIMER = NumberProperty.fromInt(
             "ENDERSIGNAL_DESPAWN_TIMER", EnderSignal.class,
             EnderSignal::getDespawnTimer, EnderSignal::setDespawnTimer, () -> 100);
-    public static Property<EnderSignal, ItemStack> ENDERSIGNAL_ITEM = new ConfSerProperty<>(
+    public static final Property<EnderSignal, ItemStack> ENDERSIGNAL_ITEM = new ConfSerProperty<>(
             "ENDERSIGNAL_ITEM", EnderSignal.class, ItemStack.class,
             EnderSignal::getItem, EnderSignal::setItem, () -> null);
-    public static Property<EnderSignal, Location> ENDERSIGNAL_TARGET_LOCATION = new ConfSerProperty<>(
+    public static final Property<EnderSignal, Location> ENDERSIGNAL_TARGET_LOCATION = new ConfSerProperty<>(
             "ENDERSIGNAL_TARGET_LOCATION", EnderSignal.class, Location.class,
             EnderSignal::getTargetLocation, EnderSignal::setTargetLocation,
             () -> new Location(Bukkit.getWorlds().get(0), 0, 0, 0));
-    public static Property<EvokerFangs, Integer> EVOKER_FANGS_ATTACK_DELAY = NumberProperty.fromInt(
+    public static final Property<EvokerFangs, Integer> EVOKER_FANGS_ATTACK_DELAY = NumberProperty.fromInt(
             "EVOKER_FANGS_ATTACK_DELAY", EvokerFangs.class,
             EvokerFangs::getAttackDelay, EvokerFangs::setAttackDelay, () -> 20);
-    public static Property<ExperienceOrb, Integer> EXPERIENCE_ORB_EXPERIENCE = NumberProperty.fromInt(
+    public static final Property<ExperienceOrb, Integer> EXPERIENCE_ORB_EXPERIENCE = NumberProperty.fromInt(
             "EXPERIENCE_ORB_EXPERIENCE", ExperienceOrb.class,
             ExperienceOrb::getExperience, ExperienceOrb::setExperience, () -> 4);
-    public static Property<Explosive, Float> EXPLOSIVE_YIELD = NumberProperty.fromFloat(
+    public static final Property<Explosive, Float> EXPLOSIVE_YIELD = NumberProperty.fromFloat(
             "EXPLOSIVE_YIELD", Explosive.class,
             Explosive::getYield, Explosive::setYield, () -> 3F);
-    public static Property<Explosive, Boolean> EXPLOSIVE_INCENDIARY = new BooleanProperty<>(
+    public static final Property<Explosive, Boolean> EXPLOSIVE_INCENDIARY = new BooleanProperty<>(
             "EXPLOSIVE_INCENDIARY", Explosive.class,
             Explosive::isIncendiary, Explosive::setIsIncendiary, () -> true);
-    public static Property<ExplosiveMinecart, Integer> EXPLOSIVEMINECART_FUSE_TICKS = NumberProperty.fromInt(
+    public static final Property<ExplosiveMinecart, Integer> EXPLOSIVEMINECART_FUSE_TICKS = NumberProperty.fromInt(
             "EXPLOSIVEMINECART_FUSE_TICKS", ExplosiveMinecart.class,
             ExplosiveMinecart::getFuseTicks, ExplosiveMinecart::setFuseTicks, () -> 0);
-    public static Property<FallingBlock, Boolean> FALLINGBLOCK_CANCEL_DROP = new BooleanProperty<>(
+    public static final Property<FallingBlock, Boolean> FALLINGBLOCK_CANCEL_DROP = new BooleanProperty<>(
             "FALLINGBLOCK_CANCEL_DROP", FallingBlock.class,
             FallingBlock::getCancelDrop, FallingBlock::setCancelDrop, () -> false);
-    public static Property<FallingBlock, Boolean> FALLINGBLOCK_DROP_ITEM = new BooleanProperty<>(
+    public static final Property<FallingBlock, Boolean> FALLINGBLOCK_DROP_ITEM = new BooleanProperty<>(
             "FALLINGBLOCK_DROP_ITEM", FallingBlock.class,
             FallingBlock::getDropItem, FallingBlock::setDropItem, () -> true);
-    public static Property<FallingBlock, Boolean> FALLINGBLOCK_HURT_ENTITIES = new BooleanProperty<>(
+    public static final Property<FallingBlock, Boolean> FALLINGBLOCK_HURT_ENTITIES = new BooleanProperty<>(
             "FALLINGBLOCK_HURT_ENTITIES", FallingBlock.class,
             FallingBlock::canHurtEntities, FallingBlock::setHurtEntities, () -> true);
-    public static Property<FallingBlock, Integer> FALLINGBLOCK_MAX_DAMAGE = NumberProperty.fromInt(
+    public static final Property<FallingBlock, Integer> FALLINGBLOCK_MAX_DAMAGE = NumberProperty.fromInt(
             "FALLINGBLOCK_MAX_DAMAGE", FallingBlock.class,
             FallingBlock::getMaxDamage, FallingBlock::setMaxDamage, () -> 20);
-    public static Property<FallingBlock, Float> FALLINGBLOCK_DAMAGE_PER_BLOCK = NumberProperty.fromFloat(
+    public static final Property<FallingBlock, Float> FALLINGBLOCK_DAMAGE_PER_BLOCK = NumberProperty.fromFloat(
             "FALLINGBLOCK_DAMAGE_PER_BLOCK", FallingBlock.class,
             FallingBlock::getDamagePerBlock, FallingBlock::setDamagePerBlock, () -> 1F);
-    public static Property<Fireball, Vector> FIREBALL_ACCELERATION = new ConfSerProperty<>(
+    public static final Property<Fireball, Vector> FIREBALL_ACCELERATION = new ConfSerProperty<>(
             "FIREBALL_ACCELERATION", Fireball.class, Vector.class,
             Fireball::getAcceleration, Fireball::setAcceleration,
             () -> new Vector(1, 0, 0));
-    public static Property<Fox, Boolean> FOX_CROUCHING = new BooleanProperty<>(
+    public static final Property<Fox, Boolean> FOX_CROUCHING = new BooleanProperty<>(
             "FOX_CROUCHING", Fox.class,
             Fox::isCrouching, Fox::setCrouching, () -> false);
-    public static Property<Fox, Boolean> FOX_SLEEPING = new BooleanProperty<>(
+    public static final Property<Fox, Boolean> FOX_SLEEPING = new BooleanProperty<>(
             "FOX_SLEEPING", Fox.class,
             Fox::isSleeping, Fox::setSleeping, () -> false);
-    public static Property<Fox, Fox.Type> FOX_TYPE = new EnumProperty<>(
+    public static final Property<Fox, Fox.Type> FOX_TYPE = new EnumProperty<>(
             "FOX_TYPE", Fox.class, Fox.Type.class,
             Fox::getFoxType, Fox::setFoxType, () -> Fox.Type.RED);
-    public static Property<Fox, UUID> FOX_FIRST_TRUSTED = new UuidProperty<>(
+    public static final Property<Fox, UUID> FOX_FIRST_TRUSTED = new UuidProperty<>(
             "FOX_FIRST_TRUSTED", Fox.class,
             (Fox e) -> {
                 AnimalTamer value = e.getFirstTrustedPlayer();
@@ -846,7 +846,7 @@ public class EntityProperties {
             },
             (Fox e, UUID value) -> e.setFirstTrustedPlayer(value == null ? null :
                     Bukkit.getOfflinePlayer(value)));
-    public static Property<Fox, UUID> FOX_SECOND_TRUSTED = new UuidProperty<>(
+    public static final Property<Fox, UUID> FOX_SECOND_TRUSTED = new UuidProperty<>(
             "FOX_SECOND_TRUSTED", Fox.class,
             (Fox e) -> {
                 AnimalTamer value = e.getSecondTrustedPlayer();
@@ -854,17 +854,17 @@ public class EntityProperties {
             },
             (Fox e, UUID value) -> e.setSecondTrustedPlayer(value == null ? null :
                     Bukkit.getOfflinePlayer(value)));
-    public static Property<Frog, Frog.Variant> FROG_TYPE = new KeyedProperty<>(
+    public static final Property<Frog, Frog.Variant> FROG_TYPE = new KeyedProperty<>(
             "FROG_TYPE", Frog.class,
             Frog::getVariant, Frog::setVariant, () -> Frog.Variant.TEMPERATE, Registry.FROG_VARIANT);
-    public static Property<Ghast, Boolean> GHAST_CHARGING = new BooleanProperty<>(
+    public static final Property<Ghast, Boolean> GHAST_CHARGING = new BooleanProperty<>(
             "GHAST_CHARGING", Ghast.class,
             Ghast::isCharging, Ghast::setCharging, () -> false);
-    public static Property<GlowSquid, Integer> GLOWINGSQUID_DARK_TICKS = NumberProperty.fromInt(
+    public static final Property<GlowSquid, Integer> GLOWINGSQUID_DARK_TICKS = NumberProperty.fromInt(
             "GLOWING_SQUID_DARK_TICKS", GlowSquid.class,
             GlowSquid::getDarkTicksRemaining, GlowSquid::setDarkTicksRemaining, () -> 100);
     @SuppressWarnings("unchecked")
-    public static Property<MushroomCow, Collection<PotionEffect>> MUSHROOMCOW_NEXT_STEW_EFFECTS = new ConfSerCollProperty<>(
+    public static final Property<MushroomCow, Collection<PotionEffect>> MUSHROOMCOW_NEXT_STEW_EFFECTS = new ConfSerCollProperty<>(
             "MUSHROOMCOW_NEXT_STEW_EFFECTS", MushroomCow.class,
             (Class<Collection<PotionEffect>>) (Class<?>) Collection.class, PotionEffect.class,
             (MushroomCow m) -> m.getEffectsForNextStew().stream()
