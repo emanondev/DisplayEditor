@@ -13,7 +13,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public abstract class AProperty<E, S> implements Property<E, S>, Keyed {
+public abstract class AProperty<E, S> implements Property<E, S> {
 
     private final Class<E> entityClass;
     private final Class<S> valueClass;
@@ -36,7 +36,11 @@ public abstract class AProperty<E, S> implements Property<E, S>, Keyed {
         this.defaultProvider = defaultProvider;
     }
 
-    @SuppressWarnings("UnstableApiUsage")
+    @Override
+    public int getPriority() { //TODO
+        return 0;
+    }
+
     private static NamespacedKey craftKey(String name) {
         return new NamespacedKey("property", name.toLowerCase(Locale.ENGLISH));
     }

@@ -28,7 +28,7 @@ public class Create extends SubCmd {
 
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
-        if (args.length == 0) {
+        if (args.length == 1) {
             onFail(sender, alias);
             return;
         }

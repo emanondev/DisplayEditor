@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public interface Property<E, S> extends Keyed {
+public interface Property<E, S> extends Keyed, Comparable<Property<E, S>> {
 
     @NotNull
     String name();
@@ -46,6 +46,13 @@ public interface Property<E, S> extends Keyed {
             e.printStackTrace();
             return null;
         }
+    }
+
+    int getPriority();
+
+    @Override
+    default int compareTo(@NotNull Property<E, S> o){
+        return getPriority()-o.getPriority();
     }
 }
 

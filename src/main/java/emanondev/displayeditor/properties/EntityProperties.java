@@ -164,11 +164,9 @@ public class EntityProperties {
     public static final Property<Ocelot, Boolean> OCELOT_TRUSTING = new BooleanProperty<>(
             "OCELOT_TRUSTING", Ocelot.class,
             Ocelot::isTrusting, Ocelot::setTrusting, () -> false);
-    @SuppressWarnings("UnstableApiUsage")
     public static final Property<OminousItemSpawner, ItemStack> OMINOUS_ITEM = new ConfSerProperty<>(
             "OMINOUS_ITEM", OminousItemSpawner.class, ItemStack.class,
             OminousItemSpawner::getItem, OminousItemSpawner::setItem, () -> null);
-    @SuppressWarnings("UnstableApiUsage")
     public static final Property<OminousItemSpawner, Long> OMINOUS_SPAWN_TICKS = NumberProperty.fromLong(
             "OMINOUS_SPAWN_TICKS", OminousItemSpawner.class,
             OminousItemSpawner::getSpawnItemAfterTicks, OminousItemSpawner::setSpawnItemAfterTicks, () -> 20L);

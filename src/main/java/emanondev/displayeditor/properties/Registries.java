@@ -264,7 +264,7 @@ public class Registries {
     }
 
 
-    public static class PropertyRegistry implements Registry<Property<?, ?>> {
+    public static class PropertyRegistry {
 
         private final Map<NamespacedKey, Property<?, ?>> properties = new LinkedHashMap<>();
         private final Map<Class<? extends Entity>, List<Property<?, ?>>> propertiesByEntityTypeCache = new LinkedHashMap<>();
@@ -304,22 +304,10 @@ public class Registries {
                 registerProperty(p);
         }
 
-        @NotNull
-        @Override
-        public Iterator<Property<?, ?>> iterator() {
-            return properties.values().iterator();
-        }
-
         @Nullable
-        @Override
         public Property<?, ?> get(@NotNull NamespacedKey key) {
             return properties.get(key);
         }
 
-        @NotNull
-        @Override
-        public Stream<Property<?, ?>> stream() {
-            return StreamSupport.stream(spliterator(), false);
-        }
     }
 }

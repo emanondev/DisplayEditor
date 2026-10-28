@@ -4,6 +4,7 @@ import emanondev.displayeditor.Util;
 import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Orientation;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.*;
 
@@ -167,7 +168,7 @@ public class BlockDataUtil {
                     (d, v) -> ((Hangable) d).setHanging(v)));
         }
         if (data instanceof Jigsaw) {
-            values.add(new EnumInteractor<>("jigsaworientation", Material.JIGSAW, Jigsaw.Orientation.class,
+            values.add(new EnumInteractor<>("jigsaworientation", Material.JIGSAW, Orientation.class,
                     (d) -> ((Jigsaw) d).getOrientation(),
                     (d, v) -> ((Jigsaw) d).setOrientation(v)));
         }
@@ -228,14 +229,14 @@ public class BlockDataUtil {
                     (d) -> ((PistonHead) d).isShort(),
                     (d, v) -> ((PistonHead) d).setShort(v)));
         }
-        if (data instanceof PointedDripstone) {
-            values.add(new EnumInteractor<>("dripstonethickness", Material.POINTED_DRIPSTONE, PointedDripstone.Thickness.class,
-                    (d) -> ((PointedDripstone) d).getThickness(),
-                    (d, v) -> ((PointedDripstone) d).setThickness(v)));
+        if (data instanceof Speleothem) {
+            values.add(new EnumInteractor<>("dripstonethickness", Material.POINTED_DRIPSTONE, Speleothem.Thickness.class,
+                    (d) -> ((Speleothem) d).getThickness(),
+                    (d, v) -> ((Speleothem) d).setThickness(v)));
             values.add(new EnumInteractor<>("directional", Material.HOPPER, BlockFace.class,
-                    (d) -> ((PointedDripstone) d).getVerticalDirection(),
-                    (d, v) -> ((PointedDripstone) d).setVerticalDirection(v),
-                    (d, v) -> ((PointedDripstone) d).getVerticalDirections().contains(v)));
+                    (d) -> ((Speleothem) d).getVerticalDirection(),
+                    (d, v) -> ((Speleothem) d).setVerticalDirection(v),
+                    (d, v) -> ((Speleothem) d).getVerticalDirections().contains(v)));
         }
         if (data instanceof Powerable) {
             values.add(new BooleanInteractor("powered", Material.POWERED_RAIL,
