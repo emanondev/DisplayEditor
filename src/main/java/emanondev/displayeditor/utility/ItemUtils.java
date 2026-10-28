@@ -95,14 +95,7 @@ public final class ItemUtils {
         if (meta == null) {
             return false;
         }
-        if (VersionUtils.isVersionAfter(1, 11)) {
-            return meta.isUnbreakable();
-        }
-
-        // For older versions, use reflection to access the unbreakable property.
-        Object spigotMeta = Objects.requireNonNull(ReflectionUtils.invokeMethod(meta, "spigot"));
-        Boolean result = (Boolean) ReflectionUtils.invokeMethod(spigotMeta, "isUnbreakable");
-        return result != null && result;
+        return meta.isUnbreakable();
     }
 
     /**
@@ -131,13 +124,7 @@ public final class ItemUtils {
         if (meta == null) {
             return;
         }
-        if (VersionUtils.isVersionAfter(1, 11)) {
-            meta.setUnbreakable(value);
-            return;
-        }
-        // For older versions, use reflection to set the unbreakable property.
-        Object spigotMeta = Objects.requireNonNull(ReflectionUtils.invokeMethod(meta, "spigot"));
-        ReflectionUtils.invokeMethod(spigotMeta, "setUnbreakable", boolean.class, value);
+        meta.setUnbreakable(value);
     }
 
     /**
@@ -153,91 +140,43 @@ public final class ItemUtils {
     public static AttributeModifier createAttributeModifier(double amount,
                                                             @NotNull AttributeModifier.Operation operation,
                                                             @Nullable String slot) {
-        if (VersionUtils.isVersionAfter(1, 20, 6)) {
-            EquipmentSlotGroup group;
-            if (slot == null) {
-                group = EquipmentSlotGroup.ANY;
-            } else {
-                group = EquipmentSlotGroup.getByName(slot.toUpperCase(Locale.ENGLISH));
-                if (group == null) {
-                    group = EquipmentSlot.valueOf(slot.toUpperCase(Locale.ENGLISH)).getGroup();
-                }
+        EquipmentSlotGroup group;
+        if (slot == null) {
+            group = EquipmentSlotGroup.ANY;
+        } else {
+            group = EquipmentSlotGroup.getByName(slot.toUpperCase(Locale.ENGLISH));
+            if (group == null) {
+                group = EquipmentSlot.valueOf(slot.toUpperCase(Locale.ENGLISH)).getGroup();
             }
-            if (VersionUtils.isVersionAfter(1, 21, 2)) {
-                return new AttributeModifier(Objects.requireNonNull(NamespacedKey.fromString(UUID.randomUUID().toString())),
-                        amount, operation, group);
-            }
-            UUID uuid = UUID.randomUUID();
-            return ReflectionUtils.invokeConstructor(AttributeModifier.class,
-                    UUID.class, uuid,
-                    String.class, uuid.toString(),
-                    double.class, amount,
-                    AttributeModifier.Operation.class, operation,
-                    EquipmentSlotGroup.class, group);
         }
-
-        UUID uuid = UUID.randomUUID();
-        if (VersionUtils.isVersionAfter(1, 13, 2)) {
-            return ReflectionUtils.invokeConstructor(AttributeModifier.class,
-                    UUID.class, uuid,
-                    String.class, uuid.toString(),
-                    double.class, amount,
-                    AttributeModifier.Operation.class, operation,
-                    EquipmentSlot.class, slot == null ? null : EquipmentSlot.valueOf(slot.toUpperCase(Locale.ENGLISH)));
-        }
-        return ReflectionUtils.invokeConstructor(AttributeModifier.class,
-                UUID.class, uuid,
-                String.class, uuid.toString(),
-                double.class, amount,
-                AttributeModifier.Operation.class, operation);
+        return new AttributeModifier(Objects.requireNonNull(NamespacedKey.fromString(UUID.randomUUID().toString())),
+                amount, operation, group);
     }
 
     /**
      * Retrieves all available {@link PatternType}s based on the current Minecraft version.
      *
-     * @return An array of {@link PatternType} objects. In versions after 1.20.6, patterns are retrieved from
-     * the {@code Registry.BANNER_PATTERN}. For earlier versions, they are retrieved via reflection.
+     * @return An array of {@link PatternType} objects from {@link Registry#BANNER_PATTERN}.
      */
     public static PatternType[] getPatternTypes() {
-        try {
-            if (VersionUtils.isVersionAfter(1, 20, 6)) {
-                List<PatternType> result = new ArrayList<>();
-                Registry.BANNER_PATTERN.forEach(result::add);
-                return result.toArray(new PatternType[0]);
-            }
-        } catch (Throwable ignored) {
-        }
-        PatternType[] result = Objects.requireNonNull((PatternType[]) ReflectionUtils
-                .invokeStaticMethod(PatternType.class, "values"));
-        return Arrays.copyOfRange(result, 1, result.length);
+        List<PatternType> result = new ArrayList<>();
+        Registry.BANNER_PATTERN.forEach(result::add);
+        return result.toArray(new PatternType[0]);
     }
 
     /**
      * Retrieves filtered {@link PatternType}s excluding non-craftable patterns in certain Minecraft versions.
      *
-     * @return An array of {@link PatternType} objects with {@code PatternType.BASE} always removed.
-     * If the version is 1.20.6 but not after 1.21, {@code PatternType.FLOW} and {@code PatternType.GUSTER}
-     * are also removed as they are not craftable.
+     * @return An array of {@link PatternType} objects with {@code PatternType.BASE} removed.
      */
     public static PatternType[] getPatternTypesFiltered() {
         PatternType[] val = getPatternTypes();
         ArrayList<PatternType> list = new ArrayList<>(Arrays.asList(val));
         list.remove(PatternType.BASE);
-        if (VersionUtils.isVersionAfter(1, 20, 6) &&
-                !VersionUtils.isVersionAfter(1, 21)) { //those are not craftable items on 1.20.6
-            list.remove(PatternType.FLOW);
-            list.remove(PatternType.GUSTER);
-        }
         return list.toArray(new PatternType[0]);
     }
 
     public static boolean isItem(@NotNull Material material) {
-        if (VersionUtils.isVersionUpTo(1, 12, 99)) {
-            return true; //limited support
-        }
-        if (material.name().startsWith("LEGACY_")) {
-            return false;
-        }
         return material.isItem();
     }
 

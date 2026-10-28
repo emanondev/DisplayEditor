@@ -2,7 +2,6 @@ package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.DisplayEditor;
 import emanondev.displayeditor.Util;
-import emanondev.displayeditor.utility.VersionUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Color;
@@ -118,8 +117,7 @@ public class SelectionManager {
                         if (!(p.isValid() && p.isOnline()))
                             return;
                         if (disp.isValid() && p.getWorld().equals(disp.getWorld()))
-                            p.spawnParticle(VersionUtils.isVersionAfter(1, 20, 5) ?
-                                            Particle.DUST : Particle.valueOf("REDSTONE"), disp.getLocation(),
+                            p.spawnParticle(Particle.DUST, disp.getLocation(),
                                     1, 0, 0, 0, 0,
                                     new Particle.DustOptions(Color.RED, 0.5F));
                     });

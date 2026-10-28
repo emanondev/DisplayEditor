@@ -6,7 +6,6 @@ import emanondev.displayeditor.Util;
 import emanondev.displayeditor.gui.SelectMobGui;
 import emanondev.displayeditor.selection.blockdata.BlockDataInteractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
-import emanondev.displayeditor.utility.VersionUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -188,8 +187,6 @@ public class EditorModeListener implements Listener {
             }
             return;
         }
-        if (!VersionUtils.isVersionAfter(1, 20, 2))
-            return;
         CopyPasteOption option = SelectionManager.getCopyPasteOption(player);
         switch (slot) {
             case 1 -> {

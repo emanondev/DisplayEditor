@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Hooks {
-    private static final MiniMessageUtil miniMessage = initMiniMessage();
 
     public static boolean isVault() {
         return isEnabled("Vault");
@@ -18,14 +17,6 @@ public class Hooks {
 
     public static boolean isPAPIEnabled() {
         return isEnabled("PlaceholderAPI");
-    }
-
-    public static boolean isNBTAPIEnabled() {
-        return isEnabled("NBTAPI");
-    }
-
-    public static boolean isShopGuiPlusEnabled() {
-        return isEnabled("ShopGuiPlus");
     }
 
     public static boolean isEnabled(@NotNull String pluginName) {
@@ -48,37 +39,4 @@ public class Hooks {
         return plugin.getDescription().getVersion();
     }
 
-    public static boolean isMythicMobsEnabled() {
-        return isEnabled("MythicMobs");
-    }
-
-    public static boolean isItemBridgeEnabled() {
-        return isEnabled("ItemBridge");
-    }
-
-    public static boolean isDungeonMMOEnabled() {
-        return isEnabled("DungeonMMO");
-    }
-
-    private static MiniMessageUtil initMiniMessage() {
-        try {
-            //if (VersionUtils.hasPaperAPI() && VersionUtils.isVersionAfter(1, 16, 5)) {
-            MiniMessagePaper inst = MiniMessagePaper.getInstance();
-            if (!inst.fromMiniToText("<red>this is a test</red>").equals("<red>this is a test</red>")) {
-                return inst;
-            }
-            //}
-        } catch (Throwable ignored) {
-            ignored.printStackTrace();//TODO
-        }
-        return null;
-    }
-
-    public static boolean hasMiniMessage() {
-        return miniMessage != null;
-    }
-
-    public static MiniMessageUtil getMiniMessageUtil() {
-        return miniMessage;
-    }
 }

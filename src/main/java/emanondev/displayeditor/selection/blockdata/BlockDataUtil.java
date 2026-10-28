@@ -1,6 +1,5 @@
 package emanondev.displayeditor.selection.blockdata;
 
-import emanondev.displayeditor.utility.VersionUtils;
 import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -464,9 +463,24 @@ public class BlockDataUtil {
                     (d) -> ((Waterlogged) d).isWaterlogged(),
                     (d, v) -> ((Waterlogged) d).setWaterlogged(v)));
         }
-        if (VersionUtils.isVersionUpTo(1, 19, 4))
-            return values;
-        BlockDataAddon_1_20.add(values, data);
+        if (data instanceof Hatchable && !(data instanceof TurtleEgg)) {
+            values.add(new NumericInteractor("hatch", Material.TURTLE_EGG,
+                    (d) -> ((Hatchable) d).getHatch(),
+                    (d, v) -> ((Hatchable) d).setHatch(v),
+                    (d) -> ((Hatchable) d).getMaximumHatch()));
+        }
+        if (data instanceof Brushable) {
+            values.add(new NumericInteractor("dusted", Material.BRUSH,
+                    (d) -> ((Brushable) d).getDusted(),
+                    (d, v) -> ((Brushable) d).setDusted(v),
+                    (d) -> ((Brushable) d).getMaximumDusted()));
+        }
+        if (data instanceof FlowerBed) {
+            values.add(new NumericInteractor("floweramount", Material.PINK_PETALS,
+                    (d) -> ((FlowerBed) d).getFlowerAmount(),
+                    (d, v) -> ((FlowerBed) d).setFlowerAmount(v),
+                    (d) -> ((FlowerBed) d).getMaximumFlowerAmount()));
+        }
         return values;
     }
 }
