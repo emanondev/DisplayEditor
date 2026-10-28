@@ -1,12 +1,11 @@
 package emanondev.displayeditor.command.displayeditor;
 
 import emanondev.displayeditor.C;
-import emanondev.displayeditor.Util;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.selection.EditorMode;
 import emanondev.displayeditor.selection.SelectionManager;
-import org.bukkit.Bukkit;
+import emanondev.displayeditor.utility.CompleteUtility;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
@@ -31,40 +30,40 @@ public class Select extends SubCmd {
             try {
                 radius = Double.parseDouble(args[1]);
                 if (radius <= 0) {
-                    sendLanguageString("invalid-radius", null, sender);
+                    sendLanguageString("invalid-radius", sender);
                     return;
                 }
             } catch (Exception e) {
                 try {
                     UUID uuid = UUID.fromString(args[1]);
-                    List<Entity> entities = player.getNearbyEntities(48,800,48);
+                    List<Entity> entities = player.getNearbyEntities(48, 800, 48);
                     Display target = null;
-                    for (Entity entity:entities)
-                        if (entity instanceof Display disp && entity.getUniqueId().equals(uuid)){
+                    for (Entity entity : entities)
+                        if (entity instanceof Display disp && entity.getUniqueId().equals(uuid)) {
                             target = disp;
                             break;
                         }
-                    if (target==null){
-                        sendLanguageString("entity-uuid-not-found", null, sender);
+                    if (target == null) {
+                        sendLanguageString("entity-uuid-not-found", sender);
                         return;
                     }
-                    SelectionManager.select(player,target);
+                    SelectionManager.select(player, target);
                     EditorMode mode = SelectionManager.getEditorMode(player);
                     if (mode == null)
                         SelectionManager.setEditorMode(player, EditorMode.POSITION);
                     else
                         mode.setup(player);
-                    sendLanguageString("success", null, sender);
+                    sendLanguageString("success", sender);
                     return;
                 } catch (Exception e2) {
-                    sendLanguageString("invalid-radius-or-uuid", null, sender);
+                    sendLanguageString("invalid-radius-or-uuid", sender);
                     return;
                 }
             }
         }
 
         Display target = null;
-        for (Entity en : player.getNearbyEntities(Math.min(200,radius), Math.min(200,radius), Math.min(200,radius))) {
+        for (Entity en : player.getNearbyEntities(Math.min(200, radius), Math.min(200, radius), Math.min(200, radius))) {
             if (en instanceof Display) {
                 if (target == null)
                     target = (Display) en;
@@ -74,7 +73,7 @@ public class Select extends SubCmd {
             }
         }
         if (target == null) {
-            sendLanguageString("none-found", null, sender);
+            sendLanguageString("none-found", sender);
             return;
         }
 
@@ -84,14 +83,15 @@ public class Select extends SubCmd {
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         else
             mode.setup(player);
-        sendLanguageString("success", null, sender);
+        sendLanguageString("success", sender);
     }
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
-        if (args.length==2 && sender instanceof Player p){
-            Collection<Entity> entities = p.getWorld().getNearbyEntities(p.getLocation(),5,8,5,(entity -> entity instanceof Display));
-            return Util.complete(args[1],entities,entity -> entity.getUniqueId().toString(),entity -> true);
+        if (args.length == 2 && sender instanceof Player p) {
+            Collection<Entity> entities = p.getWorld().getNearbyEntities(p.getLocation(), 5, 8, 5, (entity -> entity instanceof Display));
+            return CompleteUtility.complete(args[1], entities,
+                    entity -> entity.getUniqueId().toString());
         }
         return Collections.emptyList();
     }

@@ -1,6 +1,6 @@
 package emanondev.displayeditor.selection.blockdata;
 
-import emanondev.displayeditor.Util;
+import emanondev.displayeditor.utility.VersionUtils;
 import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -464,7 +464,7 @@ public class BlockDataUtil {
                     (d) -> ((Waterlogged) d).isWaterlogged(),
                     (d, v) -> ((Waterlogged) d).setWaterlogged(v)));
         }
-        if (Util.isVersionUpTo(1, 19, 4))
+        if (VersionUtils.isVersionUpTo(1, 19, 4))
             return values;
         BlockDataAddon_1_20.add(values, data);
         return values;

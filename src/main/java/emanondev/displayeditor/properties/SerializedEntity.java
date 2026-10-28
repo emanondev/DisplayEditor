@@ -59,8 +59,8 @@ public class SerializedEntity implements ConfigurationSerializable {
     }
 
     public void applyToEntity(Entity e) {
-        for (Property p:properties){
-            p.applyToEntity(e,values,null);
+        for (Property p : properties) {
+            p.applyToEntity(e, values, null);
         }
     }
 }

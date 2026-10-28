@@ -27,7 +27,7 @@ public class SpawnAll extends SubCmd {
             }
             try {
                 Entity t = loc.getWorld().spawnEntity(loc, type);
-                loc.add(0,0,2);
+                loc.add(0, 0, 2);
                 if (t instanceof LivingEntity liv) {
                     liv.setAI(false);
                 }

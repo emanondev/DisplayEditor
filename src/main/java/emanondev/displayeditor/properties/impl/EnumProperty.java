@@ -3,7 +3,6 @@ package emanondev.displayeditor.properties.impl;
 import emanondev.displayeditor.DisplayEditor;
 import emanondev.displayeditor.properties.PropertyEditor;
 import emanondev.displayeditor.properties.editors.APropertyEditor;
-import org.bukkit.Keyed;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
@@ -104,7 +103,7 @@ public class EnumProperty<E, S extends Enum<S>> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             S value = EnumProperty.this.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null":value.name(),
+            return new String[]{"%value%", value == null ? "null" : value.name(),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }

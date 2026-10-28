@@ -1,7 +1,6 @@
 package emanondev.displayeditor.command;
 
 import emanondev.displayeditor.DisplayEditor;
-import emanondev.displayeditor.command.displayeditor.*;
 import emanondev.displayeditor.command.entityeditor.Copy;
 import emanondev.displayeditor.command.entityeditor.Edit;
 import emanondev.displayeditor.command.entityeditor.Spawn;

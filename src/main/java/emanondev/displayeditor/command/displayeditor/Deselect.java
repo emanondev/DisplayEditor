@@ -19,10 +19,10 @@ public class Deselect extends SubCmd {
     public void onCommand(CommandSender sender, String alias, String[] args) {
         Player p = (Player) sender;
         if (SelectionManager.deselect(p)) {
-            sendLanguageString("success", null, sender);
+            sendLanguageString("success", sender);
             return;
         }
-        sendLanguageString("none-selected", null, sender);
+        sendLanguageString("none-selected", sender);
     }
 
     @Override

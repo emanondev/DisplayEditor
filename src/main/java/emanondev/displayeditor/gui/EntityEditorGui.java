@@ -70,7 +70,7 @@ public class EntityEditorGui implements PagedGui {
                 inv.setItem(i, null);
             } else {
                 PropertyEditor prop = props.get(i + (page - 1) * 45);
-                inv.setItem(i, prop.getEditorButton());
+                inv.setItem(i, prop.getEditorButton(player));
             }
         }
     }

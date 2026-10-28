@@ -35,7 +35,7 @@ public class SelectItemGui implements Gui {
 
     @Override
     public void onClick(@NotNull InventoryClickEvent event) {
-        if (event.getClickedInventory() != inv || event.getSlot()>=45) {
+        if (event.getClickedInventory() != inv || event.getSlot() >= 45) {
             SoundUtil.playSoundNo(player);
             return;
         }

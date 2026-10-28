@@ -1,6 +1,5 @@
 package emanondev.displayeditor.properties.impl;
 
-import emanondev.displayeditor.DisplayEditor;
 import emanondev.displayeditor.properties.Property;
 import emanondev.displayeditor.properties.PropertyEditor;
 import emanondev.displayeditor.properties.editors.APropertyEditor;
@@ -21,11 +20,11 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
 
     @SuppressWarnings("unchecked")
     protected NumberProperty(@NotNull String name,
-                           @NotNull Class<E> entityClass,
-                           @NotNull Class<S> valueClass,
-                           @NotNull Function<E, S> getter,
-                           @NotNull BiConsumer<E, S> setter,
-                           @NotNull Supplier<S> defaultProvider) {
+                             @NotNull Class<E> entityClass,
+                             @NotNull Class<S> valueClass,
+                             @NotNull Function<E, S> getter,
+                             @NotNull BiConsumer<E, S> setter,
+                             @NotNull Supplier<S> defaultProvider) {
         super(name, entityClass, valueClass, getter, setter, defaultProvider);
 
         if (!(valueClass.equals(Integer.class)
@@ -130,17 +129,17 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
     @Override
     public PropertyEditor getPropertyEditor(E entity, Player player) {
         if (getValueClass().equals(Double.class))
-            return new DoublePropertyEditor(entity,player);
+            return new DoublePropertyEditor(entity, player);
         if (getValueClass().equals(Float.class))
-            return new FloatPropertyEditor(entity,player);
+            return new FloatPropertyEditor(entity, player);
         if (getValueClass().equals(Long.class))
-            return new LongPropertyEditor(entity,player);
+            return new LongPropertyEditor(entity, player);
         if (getValueClass().equals(Integer.class))
-            return new IntegerPropertyEditor(entity,player);
+            return new IntegerPropertyEditor(entity, player);
         if (getValueClass().equals(Short.class))
-            return new ShortPropertyEditor(entity,player);
+            return new ShortPropertyEditor(entity, player);
         if (getValueClass().equals(Byte.class))
-            return new BytePropertyEditor(entity,player);
+            return new BytePropertyEditor(entity, player);
         return null;
     }
 
@@ -156,24 +155,24 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
             switch (event.getClick()) {
                 case LEFT -> {
                     Double value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0D;
-                    property.setToEntity(entity, value+Math.pow(10,editorExponent));
+                    property.setToEntity(entity, value + Math.pow(10, editorExponent));
                     return true;
                 }
                 case RIGHT -> {
                     Double value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0D;
-                    property.setToEntity(entity, value-Math.pow(10,editorExponent));
+                    property.setToEntity(entity, value - Math.pow(10, editorExponent));
                     return true;
                 }
                 case SHIFT_LEFT -> {
-                    editorExponent = Math.min(editorExponent+1,Double.MAX_EXPONENT-1);
+                    editorExponent = Math.min(editorExponent + 1, Double.MAX_EXPONENT - 1);
                     return true;
                 }
                 case SHIFT_RIGHT -> {
-                    editorExponent = Math.max(editorExponent-1,Double.MIN_EXPONENT+1);
+                    editorExponent = Math.max(editorExponent - 1, Double.MIN_EXPONENT + 1);
                     return true;
                 }
                 case SWAP_OFFHAND, CREATIVE, DROP, CONTROL_DROP -> {
@@ -187,8 +186,8 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             Double value = property.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null": String.valueOf(value),
-                    "%change%", String.valueOf(Math.pow(10,editorExponent)),
+            return new String[]{"%value%", value == null ? "null" : String.valueOf(value),
+                    "%change%", String.valueOf(Math.pow(10, editorExponent)),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }
@@ -206,24 +205,24 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
             switch (event.getClick()) {
                 case LEFT -> {
                     Float value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0F;
-                    property.setToEntity(entity, (float) (value+Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (float) (value + Math.pow(10, editorExponent)));
                     return true;
                 }
                 case RIGHT -> {
                     Float value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0F;
-                    property.setToEntity(entity, (float) (value-Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (float) (value - Math.pow(10, editorExponent)));
                     return true;
                 }
                 case SHIFT_LEFT -> {
-                    editorExponent = Math.min(editorExponent,Float.MAX_EXPONENT-1);
+                    editorExponent = Math.min(editorExponent, Float.MAX_EXPONENT - 1);
                     return true;
                 }
                 case SHIFT_RIGHT -> {
-                    editorExponent = Math.max(editorExponent,Float.MIN_EXPONENT+1);
+                    editorExponent = Math.max(editorExponent, Float.MIN_EXPONENT + 1);
                     return true;
                 }
                 case SWAP_OFFHAND, CREATIVE, DROP, CONTROL_DROP -> {
@@ -237,8 +236,8 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             Float value = property.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null": String.valueOf(value),
-                    "%change%", String.valueOf(Math.pow(10,editorExponent)),
+            return new String[]{"%value%", value == null ? "null" : String.valueOf(value),
+                    "%change%", String.valueOf(Math.pow(10, editorExponent)),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }
@@ -256,24 +255,24 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
             switch (event.getClick()) {
                 case LEFT -> {
                     Long value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0L;
-                    property.setToEntity(entity, (long) (value+Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (long) (value + Math.pow(10, editorExponent)));
                     return true;
                 }
                 case RIGHT -> {
                     Long value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0L;
-                    property.setToEntity(entity, (long) (value-Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (long) (value - Math.pow(10, editorExponent)));
                     return true;
                 }
                 case SHIFT_LEFT -> {
-                    editorExponent = Math.min(editorExponent,(int) Math.log10(Long.MAX_VALUE-1));
+                    editorExponent = Math.min(editorExponent, (int) Math.log10(Long.MAX_VALUE - 1));
                     return true;
                 }
                 case SHIFT_RIGHT -> {
-                    editorExponent = Math.max(editorExponent,0);
+                    editorExponent = Math.max(editorExponent, 0);
                     return true;
                 }
                 case SWAP_OFFHAND, CREATIVE, DROP, CONTROL_DROP -> {
@@ -287,8 +286,8 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             Long value = property.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null": String.valueOf(value),
-                    "%change%", String.valueOf(Math.pow(10,editorExponent)),
+            return new String[]{"%value%", value == null ? "null" : String.valueOf(value),
+                    "%change%", String.valueOf(Math.pow(10, editorExponent)),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }
@@ -306,24 +305,24 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
             switch (event.getClick()) {
                 case LEFT -> {
                     Byte value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0;
-                    property.setToEntity(entity, (byte) (value+Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (byte) (value + Math.pow(10, editorExponent)));
                     return true;
                 }
                 case RIGHT -> {
                     Byte value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0;
-                    property.setToEntity(entity, (byte) (value-Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (byte) (value - Math.pow(10, editorExponent)));
                     return true;
                 }
                 case SHIFT_LEFT -> {
-                    editorExponent = Math.min(editorExponent,(int) Math.log10(Byte.MAX_VALUE-1));
+                    editorExponent = Math.min(editorExponent, (int) Math.log10(Byte.MAX_VALUE - 1));
                     return true;
                 }
                 case SHIFT_RIGHT -> {
-                    editorExponent = Math.max(editorExponent,0);
+                    editorExponent = Math.max(editorExponent, 0);
                     return true;
                 }
                 case SWAP_OFFHAND, CREATIVE, DROP, CONTROL_DROP -> {
@@ -337,8 +336,8 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             Byte value = property.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null": String.valueOf(value),
-                    "%change%", String.valueOf(Math.pow(10,editorExponent)),
+            return new String[]{"%value%", value == null ? "null" : String.valueOf(value),
+                    "%change%", String.valueOf(Math.pow(10, editorExponent)),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }
@@ -356,24 +355,24 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
             switch (event.getClick()) {
                 case LEFT -> {
                     Short value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0;
-                    property.setToEntity(entity, (short) (value+Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (short) (value + Math.pow(10, editorExponent)));
                     return true;
                 }
                 case RIGHT -> {
                     Short value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0;
-                    property.setToEntity(entity, (short) (value-Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (short) (value - Math.pow(10, editorExponent)));
                     return true;
                 }
                 case SHIFT_LEFT -> {
-                    editorExponent = Math.min(editorExponent,(int) Math.log10(Short.MAX_VALUE-1));
+                    editorExponent = Math.min(editorExponent, (int) Math.log10(Short.MAX_VALUE - 1));
                     return true;
                 }
                 case SHIFT_RIGHT -> {
-                    editorExponent = Math.max(editorExponent,0);
+                    editorExponent = Math.max(editorExponent, 0);
                     return true;
                 }
                 case SWAP_OFFHAND, CREATIVE, DROP, CONTROL_DROP -> {
@@ -387,8 +386,8 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             Short value = property.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null": String.valueOf(value),
-                    "%change%", String.valueOf(Math.pow(10,editorExponent)),
+            return new String[]{"%value%", value == null ? "null" : String.valueOf(value),
+                    "%change%", String.valueOf(Math.pow(10, editorExponent)),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }
@@ -406,24 +405,24 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
             switch (event.getClick()) {
                 case LEFT -> {
                     Integer value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0;
-                    property.setToEntity(entity, (int) (value+Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (int) (value + Math.pow(10, editorExponent)));
                     return true;
                 }
                 case RIGHT -> {
                     Integer value = property.getFromEntity(entity);
-                    if (value==null)
+                    if (value == null)
                         value = 0;
-                    property.setToEntity(entity, (int) (value-Math.pow(10,editorExponent)));
+                    property.setToEntity(entity, (int) (value - Math.pow(10, editorExponent)));
                     return true;
                 }
                 case SHIFT_LEFT -> {
-                    editorExponent = Math.min(editorExponent,(int) Math.log10(Integer.MAX_VALUE-1));
+                    editorExponent = Math.min(editorExponent, (int) Math.log10(Integer.MAX_VALUE - 1));
                     return true;
                 }
                 case SHIFT_RIGHT -> {
-                    editorExponent = Math.max(editorExponent,0);
+                    editorExponent = Math.max(editorExponent, 0);
                     return true;
                 }
                 case SWAP_OFFHAND, CREATIVE, DROP, CONTROL_DROP -> {
@@ -437,13 +436,12 @@ public class NumberProperty<E, S extends Number> extends AProperty<E, S> {
         @Override
         protected String[] getPlaceholders() {
             Integer value = property.getFromEntity(entity);
-            return new String[]{"%value%", value==null?"null": String.valueOf(value),
-                    "%change%", String.valueOf(Math.pow(10,editorExponent)),
+            return new String[]{"%value%", value == null ? "null" : String.valueOf(value),
+                    "%change%", String.valueOf(Math.pow(10, editorExponent)),
                     "%value_color%", value == null ? "<yellow>" : "<aqua>",
                     "%value_color_end%", value == null ? "</yellow>" : "</aqua>"};
         }
     }
-
 
 
 }

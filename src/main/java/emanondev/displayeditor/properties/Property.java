@@ -39,7 +39,7 @@ public interface Property<E, S> extends Keyed, Comparable<Property<E, S>> {
 
     PropertyEditor getPropertyEditor(E entity, Player player);
 
-    default PropertyEditor getPropertyEditorRaw(Entity entity, Player player){
+    default PropertyEditor getPropertyEditorRaw(Entity entity, Player player) {
         try {
             return getPropertyEditor((E) entity, player);
         } catch (Exception e) {
@@ -51,8 +51,8 @@ public interface Property<E, S> extends Keyed, Comparable<Property<E, S>> {
     int getPriority();
 
     @Override
-    default int compareTo(@NotNull Property<E, S> o){
-        return getPriority()-o.getPriority();
+    default int compareTo(@NotNull Property<E, S> o) {
+        return getPriority() - o.getPriority();
     }
 }
 

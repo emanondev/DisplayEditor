@@ -2,6 +2,7 @@ package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.DisplayEditor;
 import emanondev.displayeditor.Util;
+import emanondev.displayeditor.utility.VersionUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Color;
@@ -110,17 +111,15 @@ public class SelectionManager {
                         if (!(p.isValid() && p.isOnline()))
                             return;
                         if (DisplayEditor.get().getConfig().loadBoolean("editor.actionbar_reminder", true) && counter % 5 == 0)
-                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(
-                                    DisplayEditor.get().getLanguageConfig(p).getMessage("editor.reminder",
-                                            "&6You are on (Display) Editor Mode")).create());
+                            p.sendActionBar(DisplayEditor.get().getTranslator().translate(p, "editor.reminder"));
                     });
                     //if (counter % 3 == 0)
                     selections.forEach((p, disp) -> {
                         if (!(p.isValid() && p.isOnline()))
                             return;
                         if (disp.isValid() && p.getWorld().equals(disp.getWorld()))
-                            p.spawnParticle(Util.isVersionAfter(1,20,5)?
-                                            Particle.DUST:Particle.valueOf("REDSTONE"), disp.getLocation(),
+                            p.spawnParticle(VersionUtils.isVersionAfter(1, 20, 5) ?
+                                            Particle.DUST : Particle.valueOf("REDSTONE"), disp.getLocation(),
                                     1, 0, 0, 0, 0,
                                     new Particle.DustOptions(Color.RED, 0.5F));
                     });

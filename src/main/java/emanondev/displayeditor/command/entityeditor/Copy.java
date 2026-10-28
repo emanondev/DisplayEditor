@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Copy extends SubCmd {
     public Copy(EntityEditorCommand cmd) {
-        super("copy",cmd,true,false);
+        super("copy", cmd, true, false);
     }
 
     @Override
@@ -21,11 +21,11 @@ public class Copy extends SubCmd {
         List<Entity> en = ((Player) sender).getNearbyEntities(5, 5, 5);
         YMLConfig config = getPlugin().getConfig("test/data.yml");
         ArrayList<SerializedEntity> values = new ArrayList<>();
-        for (Entity e : en){
+        for (Entity e : en) {
             if (e.getType().isSpawnable())
                 values.add(new SerializedEntity(e));
         }
-        config.set("entities" , values);
+        config.set("entities", values);
         config.save();
     }
 

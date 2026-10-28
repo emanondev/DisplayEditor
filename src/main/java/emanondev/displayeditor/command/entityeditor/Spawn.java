@@ -13,14 +13,14 @@ import java.util.List;
 
 public class Spawn extends SubCmd {
     public Spawn(EntityEditorCommand cmd) {
-        super("spawn",cmd,true,false);
+        super("spawn", cmd, true, false);
     }
 
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
         YMLConfig config = getPlugin().getConfig("test/data.yml");
-        ArrayList<SerializedEntity> values = new ArrayList<>((List<SerializedEntity>) config.get("entities" ));
-        for (SerializedEntity ser:values){
+        ArrayList<SerializedEntity> values = new ArrayList<>((List<SerializedEntity>) config.get("entities"));
+        for (SerializedEntity ser : values) {
             Entity e = ser.getEntitySnapshot().createEntity(((Player) sender).getLocation());
             ser.applyToEntity(e);
         }

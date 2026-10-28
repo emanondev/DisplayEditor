@@ -1,9 +1,9 @@
 package emanondev.displayeditor.command.displayeditor;
 
-import emanondev.displayeditor.Util;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.selection.SelectionManager;
+import emanondev.displayeditor.utility.CompleteUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Material;
@@ -28,11 +28,11 @@ public class Setblock extends SubCmd {
     public void onCommand(CommandSender sender, String alias, String[] args) {
         Display sel = SelectionManager.getSelection((Player) sender);
         if (sel == null) {
-            sendLanguageString("none-selected", null, sender);
+            sendLanguageString("none-selected", sender);
             return;
         }
         if (!(sel instanceof BlockDisplay)) {
-            sendLanguageString("wrong-type", null, sender);
+            sendLanguageString("wrong-type", sender);
             return;
         }
         BlockData data;
@@ -40,12 +40,12 @@ public class Setblock extends SubCmd {
             try {
                 Material mat = Material.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                 if (!mat.isBlock()) {
-                    sendLanguageString("invalid-material", null, sender, "%material%", args[1]);
+                    sendLanguageString("invalid-material", sender, "%material%", args[1]);
                     return;
                 }
                 data = Bukkit.createBlockData(mat);
             } catch (Exception e) {
-                sendLanguageString("not-existing-material", null, sender, "%material%", args[1]);
+                sendLanguageString("not-existing-material", sender, "%material%", args[1]);
                 return;
             }
         } else {
@@ -56,13 +56,13 @@ public class Setblock extends SubCmd {
                 data = Bukkit.createBlockData(Material.AIR);
         }
         ((BlockDisplay) sel).setBlock(data);
-        sendLanguageString("success", null, sender);
+        sendLanguageString("success", sender);
     }
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
         if (args.length == 2)
-            return Util.complete(args[1], Material.class, Material::isBlock);
+            return CompleteUtility.complete(args[1], Material.class, Material::isBlock);
         return Collections.emptyList();
     }
 }

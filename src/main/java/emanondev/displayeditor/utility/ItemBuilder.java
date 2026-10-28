@@ -1,0 +1,863 @@
+package emanondev.displayeditor.utility;
+
+import com.google.common.collect.Multimap;
+import io.papermc.paper.datacomponent.DataComponentType;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.*;
+import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
+import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistryKeySet;
+import io.papermc.paper.registry.set.RegistrySet;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Axolotl;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.TropicalFish;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemRarity;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.*;
+import org.bukkit.inventory.meta.Repairable;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+@SuppressWarnings("UnstableApiUsage")
+public class ItemBuilder {
+
+    private final @NotNull ItemStack stack;
+    private final @NotNull ItemMeta meta;
+    private final Map<DataComponentType.Valued<?>, Boolean> editedComponents = new HashMap<>();
+
+    public ItemBuilder(@NotNull Material material) {
+        this(new ItemStack(material));
+    }
+
+    public ItemBuilder(@NotNull ItemStack itemStack) {
+        this.stack = itemStack;
+        this.meta = Objects.requireNonNull(itemStack.getItemMeta());
+    }
+
+    public ItemStack build() {
+        Map<DataComponentType.Valued<?>, Object> editedValues = new HashMap<>();
+
+        editedComponents.forEach((type, overwrite) -> {
+            if (overwrite) {
+                editedValues.put(type, stack.getData(type));
+            }
+        });
+
+        stack.setItemMeta(meta);
+
+        editedComponents.forEach((type, overwrite) -> {
+            if (overwrite) {
+                setDataUnchecked(type, editedValues.get(type));
+            } else {
+                stack.unsetData(type);
+            }
+        });
+
+        return stack;
+    }
+
+    public ItemStack getConvertsTo() {
+        return meta.getUseRemainder();
+    }
+
+    public ItemBuilder setConvertsTo(ItemStack itemStack) {
+        meta.setUseRemainder(itemStack);
+        return this;
+    }
+
+    public ItemBuilder addConsumeEffect(@NotNull ConsumeEffect effect) {
+        Consumable consumable = stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).toBuilder().addEffect(effect).build();
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+        return this;
+    }
+
+    public ItemUseAnimation getConsumeAnimation() {
+        return stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).animation();
+    }
+
+    public float getConsumeSeconds() {
+        return stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).consumeSeconds();
+    }
+
+    public List<ConsumeEffect> getConsumeEffects() {
+        return stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).consumeEffects();
+
+    }
+
+    public Key getConsumeSound() {
+        return stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).sound();
+    }
+
+    public boolean hasConsumeParticles() {
+        return stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).hasConsumeParticles();
+    }
+
+    public ItemBuilder setConsumeAnimation(ItemUseAnimation animation) {
+        Consumable consumable = stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).toBuilder().animation(animation).build();
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+        return this;
+    }
+
+    public ItemBuilder setConsumeParticles(boolean consumeParticles) {
+        Consumable consumable = stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).toBuilder().hasConsumeParticles(consumeParticles).build();
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+        return this;
+    }
+
+    public ItemBuilder setConsumeSeconds(float consumeSeconds) {
+        Consumable consumable = stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).toBuilder().consumeSeconds(consumeSeconds).build();
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+        return this;
+    }
+
+    public ItemBuilder setConsumeEffects(List<ConsumeEffect> effects) {
+        Consumable consumable = stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).toBuilder().effects(effects).build();
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+        return this;
+    }
+
+    public ItemBuilder setConsumeSound(Sound sound) {
+        return setConsumeSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(sound)));
+    }
+
+    public ItemBuilder setConsumeSound(Key sound) {
+        Consumable consumable = stack.getDataOrDefault(DataComponentTypes.CONSUMABLE,
+                Consumable.consumable().build()).toBuilder().sound(sound).build();
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+        return this;
+    }
+
+    public ItemBuilder setConsumableComponent(@Nullable Consumable consumable) {
+        setStackData(DataComponentTypes.CONSUMABLE, consumable);
+
+        return this;
+    }
+
+    public ItemBuilder clearConsumableComponent() {
+        return setConsumableComponent(null);
+    }
+
+    public Consumable getConsumableComponent() {
+        return stack.getData(DataComponentTypes.CONSUMABLE);
+    }
+
+    public boolean canAlwaysEat() {
+        return stack.getDataOrDefault(DataComponentTypes.FOOD,
+                FoodProperties.food().build()).canAlwaysEat();
+    }
+
+    public int getNutrition() {
+        return stack.getDataOrDefault(DataComponentTypes.FOOD,
+                FoodProperties.food().build()).nutrition();
+    }
+
+    //FOOD COMPONENT
+
+    public float getSaturation() {
+        return stack.getDataOrDefault(DataComponentTypes.FOOD,
+                FoodProperties.food().build()).saturation();
+    }
+
+    public ItemBuilder setCanAlwaysEat(boolean canAlwaysEat) {
+        FoodProperties food = stack.getDataOrDefault(DataComponentTypes.FOOD,
+                FoodProperties.food().build()).toBuilder().canAlwaysEat(canAlwaysEat).build();
+        setStackData(DataComponentTypes.FOOD, food);
+        return this;
+    }
+
+    public ItemBuilder setNutrition(int nutrition) {
+        FoodProperties food = stack.getDataOrDefault(DataComponentTypes.FOOD,
+                FoodProperties.food().build()).toBuilder().nutrition(nutrition).build();
+        setStackData(DataComponentTypes.FOOD, food);
+        return this;
+    }
+
+    public ItemBuilder setSaturation(float saturation) {
+        FoodProperties food = stack.getDataOrDefault(DataComponentTypes.FOOD,
+                FoodProperties.food().build()).toBuilder().saturation(saturation).build();
+        setStackData(DataComponentTypes.FOOD, food);
+        return this;
+    }
+
+    public ItemBuilder setFoodComponent(FoodProperties food) {
+        setStackData(DataComponentTypes.FOOD, food);
+        return this;
+    }
+
+    public ItemBuilder clearFoodComponent() {
+        return setFoodComponent(null);
+    }
+
+    public FoodProperties getFoodComponent() {
+        return stack.getData(DataComponentTypes.FOOD);
+    }
+
+    public KineticWeapon.Builder getKineticWeapon() {
+        KineticWeapon weapon = stack.getData(DataComponentTypes.KINETIC_WEAPON);
+        KineticWeapon.Builder builder = KineticWeapon.kineticWeapon();
+        if (weapon != null) {
+            inheritProperties(builder, weapon);
+        }
+        return builder;
+    }
+
+    public ItemBuilder setKineticWeapon(KineticWeapon.Builder builder) {
+        return setKineticWeapon(builder == null ? null : builder.build());
+    }
+
+    public ItemBuilder setKineticWeapon(KineticWeapon weapon) {
+        setStackData(DataComponentTypes.KINETIC_WEAPON, weapon);
+        return this;
+    }
+
+    public ItemBuilder setKineticContactCooldownTicks(int ticks) {
+        return setKineticWeapon(getKineticWeapon().contactCooldownTicks(ticks));
+    }
+
+    public ItemBuilder setKineticDamageMultiplier(float multiplier) {
+        return setKineticWeapon(getKineticWeapon().damageMultiplier(multiplier));
+    }
+
+    public ItemBuilder setKineticDelayTicks(int ticks) {
+        return setKineticWeapon(getKineticWeapon().delayTicks(ticks));
+    }
+
+    public ItemBuilder setKineticForwardMovement(float multiplier) {
+        return setKineticWeapon(getKineticWeapon().forwardMovement(multiplier));
+    }
+
+    public ItemBuilder setKineticHitSound(Sound value) {
+        return setKineticHitSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(value)));
+    }
+
+    public ItemBuilder setKineticHitSound(Key value) {
+        return setKineticWeapon(getKineticWeapon().hitSound(value));
+    }
+
+    public ItemBuilder setKineticSound(Sound value) {
+        return setKineticSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(value)));
+    }
+
+    public ItemBuilder setKineticSound(Key value) {
+        return setKineticWeapon(getKineticWeapon().sound(value));
+    }
+
+    public ItemBuilder setKineticDamageConditions(KineticWeapon.Condition condition) {
+        return setKineticWeapon(getKineticWeapon().damageConditions(condition));
+    }
+
+    public ItemBuilder setKineticDismountConditions(KineticWeapon.Condition condition) {
+        return setKineticWeapon(getKineticWeapon().dismountConditions(condition));
+    }
+
+    public ItemBuilder setKineticKnockbackConditions(KineticWeapon.Condition condition) {
+        return setKineticWeapon(getKineticWeapon().knockbackConditions(condition));
+    }
+
+    public PiercingWeapon.Builder getPiercingWeapon() {
+        PiercingWeapon weapon = stack.getData(DataComponentTypes.PIERCING_WEAPON);
+        PiercingWeapon.Builder builder = PiercingWeapon.piercingWeapon();
+        if (weapon != null) {
+            inheritProperties(builder, weapon);
+        }
+        return builder;
+    }
+
+    public ItemBuilder setPiercingWeapon(PiercingWeapon.Builder builder) {
+        return setPiercingWeapon(builder == null ? null : builder.build());
+    }
+
+    public ItemBuilder setPiercingWeapon(PiercingWeapon weapon) {
+        setStackData(DataComponentTypes.PIERCING_WEAPON, weapon);
+        return this;
+    }
+
+    public ItemBuilder setPiercingDismounts(boolean value) {
+        return setPiercingWeapon(getPiercingWeapon().dismounts(value));
+    }
+
+    public ItemBuilder setPiercingDealsKnockback(boolean value) {
+        return setPiercingWeapon(getPiercingWeapon().dealsKnockback(value));
+    }
+
+    public ItemBuilder setPiercingHitSound(Sound value) {
+        return setPiercingHitSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(value)));
+    }
+
+    public ItemBuilder setPiercingHitSound(Key value) {
+        return setPiercingWeapon(getPiercingWeapon().hitSound(value));
+    }
+
+    public ItemBuilder setPiercingSound(Sound value) {
+        return setPiercingSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(value)));
+    }
+
+    public ItemBuilder setPiercingSound(Key value) {
+        return setPiercingWeapon(getPiercingWeapon().sound(value));
+    }
+
+    public boolean isPiercingDismounts() {
+        return stack.getDataOrDefault(DataComponentTypes.PIERCING_WEAPON,
+                PiercingWeapon.piercingWeapon().build()).dismounts();
+    }
+
+    public boolean isPiercingDealsKnockback() {
+        return stack.getDataOrDefault(DataComponentTypes.PIERCING_WEAPON,
+                PiercingWeapon.piercingWeapon().build()).dealsKnockback();
+    }
+
+    public ItemBuilder setEnchantmentGlintOverride(Boolean value) {
+        meta.setEnchantmentGlintOverride(value);
+        return this;
+    }
+
+    public Boolean getEnchantmentGlintOverride() {
+        if (meta.hasEnchantmentGlintOverride()) {
+            return meta.getEnchantmentGlintOverride();
+        }
+        return null;
+    }
+
+    public Equippable.Builder getEquippable() {
+        Equippable equippable = stack.getData(DataComponentTypes.EQUIPPABLE);
+        Equippable.Builder builder = Equippable.equippable(
+                equippable == null ? EquipmentSlot.HAND : equippable.slot());
+        if (equippable != null) {
+            inheritProperties(builder, equippable);
+        }
+        return builder;
+    }
+
+    public ItemBuilder setEquippable(Equippable.Builder builder) {
+        return setEquippable(builder == null ? null : builder.build());
+    }
+
+    public ItemBuilder setEquippable(Equippable equippable) {
+        setStackData(DataComponentTypes.EQUIPPABLE, equippable);
+        return this;
+    }
+
+    public boolean isEquippableCanBeSheared() {
+        return stack.getDataOrDefault(DataComponentTypes.EQUIPPABLE,
+                Equippable.equippable(EquipmentSlot.HEAD).build()).canBeSheared();
+    }
+
+    public ItemBuilder setEquippableCanBeSheared(boolean canBeSheared) {
+        return setEquippable(getEquippable().canBeSheared(canBeSheared));
+    }
+
+    public ItemBuilder clearEquippable() {
+        return setEquippable((Equippable) null);
+    }
+
+    public ItemBuilder setEquippableSlot(EquipmentSlot slot) {
+        Equippable equippable = stack.getData(DataComponentTypes.EQUIPPABLE);
+        if (equippable != null && equippable.slot().equals(slot)) {
+            return this;
+        }
+        Equippable.Builder builder = Equippable.equippable(slot);
+        if (equippable != null) {
+            inheritProperties(builder, equippable);
+        }
+        return setEquippable(builder);
+    }
+
+    public ItemBuilder setEquippableEquipSound(Sound value) {
+        return setEquippableEquipSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(value)));
+    }
+
+    public ItemBuilder setEquippableEquipSound(Key value) {
+        return setEquippable(getEquippable().equipSound(value));
+    }
+
+    public ItemBuilder setEquippableShearingSound(Sound value) {
+        return setEquippableShearingSound(RegistryKey.SOUND_EVENT.typedKey(Registry.SOUNDS.getKeyOrThrow(value)));
+    }
+
+    public ItemBuilder setEquippableShearingSound(Key value) {
+        return setEquippable(getEquippable().shearSound(value));
+    }
+
+    public ItemBuilder setEquippableAllowedEntities(EntityType entityType) {
+        return setEquippableAllowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, Stream.of(entityType)
+                .map(e -> TypedKey.create(RegistryKey.ENTITY_TYPE, e.getKey())).toList()));
+    }
+
+    public ItemBuilder setEquippableAllowedEntities(RegistryKeySet<EntityType> entityType) {
+        return setEquippable(getEquippable().allowedEntities(entityType));
+    }
+
+    public ItemBuilder setEquippableAllowedEntities(Collection<EntityType> entityType) {
+        return setEquippableAllowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, entityType.stream()
+                .map(e -> TypedKey.create(RegistryKey.ENTITY_TYPE, e.getKey())).toList()));
+    }
+
+    public boolean isEquipmentSwappable() {
+        Equippable eq = stack.getData(DataComponentTypes.EQUIPPABLE);
+        return eq != null && eq.swappable();
+    }
+
+    public ItemBuilder setEquipmentSwappable(boolean value) {
+        return setEquippable(getEquippable().swappable(value));
+    }
+
+    public boolean isEquipmentDispensable() {
+        Equippable eq = stack.getData(DataComponentTypes.EQUIPPABLE);
+        return eq != null && eq.dispensable();
+    }
+
+    public ItemBuilder setEquipmentDispensable(boolean value) {
+        return setEquippable(getEquippable().dispensable(value));
+    }
+
+    public boolean isEquipmentEquipOnInteract() {
+        Equippable eq = stack.getData(DataComponentTypes.EQUIPPABLE);
+        return eq != null && eq.equipOnInteract();
+    }
+
+    public ItemBuilder setEquipmentEquipOnInteract(boolean value) {
+        return setEquippable(getEquippable().equipOnInteract(value));
+    }
+
+    public boolean isEquipmentDamageOnHurt() {
+        Equippable eq = stack.getData(DataComponentTypes.EQUIPPABLE);
+        return eq != null && eq.damageOnHurt();
+    }
+
+    public ItemBuilder setEquipmentDamageOnHurt(boolean value) {
+        return setEquippable(getEquippable().damageOnHurt(value));
+    }
+
+    public ItemBuilder setEquipmentCameraOverlay(Key key) {
+        if (key == null && !stack.hasData(DataComponentTypes.EQUIPPABLE)) {
+            return this;
+        }
+        return setEquippable(getEquippable().cameraOverlay(key));
+    }
+
+    public boolean hasEquippableComponent() {
+        return stack.hasData(DataComponentTypes.EQUIPPABLE);
+    }
+
+    public ItemBuilder setEquipmentModel(Key key) {
+        if (key == null && !stack.hasData(DataComponentTypes.EQUIPPABLE)) {
+            return this;
+        }
+        return setEquippable(getEquippable().assetId(key));
+    }
+
+    /**
+     * @since 1.21.2
+     */
+    public boolean isGlider() {
+        return meta.isGlider();
+    }
+
+    /**
+     * @since 1.21.2
+     */
+    public ItemBuilder setGlider(boolean value) {
+        meta.setGlider(value);
+        return this;
+    }
+
+    public boolean isUnbreakable() {
+        return meta.isUnbreakable();
+    }
+
+    public ItemBuilder setUnbreakable(boolean value) {
+        meta.setUnbreakable(value);
+        return this;
+    }
+
+    /**
+     * @since 1.20.5
+     * @deprecated 1.21.2
+     */
+    public boolean isFireResistent() {
+        return meta.isFireResistant();
+    }
+
+    /**
+     * @since 1.20.5
+     */
+    public Boolean isHideToolTip() {
+        return meta.isHideTooltip();
+    }
+
+    /**
+     * @since 1.20.5
+     * @deprecated 1.21.2
+     */
+    public ItemBuilder setFireResistent(boolean value) {
+        meta.setFireResistant(value);
+        return this;
+    }
+
+    /**
+     * @since 1.20.5
+     */
+    public ItemBuilder setHideToolTip(boolean value) {
+        meta.setHideTooltip(value);
+        return this;
+    }
+
+    public boolean isMetaClass(Class<? extends ItemMeta> metaClass) {
+        return metaClass.isInstance(meta);
+    }
+
+    public ItemBuilder setAxolotlVariant(Axolotl.Variant type) {
+        if (meta instanceof AxolotlBucketMeta axolotlBucketMeta) {
+            axolotlBucketMeta.setVariant(type);
+        }
+        return this;
+    }
+
+    public Material getType() {
+        return stack.getType();
+    }
+
+    public ItemBuilder setBookAuthor(Component author) {
+        if (meta instanceof BookMeta bookMeta) {
+            bookMeta.author(author);
+        }
+        return this;
+    }
+
+    public ItemBuilder setBookGeneration(BookMeta.Generation type) {
+        if (meta instanceof BookMeta bookMeta) {
+            bookMeta.setGeneration(type);
+        }
+        return this;
+    }
+
+    public ItemBuilder addBannerPattern(Pattern pattern) {
+        if (meta instanceof BannerMeta bannerMeta) {
+            bannerMeta.addPattern(pattern);
+        }
+        return this;
+    }
+
+    public ItemBuilder setBannerPattern(int index, Pattern pattern) {
+        if (meta instanceof BannerMeta bannerMeta) {
+            bannerMeta.setPattern(index, pattern);
+        }
+        return this;
+    }
+
+    public List<Pattern> getBannerPatterns() {
+        if (meta instanceof BannerMeta bannerMeta) {
+            return bannerMeta.getPatterns();
+        }
+        return List.of();
+    }
+
+    public ItemBuilder setBannerPatterns(List<Pattern> list) {
+        if (meta instanceof BannerMeta bannerMeta) {
+            bannerMeta.setPatterns(list);
+        }
+        return this;
+    }
+
+    public ItemBuilder setColor(Color color) {
+        if (meta instanceof LeatherArmorMeta leatherArmorMeta) {
+            leatherArmorMeta.setColor(color);
+        } else if (meta instanceof PotionMeta potionMeta) {
+            potionMeta.setColor(color);
+        }
+        return this;
+    }
+
+    public FireworkEffect getFireworkEffect() {
+        if (meta instanceof FireworkEffectMeta fireworkMeta) {
+            return fireworkMeta.getEffect();
+        }
+        return null;
+    }
+
+    public ItemBuilder setFireworkEffect(FireworkEffect build) {
+        if (meta instanceof FireworkEffectMeta fireworkMeta) {
+            fireworkMeta.setEffect(build);
+        }
+        return this;
+    }
+
+    public ItemBuilder setCompassLodestone(boolean tracked, Location location) {
+        if (meta instanceof CompassMeta compassMeta) {
+            compassMeta.setLodestoneTracked(tracked);
+            compassMeta.setLodestone(location);
+        }
+        return this;
+    }
+
+    public ItemBuilder setCustomModelData(Integer amount) {
+        meta.setCustomModelData(amount);
+        return this;
+    }
+
+    public ItemBuilder setDamage(int amount) {
+        if (meta instanceof Damageable damageable) {
+            damageable.setDamage(amount);
+        }
+        return this;
+    }
+
+    public ItemBuilder removeEnchantment(Enchantment ench) {
+        meta.removeEnchant(ench);
+        return this;
+    }
+
+    public ItemBuilder setEnchantment(Enchantment ench, int lv) {
+        meta.addEnchant(ench, lv, true);
+        return this;
+    }
+
+    public ItemBuilder setFireworkPower(int power) {
+        if (meta instanceof FireworkMeta fireworkMeta) {
+            fireworkMeta.setPower(power);
+        }
+        return this;
+    }
+
+    public ItemBuilder setMusicInstrument(MusicInstrument type) {
+        if (meta instanceof MusicInstrumentMeta musicInstrumentMeta) {
+            musicInstrumentMeta.setInstrument(type);
+        }
+        return this;
+    }
+
+    public boolean hasItemFlag(ItemFlag flag) {
+        return meta.hasItemFlag(flag);
+    }
+
+    public ItemBuilder setItemFlag(ItemFlag flag, boolean add) {
+        if (add) {
+            meta.addItemFlags(flag);
+        } else {
+            meta.removeItemFlags(flag);
+        }
+        return this;
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+        return meta.getAttributeModifiers();
+    }
+
+    public ItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
+        meta.addAttributeModifier(attribute, attributeModifier);
+        return this;
+    }
+
+    public ItemBuilder removeAttributeModifier(EquipmentSlot slot) {
+        meta.removeAttributeModifier(slot);
+        return this;
+    }
+
+    public ItemBuilder setItemFlags(ItemFlag[] values, boolean value) {
+        for (ItemFlag itemFlag : values) {
+            setItemFlag(itemFlag, value);
+        }
+        return this;
+    }
+
+    public ItemBuilder setItemModel(NamespacedKey key) {
+        meta.setItemModel(key);
+        return this;
+    }
+
+    public ItemBuilder setMaxDamage(int amount) {
+        if (meta instanceof Damageable damageable) {
+            damageable.setMaxDamage(amount);
+        }
+        return this;
+    }
+
+    public ItemBuilder setMaxStackSize(Integer value) {
+        meta.setMaxStackSize(value);
+        return this;
+    }
+
+    public ItemBuilder removeCustomEffect(PotionEffectType effect) {
+        if (meta instanceof PotionMeta potionMeta) {
+            potionMeta.removeCustomEffect(effect);
+        } else if (meta instanceof SuspiciousStewMeta suspiciousStewMeta) {
+            suspiciousStewMeta.removeCustomEffect(effect);
+        }
+        return this;
+    }
+
+    public ItemBuilder addCustomEffect(PotionEffect effect) {
+        if (meta instanceof PotionMeta potionMeta) {
+            potionMeta.addCustomEffect(effect, true);
+        } else if (meta instanceof SuspiciousStewMeta suspiciousStewMeta) {
+            suspiciousStewMeta.addCustomEffect(effect, true);
+        }
+        return this;
+    }
+
+    public ItemBuilder clearCustomEffects() {
+        if (meta instanceof PotionMeta potionMeta) {
+            potionMeta.clearCustomEffects();
+        } else if (meta instanceof SuspiciousStewMeta suspiciousStewMeta) {
+            suspiciousStewMeta.clearCustomEffects();
+        }
+        return this;
+    }
+
+    public ItemBuilder setRarity(ItemRarity rarity) {
+        meta.setRarity(rarity);
+        return this;
+    }
+
+    public ItemBuilder setRepairCost(int amount) {
+        if (meta instanceof Repairable repairable) {
+            repairable.setRepairCost(amount);
+        }
+        return this;
+    }
+
+    public int getDamage() {
+        if (meta instanceof Damageable damageable) {
+            return damageable.getDamage();
+        }
+        return 0;
+    }
+
+    public ItemBuilder setSkullOwner(String name) {
+        if (meta instanceof SkullMeta skullMeta) {
+            skullMeta.setOwner(name);
+        }
+        return this;
+    }
+
+    public ItemBuilder setTooltipStyle(NamespacedKey namespacedKey) {
+        meta.setTooltipStyle(namespacedKey);
+        return this;
+    }
+
+    public ItemBuilder setTrim(ArmorTrim armorTrim) {
+        if (meta instanceof ArmorMeta armorMeta) {
+            armorMeta.setTrim(armorTrim);
+        }
+        return this;
+    }
+
+    public ItemBuilder setTropicalFishBodyColor(DyeColor color) {
+        if (meta instanceof TropicalFishBucketMeta tropicalFishBucketMeta) {
+            tropicalFishBucketMeta.setBodyColor(color);
+        }
+        return this;
+    }
+
+    public ItemBuilder setTropicalFishPatternColor(DyeColor color) {
+        if (meta instanceof TropicalFishBucketMeta tropicalFishBucketMeta) {
+            tropicalFishBucketMeta.setPatternColor(color);
+        }
+        return this;
+    }
+
+    public ItemBuilder setTropicalFishPattern(TropicalFish.Pattern pattern) {
+        if (meta instanceof TropicalFishBucketMeta tropicalFishBucketMeta) {
+            tropicalFishBucketMeta.setPattern(pattern);
+        }
+        return this;
+    }
+
+    public ItemBuilder setGuiDescription(List<Component> description) {
+        if (description == null || description.isEmpty()) {
+            meta.displayName(Component.text(" "));
+        } else {
+            meta.displayName(Component.text()
+                    .color(NamedTextColor.WHITE)
+                    .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+                    .append(description.getFirst())
+                    .build());
+        }
+        if (description != null && description.size() > 1) {
+            meta.lore(description.subList(1, description.size()).stream()
+                    .map(component -> Component.text()
+                            .color(NamedTextColor.WHITE)
+                            .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+                            .append(component)
+                            .build()
+                    ).toList());
+        }
+        return this;
+    }
+
+    private <T> void setStackData(DataComponentType.Valued<T> type, T value) {
+        if (value != null) {
+            stack.setData(type, value);
+            editedComponents.put(type, true);
+            return;
+        }
+        stack.unsetData(type);
+        editedComponents.put(type, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> void setDataUnchecked(DataComponentType.Valued<T> type, Object value) {
+        stack.setData(type, (T) value);
+    }
+
+    private void inheritProperties(Equippable.Builder builder, Equippable equippable) {
+        builder.canBeSheared(equippable.canBeSheared());
+        builder.allowedEntities(equippable.allowedEntities());
+        builder.assetId(equippable.assetId());
+        builder.cameraOverlay(equippable.cameraOverlay());
+        builder.damageOnHurt(equippable.damageOnHurt());
+        builder.dispensable(equippable.dispensable());
+        builder.equipOnInteract(equippable.equipOnInteract());
+        builder.shearSound(equippable.shearSound());
+        builder.equipSound(equippable.equipSound());
+        builder.swappable(equippable.swappable());
+    }
+
+    private void inheritProperties(KineticWeapon.Builder builder, KineticWeapon weapon) {
+        builder.delayTicks(weapon.delayTicks());
+        builder.contactCooldownTicks(weapon.contactCooldownTicks());
+        builder.sound(weapon.sound());
+        builder.damageConditions(weapon.damageConditions());
+        builder.damageMultiplier(weapon.damageMultiplier());
+        builder.dismountConditions(weapon.dismountConditions());
+        builder.forwardMovement(weapon.forwardMovement());
+        builder.hitSound(weapon.hitSound());
+        builder.knockbackConditions(weapon.knockbackConditions());
+    }
+
+    private void inheritProperties(PiercingWeapon.Builder builder, PiercingWeapon weapon) {
+        builder.sound(weapon.sound());
+        builder.hitSound(weapon.hitSound());
+        builder.dismounts(weapon.dismounts());
+        builder.dealsKnockback(weapon.dealsKnockback());
+    }
+}

@@ -2,11 +2,11 @@ package emanondev.displayeditor.command;
 
 import emanondev.displayeditor.APlugin;
 import emanondev.displayeditor.Util;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ import java.util.Locale;
  * <br>
  * those info should be added to your plugin.yml
  */
+@Slf4j
 public class ReloadCommand implements TabExecutor {
 
     private final APlugin plugin;
@@ -39,16 +40,17 @@ public class ReloadCommand implements TabExecutor {
     }
 
     public void sendPermissionLackMessage(@NotNull String permission, CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender).loadMessage("lack-permission", "&cYou lack of permission %permission%",
-                sender instanceof Player ? (Player) sender : null, true
-                , "%permission%", permission));
+        plugin.getTranslator().send(sender, "lack-permission",
+                "%permission%", permission,
+                "%prefix%", plugin.getTranslator().translateOrEmptyRaw(sender, "generic.help.prefix"));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission(permission)) {
             plugin.onReload();
-            Util.sendMessage(sender, plugin.getLanguageConfig(sender).loadMessage(plugin.getName().toLowerCase(Locale.ENGLISH) + "reload.success", "", true));
+            Util.sendComponent(sender, plugin.getTranslator().translate(sender,
+                    plugin.getName().toLowerCase(Locale.ENGLISH) + "reload.success"));
         } else
             sendPermissionLackMessage(permission, sender);
         return true;
@@ -59,7 +61,7 @@ public class ReloadCommand implements TabExecutor {
             plugin.registerCommand(plugin.getName().toLowerCase(Locale.ENGLISH) + "reload", this, null);
         } catch (Exception e) {
             plugin.log("Unable to register command " + ChatColor.YELLOW + plugin.getName().toLowerCase(Locale.ENGLISH) + "reload");
-            e.printStackTrace();
+            log.warn(e.getMessage(), e);
         }
     }
 }

@@ -338,7 +338,7 @@ public class EntityProperties {
     public static final Property<Lootable, LootTables> LOOT_TABLE = new KeyedProperty<>(
             "LOOT_TABLE", Lootable.class,
             (Lootable l) -> l.getLootTable() == null ? null : Registry.LOOT_TABLES.get(l.getLootTable().getKey()),
-            (Lootable l, LootTables t) -> l.setLootTable(t==null?null:t.getLootTable()), () -> null, Registry.LOOT_TABLES);
+            (Lootable l, LootTables t) -> l.setLootTable(t == null ? null : t.getLootTable()), () -> null, Registry.LOOT_TABLES);
     public static final Property<Lootable, Long> LOOT_SEED = NumberProperty.fromLong(
             "LOOT_SEED", Lootable.class,
             Lootable::getSeed, Lootable::setSeed, () -> 0L);
@@ -381,56 +381,56 @@ public class EntityProperties {
             (Class<List<ItemStack>>) (Class<?>) List.class, ItemStack.class,
             (LivingEntity i) -> i.getEquipment() == null ? null : Arrays.stream(i.getEquipment().getArmorContents()).toList(),
             (LivingEntity i, List<ItemStack> v) -> {
-                if (v != null && i.getEquipment()!=null)
+                if (v != null && i.getEquipment() != null)
                     i.getEquipment().setArmorContents(v.toArray(new ItemStack[0]));
             },
             Collections::emptyList);
     public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_MAINHAND = NumberProperty.fromFloat(
             "EQUIPMENT_DROPCHANCE_MAINHAND", LivingEntity.class,
-            liv->liv.getEquipment()==null?null: liv.getEquipment().getItemInMainHandDropChance(),
-            (liv,v)->{
+            liv -> liv.getEquipment() == null ? null : liv.getEquipment().getItemInMainHandDropChance(),
+            (liv, v) -> {
                 EntityEquipment equip = liv.getEquipment();
-                if (equip!=null)
+                if (equip != null)
                     equip.setItemInMainHandDropChance(v);
             }, () -> 0.0f);
     public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_OFFHAND = NumberProperty.fromFloat(
             "EQUIPMENT_DROPCHANCE_OFFHAND", LivingEntity.class,
-            liv->liv.getEquipment()==null?null: liv.getEquipment().getItemInOffHandDropChance(),
-            (liv,v)->{
+            liv -> liv.getEquipment() == null ? null : liv.getEquipment().getItemInOffHandDropChance(),
+            (liv, v) -> {
                 EntityEquipment equip = liv.getEquipment();
-                if (equip!=null)
+                if (equip != null)
                     equip.setItemInOffHandDropChance(v);
             }, () -> 0.0f);
     public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_LEGS = NumberProperty.fromFloat(
             "EQUIPMENT_DROPCHANCE_LEGS", LivingEntity.class,
-            liv->liv.getEquipment()==null?null: liv.getEquipment().getLeggingsDropChance(),
-            (liv,v)->{
+            liv -> liv.getEquipment() == null ? null : liv.getEquipment().getLeggingsDropChance(),
+            (liv, v) -> {
                 EntityEquipment equip = liv.getEquipment();
-                if (equip!=null)
+                if (equip != null)
                     equip.setLeggingsDropChance(v);
             }, () -> 0.0f);
     public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_CHEST = NumberProperty.fromFloat(
             "EQUIPMENT_DROPCHANCE_CHEST", LivingEntity.class,
-            liv->liv.getEquipment()==null?null: liv.getEquipment().getChestplateDropChance(),
-            (liv,v)->{
+            liv -> liv.getEquipment() == null ? null : liv.getEquipment().getChestplateDropChance(),
+            (liv, v) -> {
                 EntityEquipment equip = liv.getEquipment();
-                if (equip!=null)
+                if (equip != null)
                     equip.setChestplateDropChance(v);
             }, () -> 0.0f);
     public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_HEAD = NumberProperty.fromFloat(
             "EQUIPMENT_DROPCHANCE_HEAD", LivingEntity.class,
-            liv->liv.getEquipment()==null?null: liv.getEquipment().getHelmetDropChance(),
-            (liv,v)->{
+            liv -> liv.getEquipment() == null ? null : liv.getEquipment().getHelmetDropChance(),
+            (liv, v) -> {
                 EntityEquipment equip = liv.getEquipment();
-                if (equip!=null)
+                if (equip != null)
                     equip.setHelmetDropChance(v);
             }, () -> 0.0f);
     public static final Property<LivingEntity, Float> EQUIPMENT_DROPCHANCE_FEET = NumberProperty.fromFloat(
             "EQUIPMENT_DROPCHANCE_FOOT", LivingEntity.class,
-            liv->liv.getEquipment()==null?null: liv.getEquipment().getBootsDropChance(),
-            (liv,v)->{
+            liv -> liv.getEquipment() == null ? null : liv.getEquipment().getBootsDropChance(),
+            (liv, v) -> {
                 EntityEquipment equip = liv.getEquipment();
-                if (equip!=null)
+                if (equip != null)
                     equip.setBootsDropChance(v);
             }, () -> 0.0f);
     @SuppressWarnings("unchecked")

@@ -1,10 +1,10 @@
 package emanondev.displayeditor.command.displayeditor;
 
-import emanondev.displayeditor.Util;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.gui.SelectItemGui;
 import emanondev.displayeditor.selection.SelectionManager;
+import emanondev.displayeditor.utility.CompleteUtility;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display;
@@ -27,11 +27,11 @@ public class Setitem extends SubCmd {
         Player player = ((Player) sender);
         Display sel = SelectionManager.getSelection(player);
         if (sel == null) {
-            sendLanguageString("none-selected", null, sender);
+            sendLanguageString("none-selected", sender);
             return;
         }
         if (!(sel instanceof ItemDisplay)) {
-            sendLanguageString("wrong-type", null, sender);
+            sendLanguageString("wrong-type", sender);
             return;
         }
         //ItemStack item;
@@ -39,14 +39,14 @@ public class Setitem extends SubCmd {
             try {
                 Material mat = Material.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                 if (!mat.isItem()) {
-                    sendLanguageString("invalid-material", null, sender, "%material%", args[1]);
+                    sendLanguageString("invalid-material", sender, "%material%", args[1]);
                     return;
                 }
                 ItemStack item = new ItemStack(mat);
                 ((ItemDisplay) sel).setItemStack(item);
-                sendLanguageString("success", null, sender);
+                sendLanguageString("success", sender);
             } catch (Exception e) {
-                sendLanguageString("not-existing-material", null, sender, "%material%", args[1]);
+                sendLanguageString("not-existing-material", sender, "%material%", args[1]);
                 return;
             }
             return;
@@ -60,7 +60,7 @@ public class Setitem extends SubCmd {
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
         if (args.length == 2)
-            return Util.complete(args[1], Material.class, Material::isItem);
+            return CompleteUtility.complete(args[1], Material.class, Material::isItem);
         return Collections.emptyList();
     }
 }

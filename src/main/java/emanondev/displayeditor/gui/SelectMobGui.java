@@ -93,11 +93,11 @@ public class SelectMobGui implements PagedGui {
         inv.setItem(46, page > 1 ? getPreviousPageItem() : null);
         inv.setItem(52, page < entities.size() / 45 + (entities.size() % 45 == 0 ? 0 : 1) ? getNextPageItem() : null);
         for (int i = 0; i < 45; i++) {
-            if (entities.size() <= i+(page-1)*45) {
+            if (entities.size() <= i + (page - 1) * 45) {
                 inv.setItem(i, null);
                 continue;
             }
-            Entity entity = entities.get(i+(page-1)*45);
+            Entity entity = entities.get(i + (page - 1) * 45);
             String[] holders = new String[8 /*+ (entities.get(i) instanceof Display ? 2 : 0)*/];
             int j = 0;
             holders[j++] = "%type%";

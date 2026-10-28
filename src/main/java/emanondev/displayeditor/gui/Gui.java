@@ -2,8 +2,11 @@ package emanondev.displayeditor.gui;
 
 import emanondev.displayeditor.APlugin;
 import emanondev.displayeditor.YMLConfig;
+import emanondev.displayeditor.utility.ItemBuilder;
+import emanondev.displayeditor.utility.SchedulerUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -18,14 +21,14 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 public interface Gui extends InventoryHolder {
 
-    void onClose(@NotNull InventoryCloseEvent event);
+    void onClose(InventoryCloseEvent event);
 
-    void onClick(@NotNull InventoryClickEvent event);
+    void onClick(InventoryClickEvent event);
 
     /**
      * This event is called when the player drags an item in their cursor across the
@@ -68,19 +71,19 @@ public interface Gui extends InventoryHolder {
      * <p>
      * Any modifications to slots that are modified by the results of this
      * InventoryDragEvent will be overwritten. To change these slots, this event
-     * should be cancelled and the changes applied. Alternatively, scheduling a task
+     * should be canceled and the changes applied. Alternatively, scheduling a task
      * using <a href=
      * "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/scheduler/BukkitScheduler.html#runTask-org.bukkit.plugin.Plugin-java.lang.Runnable-"><code>BukkitScheduler.runTask(Plugin, Runnable)</code></a>,
      * which would execute the task on the next tick, would work as well.
      *
      * @param event - the event
      */
-    void onDrag(@NotNull InventoryDragEvent event);
+    void onDrag(InventoryDragEvent event);
 
     /**
      * @param event - the event
      */
-    void onOpen(@NotNull InventoryOpenEvent event);
+    void onOpen(InventoryOpenEvent event);
 
     /**
      * @return button at slot position
@@ -88,24 +91,37 @@ public interface Gui extends InventoryHolder {
     @NotNull
     Inventory getInventory();
 
+    /**
+     * Defers opening a GUI until after the current inventory click has completed.
+     */
+    default void openGuiNextTick(@NotNull Supplier<? extends Gui> guiSupplier) {
+        SchedulerUtils.run(getPlugin(), getTargetPlayer(), () ->
+                getTargetPlayer().openInventory(guiSupplier.get().getInventory()));
+    }
+
     Player getTargetPlayer();
 
     @NotNull
     APlugin getPlugin();
 
-    default String getLanguageMessage(@NotNull String fullPath, String... holders) {
-        return getPlugin().getLanguageConfig(getTargetPlayer()).loadMessage(fullPath, "", null, true, holders);
+    @Deprecated(forRemoval = true)
+    default String getLanguageMessage(@NotNull String fullPath,
+                                      String... holders) {
+        return MiniMessage.miniMessage().serialize(getLanguageComponent(fullPath, holders));
     }
 
-    default List<String> getLanguageMultiMessage(@NotNull String fullPath, String... holders) {
-        return getPlugin().getLanguageConfig(getTargetPlayer())
-                .loadMultiMessage(fullPath, Collections.emptyList(), null, true, holders);
+    default Component getLanguageComponent(@NotNull String fullPath,
+                                           String... holders) {
+        return getPlugin().getTranslator().translateOrEmpty(getTargetPlayer(), fullPath, holders);
     }
 
     @Contract("null,_,_->null;!null,_,_->!null")
-    default ItemStack loadLanguageDescription(@Nullable ItemStack item, @NotNull String fullPath, String... holders) {
-        if (item == null)
+    default ItemStack loadLanguageDescription(@Nullable ItemStack item,
+                                              @NotNull String fullPath,
+                                              String... holders) {
+        if (item == null) {
             return null;
+        }
         ItemMeta meta = item.getItemMeta();
         loadLanguageDescription(meta, fullPath, holders);
         item.setItemMeta(meta);
@@ -113,40 +129,40 @@ public interface Gui extends InventoryHolder {
     }
 
     @Contract("null,_,_->null;!null,_,_->!null")
-    default ItemMeta loadLanguageDescription(@Nullable ItemMeta meta, @NotNull String fullPath, String... holders) {
-        if (meta == null)
+    default ItemMeta loadLanguageDescription(@Nullable ItemMeta meta,
+                                             @NotNull String fullPath,
+                                             String... holders) {
+        if (meta == null) {
             return null;
-        List<String> list = getPlugin().getLanguageConfig(getTargetPlayer()).loadMultiMessage(fullPath,
-                null, getTargetPlayer(), true, holders);
-        meta.setDisplayName(list == null || list.isEmpty() ? " " : list.get(0));
-        if (list != null && !list.isEmpty())
-            meta.setLore(list.subList(1, list.size()));
+        }
+        List<Component> list = getPlugin().getTranslator().translateList(getTargetPlayer(), fullPath, holders);
+        meta.displayName(list == null || list.isEmpty() ? Component.text(" ") : list.getFirst());
+        if (list != null && list.size() > 1) {
+            meta.lore(list.subList(1, list.size()));
+        }
         return meta;
     }
 
     @NotNull
-    default ItemStack getGuiItem(@NotNull String path, @NotNull Material defMaterial) {
+    default ItemStack getGuiItem(@NotNull String path,
+                                 @NotNull Material defMaterial) {
         return getGuiItem(path, defMaterial, 0);
     }
 
     @NotNull
-    default ItemStack getGuiItem(@NotNull String path, @NotNull Material defMaterial, int defDurability) {
+    default ItemStack getGuiItem(@NotNull String path,
+                                 @NotNull Material defMaterial,
+                                 int defDurability) {
         YMLConfig config = getPlugin().getConfig("gui.yml");
-        ItemStack item = new ItemStack(config.loadMaterial(path + ".material", defMaterial));
-        ItemMeta meta = item.getItemMeta();
-        meta.addItemFlags(ItemFlag.values());
-        if (config.getBoolean(path + ".glow", false))//TODO use glint override
-            meta.addEnchant(Enchantment.LURE, 1, true);
-
-        item.setItemMeta(meta);
-        int dur = config.loadInteger(path + ".durability", defDurability);
-        if (dur > 0)
-            item.setDurability((short) dur);
-        return item;
+        return new ItemBuilder(config.loadMaterial(path + ".material", defMaterial))
+                .setItemFlags(ItemFlag.values(), true)
+                .setEnchantmentGlintOverride(config.getBoolean(path + ".glow", false))
+                .build();
     }
 
     @NotNull
     default ItemStack getBackItem() {
-        return this.loadLanguageDescription(getGuiItem("buttons.back", Material.BARRIER), "gui.back.description");
+        return this.loadLanguageDescription(getGuiItem("buttons.back", Material.BARRIER),
+                "gui.back.description");
     }
 }

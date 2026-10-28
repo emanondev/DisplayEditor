@@ -1,12 +1,13 @@
 package emanondev.displayeditor.command.displayeditor;
 
 import emanondev.displayeditor.C;
-import emanondev.displayeditor.Util;
 import emanondev.displayeditor.UtilsString;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.selection.EditorMode;
 import emanondev.displayeditor.selection.SelectionManager;
+import emanondev.displayeditor.utility.CompleteUtility;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -56,14 +57,14 @@ public class Create extends SubCmd {
             try {
                 type = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
             } catch (Exception e) {
-                sendLanguageString("wrong-block-type", null, player);
+                sendLanguageString("wrong-block-type", player);
                 return;
             }
         } else if (getItemInHand(player) != null && !getItemInHand(player).getType().isAir() && getItemInHand(player).getType().isBlock()) {
             type = getItemInHand(player).getType();
         }
         if (!type.isBlock()) {
-            sendLanguageString("wrong-block-type", null, player);
+            sendLanguageString("wrong-block-type", player);
             return;
         }
         //TODO can create on this position check
@@ -78,7 +79,11 @@ public class Create extends SubCmd {
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         else
             SelectionManager.getEditorMode(player).setup(player);
-        sendLanguageString("success-block", null, player);
+        sendLanguageString("success-block", player);
+    }
+
+    private ItemStack getItemInHand(Player player) { //TODO remove
+        return player.getInventory().getItemInMainHand();
     }
 
 
@@ -89,12 +94,12 @@ public class Create extends SubCmd {
             try {
                 Material mat = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
                 if (!mat.isItem()) {
-                    sendLanguageString("wrong-item-type", null, player);
+                    sendLanguageString("wrong-item-type", player);
                     return;
                 }
                 type = new ItemStack(mat);
             } catch (Exception e) {
-                sendLanguageString("wrong-item-type", null, player);
+                sendLanguageString("wrong-item-type", player);
                 return;
             }
         } else if (getItemInHand(player) != null && !getItemInHand(player).getType().isAir()) {
@@ -112,7 +117,7 @@ public class Create extends SubCmd {
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         else
             SelectionManager.getEditorMode(player).setup(player);
-        sendLanguageString("success-item", null, player);
+        sendLanguageString("success-item", player);
     }
 
     //create text [text=Hologram]
@@ -124,29 +129,29 @@ public class Create extends SubCmd {
         //TODO fix text
         //TODO apply censure or bypass it
         //TODO can create on this position check
-        text = UtilsString.fix(text, null, true);
+        Component component = UtilsString.fix(text, null, true);
         Location loc = player.getLocation().clone();
         loc.setYaw(0);
         loc.setPitch(0);
         TextDisplay textDisplay = (TextDisplay) player.getWorld().spawnEntity(loc, EntityType.TEXT_DISPLAY, false);
         textDisplay.setBillboard(Display.Billboard.CENTER);
-        textDisplay.setText(text);
+        textDisplay.text(component);
         setOwner(textDisplay, player);
         SelectionManager.select(player, textDisplay);
         if (!SelectionManager.isOnEditorMode(player))
             SelectionManager.setEditorMode(player, EditorMode.POSITION);
         else
             SelectionManager.getEditorMode(player).setup(player);
-        sendLanguageString("success-text", null, player);
+        sendLanguageString("success-text", player);
     }
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
         return switch (args.length) {
-            case 2 -> Util.complete(args[1], "text", "item", "block");
+            case 2 -> CompleteUtility.complete(args[1], "text", "item", "block");
             case 3 -> switch (args[1].toLowerCase(Locale.ENGLISH)) {
-                case "item" -> Util.complete(args[2], Material.class, Material::isItem);
-                case "block" -> Util.complete(args[2], Material.class, Material::isBlock);
+                case "item" -> CompleteUtility.complete(args[2], Material.class, Material::isItem);
+                case "block" -> CompleteUtility.complete(args[2], Material.class, Material::isBlock);
                 default -> Collections.emptyList();
             };
             default -> Collections.emptyList();

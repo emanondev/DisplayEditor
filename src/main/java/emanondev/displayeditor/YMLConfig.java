@@ -1,5 +1,9 @@
 package emanondev.displayeditor;
 
+import emanondev.displayeditor.utility.VersionUtils;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,10 +22,21 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+@Getter
+@Slf4j
 public class YMLConfig extends YamlConfiguration {
+
+    /**
+     * The plugin associated with this Config.
+     */
     private final JavaPlugin plugin;
     private final File file;
-    private final String name;
+    /**
+     * The file path of this config. Starting from owner {@link #getPlugin() plugin} data folder.
+     */
+    private final String fileName;
+    @Setter
+    private boolean multiThreadSupport = false;
 
     /**
      * Constructs a new Configuration File.<br>
@@ -30,17 +45,20 @@ public class YMLConfig extends YamlConfiguration {
      * If the plugin jar has a file on name path, that file is used to generate the
      * config file.
      *
-     * @param plugin associated plugin to grab the folder
-     * @param name   raw name of the file sub path
+     * @param plugin   associated plugin to grab the folder
+     * @param fileName raw name of the file sub path
      * @throws NullPointerException     if name is null
      * @throws IllegalArgumentException if name is empty
      */
-    public YMLConfig(@NotNull JavaPlugin plugin, @NotNull String name) {
+    public YMLConfig(@NotNull JavaPlugin plugin, @NotNull String fileName) {
         this.plugin = plugin;
-        name = fixName(name);
-        this.name = name;
-        this.file = new File(plugin.getDataFolder(), name);
+        fileName = fixName(fileName);
+        this.fileName = fileName;
+        this.file = new File(plugin.getDataFolder(), fileName);
         reload();
+        if (VersionUtils.hasFoliaAPI()) {
+            multiThreadSupport = true;
+        }
     }
 
     /**
@@ -60,26 +78,6 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     /**
-     * Returns the file path of this config.
-     *
-     * @return the file path starting by
-     * {@link #getPlugin()}.{@link JavaPlugin#getDataFolder()
-     * getDataFolder()}.
-     */
-    public String getFileName() {
-        return name;
-    }
-
-    /**
-     * Return the plugin associated with this Config.
-     *
-     * @return the plugin associated with this Config
-     */
-    public JavaPlugin getPlugin() {
-        return plugin;
-    }
-
-    /**
      * Reload config object in RAM to that of the file.<br>
      * Lose any unsaved changes.<br>
      *
@@ -89,28 +87,29 @@ public class YMLConfig extends YamlConfiguration {
         boolean existed = file.exists();
         if (!file.exists()) {
             if (!file.getParentFile().exists())  // Create parent folders if they don't exist
-                if (!file.getParentFile().mkdirs())
-                    new Exception("unable to create parent folder").printStackTrace();
+                if (!file.getParentFile().mkdirs()) {
+                    log.warn("unable to create parent folder", new Exception());
+                }
 
-            if (plugin.getResource(name.replace('\\', '/')) != null) {
-                plugin.saveResource(name, true); // Save the one from the JAR if possible
+            if (plugin.getResource(fileName.replace('\\', '/')) != null) {
+                plugin.saveResource(fileName, true); // Save the one from the JAR if possible
             } else
                 try {
                     if (!file.createNewFile())
-                        new Exception("unable to create file").printStackTrace();
+                        log.warn("unable to create file", new Exception());
                 } // Create a blank file if there's not one to copy from the JAR
                 catch (IOException e) {
-                    e.printStackTrace();
+                    log.warn(e.getMessage(), e);
                 }
         }
         try {
             this.load(file);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn(e.getMessage(), e);
         }
-        InputStream resource = plugin.getResource(name.replace('\\', '/'));
+        InputStream resource = plugin.getResource(fileName.replace('\\', '/'));
         if (resource != null)
-            // Set up defaults in case their config is broked.
+            // Set up defaults in case their config is broken.
             this.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(resource, StandardCharsets.UTF_8)));
 
         return existed;
@@ -125,18 +124,8 @@ public class YMLConfig extends YamlConfiguration {
         try {
             this.save(file);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn(e.getMessage(), e);
         }
-    }
-
-    /**
-     * Get the file of the config.
-     *
-     * @return the file associated to the config
-     */
-    @NotNull
-    public File getFile() {
-        return file;
     }
 
     /**
@@ -145,8 +134,7 @@ public class YMLConfig extends YamlConfiguration {
      * @param path yaml path on file
      * @return sub-keys at selected path
      */
-    @NotNull
-    public Set<String> getKeys(@NotNull String path) {
+    public @NotNull Set<String> getKeys(@NotNull String path) {
         ConfigurationSection section = this.getConfigurationSection(path);
         if (section == null)
             return new LinkedHashSet<>();
@@ -219,15 +207,13 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     @Contract("_, !null -> !null")
-    @Nullable
-    public Double loadDouble(@NotNull String path, @Nullable Double def) {
+    public @Nullable Double loadDouble(@NotNull String path, @Nullable Double def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.doubleValue();
     }
 
     @Contract("_, !null -> !null")
-    @Nullable
-    public Boolean loadBoolean(@NotNull String path, @Nullable Boolean def) {
+    public @Nullable Boolean loadBoolean(@NotNull String path, @Nullable Boolean def) {
         return load(path, def, Boolean.class);
     }
 
@@ -247,22 +233,19 @@ public class YMLConfig extends YamlConfiguration {
     }
 
     @Contract("_, !null -> !null")
-    @Nullable
-    public Integer loadInteger(@NotNull String path, @Nullable Integer def) {
+    public @Nullable Integer loadInteger(@NotNull String path, @Nullable Integer def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.intValue();
     }
 
     @Contract("_, !null -> !null")
-    @Nullable
-    public Integer getInteger(@NotNull String path, @Nullable Integer def) {
+    public @Nullable Integer getInteger(@NotNull String path, @Nullable Integer def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.intValue();
     }
 
     @Contract("_, !null -> !null")
-    @Nullable
-    public Long loadLong(@NotNull String path, @Nullable Long def) {
+    public @Nullable Long loadLong(@NotNull String path, @Nullable Long def) {
         Number val = load(path, def, Number.class);
         return val == null ? null : val.longValue();
     }
@@ -281,8 +264,7 @@ public class YMLConfig extends YamlConfiguration {
      * @see #load(String, Object, Class)
      */
     @Contract("_, !null, _, _ -> !null")
-    @Nullable
-    public String loadMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
+    public @Nullable String loadMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
         return loadMessage(path, def, null, color, args);
     }
 
@@ -299,8 +281,7 @@ public class YMLConfig extends YamlConfiguration {
      * @see #load(String, Object, Class)
      */
     @Contract("_, !null, _ -> !null")
-    @Nullable
-    public String loadMessage(@NotNull String path, @Nullable String def, String... args) {
+    public @Nullable String loadMessage(@NotNull String path, @Nullable String def, String... args) {
         return loadMessage(path, def, null, true, args);
     }
 
@@ -316,23 +297,10 @@ public class YMLConfig extends YamlConfiguration {
      * @see #load(String, Object, Class)
      */
     @Contract("_, !null, _, _, _ -> !null")
-    @Nullable
-    public String loadMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
-                              boolean color, String... args) {
-        if (args.length > 0) {
-            if (Util.isVersionAfter(1, 18, 1)) {
-                if (getComments(path).isEmpty()) {
-                    if (this.contains(path + "_HOLDERS"))
-                        this.set(path + "_HOLDERS", null);
-
-                    StringBuilder build = new StringBuilder();
-                    for (int i = 0; i < args.length; i += 2)
-                        build.append(args[i]).append(" ");
-                    this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
-                }
-            }
-        }
-        return UtilsString.fix(load(path, def, String.class), target, color, args);
+    public @Nullable String loadMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
+                                        boolean color, String... args) {
+        setComments(path, args);
+        return UtilsString.fixToString(load(path, def, String.class), target, color, args);
     }
 
     /**
@@ -347,23 +315,27 @@ public class YMLConfig extends YamlConfiguration {
      * @see #get(String, Object, Class)
      */
     @Contract("_, !null, _, _, _ -> !null")
-    @Nullable
-    public String getMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
-                             boolean color, String... args) {
-        if (args.length > 0) {
-            if (Util.isVersionAfter(1, 18, 1)) {
-                if (getComments(path).isEmpty()) {
-                    if (this.contains(path + "_HOLDERS"))
-                        this.set(path + "_HOLDERS", null);
+    public @Nullable String getMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
+                                       boolean color, String... args) {
+        setComments(path, args);
+        return UtilsString.fixToString(get(path, def, String.class), target, color, args);
+    }
 
-                    StringBuilder build = new StringBuilder();
-                    for (int i = 0; i < args.length; i += 2)
-                        build.append(args[i]).append(" ");
-                    this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
-                }
-            }
-        }
-        return UtilsString.fix(get(path, def, String.class), target, color, args);
+    /**
+     * Get String value.<br>
+     *
+     * @param path   yaml path on file
+     * @param def    default value
+     * @param target target user for papi support
+     * @param args   holders and replacer
+     * @return the value found or default if none
+     * @see #get(String, Object, Class)
+     */
+    @Contract("_, !null, _, _, _ -> !null")
+    public @Nullable String getMessage(@NotNull String path, @Nullable String def, @Nullable Player target,
+                                       String... args) {
+        setComments(path, args);
+        return UtilsString.fixToString(get(path, def, String.class), target, true, args);
     }
 
     /**
@@ -380,8 +352,7 @@ public class YMLConfig extends YamlConfiguration {
      * @see #get(String, Object, Class)
      */
     @Contract("_, !null, _, _ -> !null")
-    @Nullable
-    public String getMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
+    public @Nullable String getMessage(@NotNull String path, @Nullable String def, boolean color, String... args) {
         return this.getMessage(path, def, null, color, args);
     }
 
@@ -398,8 +369,7 @@ public class YMLConfig extends YamlConfiguration {
      * @see #get(String, Object, Class)
      */
     @Contract("_, !null, _ -> !null")
-    @Nullable
-    public String getMessage(@NotNull String path, @Nullable String def, String... args) {
+    public @Nullable String getMessage(@NotNull String path, @Nullable String def, String... args) {
         return this.getMessage(path, def, null, true, args);
     }
 
@@ -413,8 +383,7 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _ -> !null")
-    @Nullable
-    public List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
+    public @Nullable List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
         return loadMultiMessage(path, def, null, true, holders);
     }
 
@@ -428,8 +397,7 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _, _ -> !null")
-    @Nullable
-    public List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
+    public @Nullable List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
         return loadMultiMessage(path, def, null, color, holders);
     }
 
@@ -443,27 +411,21 @@ public class YMLConfig extends YamlConfiguration {
      */
     @SuppressWarnings("unchecked")
     @Contract("_, !null, _, _, _ -> !null")
-    @Nullable
-    public List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def,
-                                         @Nullable Player target, boolean color, String... holders) {
+    public @Nullable List<String> loadMultiMessage(@NotNull String path, @Nullable List<String> def,
+                                                   @Nullable Player target, boolean color, String... holders) {
         if (holders.length > 0) {
-            if (Util.isVersionAfter(1, 18, 1)) {
-                if (getComments(path).isEmpty()) {
-                    if (this.contains(path + "_HOLDERS"))
-                        this.set(path + "_HOLDERS", null);
-
-                    StringBuilder build = new StringBuilder();
-                    for (int i = 0; i < holders.length; i += 2)
-                        build.append(holders[i]).append(" ");
-                    this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
-                }
+            if (getComments(path).isEmpty()) {
+                StringBuilder build = new StringBuilder();
+                for (int i = 0; i < holders.length; i += 2)
+                    build.append(holders[i]).append(" ");
+                this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
             }
         }
         try {
-            return UtilsString.fix(load(path, def, List.class), target, color, holders);
+            return UtilsString.fixToString(load(path, def, List.class), target, color, holders);
         } catch (Exception e) {
-            e.printStackTrace();
-            return UtilsString.fix(def, target, color, holders);
+            log.warn(e.getMessage(), e);
+            return UtilsString.fixToString(def, target, color, holders);
         }
     }
 
@@ -476,8 +438,7 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _ -> !null")
-    @Nullable
-    public List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
+    public @Nullable List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, String... holders) {
         return getMultiMessage(path, def, null, true, holders);
     }
 
@@ -491,8 +452,7 @@ public class YMLConfig extends YamlConfiguration {
      * @return the value found or default if none
      */
     @Contract("_, !null, _, _ -> !null")
-    @Nullable
-    public List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
+    public @Nullable List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def, boolean color, String... holders) {
         return getMultiMessage(path, def, null, color, holders);
     }
 
@@ -506,30 +466,26 @@ public class YMLConfig extends YamlConfiguration {
      */
     @SuppressWarnings("unchecked")
     @Contract("_, !null, _, _, _ -> !null")
-    @Nullable
-    public List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def,
-                                        @Nullable Player target, boolean color, String... holders) {
+    public @Nullable List<String> getMultiMessage(@NotNull String path, @Nullable List<String> def,
+                                                  @Nullable Player target, boolean color, String... holders) {
         if (holders.length > 0) {
-            if (Util.isVersionAfter(1, 18, 1)) {
-                if (getComments(path).isEmpty()) {
-                    StringBuilder build = new StringBuilder();
-                    for (int i = 0; i < holders.length; i += 2)
-                        build.append(holders[i]).append(" ");
-                    this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
-                }
+            if (getComments(path).isEmpty()) {
+                StringBuilder build = new StringBuilder();
+                for (int i = 0; i < holders.length; i += 2)
+                    build.append(holders[i]).append(" ");
+                this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
             }
         }
         try {
-            return UtilsString.fix(get(path, def, List.class), target, color, holders);
+            return UtilsString.fixToString(get(path, def, List.class), target, color, holders);
         } catch (Exception e) {
-            e.printStackTrace();
-            return UtilsString.fix(def, target, color, holders);
+            log.warn(e.getMessage(), e);
+            return UtilsString.fixToString(def, target, color, holders);
         }
     }
 
     @Contract("_, !null -> !null")
-    @Nullable
-    public ItemStack loadItemStack(@NotNull String path, @Nullable ItemStack def) {
+    public @Nullable ItemStack loadItemStack(@NotNull String path, @Nullable ItemStack def) {
         return load(path, def, ItemStack.class);
     }
 
@@ -544,15 +500,186 @@ public class YMLConfig extends YamlConfiguration {
      * the string is empty return def
      */
     @Contract("_, !null, _ -> !null")
-    @Nullable
-    public <T extends Enum<T>> T loadEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
+    public @Nullable <T extends Enum<T>> T loadEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
         return stringToEnum(loadMessage(path, def == null ? null : def.name(), false), def, clazz, path);
     }
 
     @Contract("_, !null, _ -> !null")
-    @Nullable
-    public <T extends Enum<T>> T getEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
+    public @Nullable <T extends Enum<T>> T getEnum(@NotNull String path, @Nullable T def, @NotNull Class<T> clazz) {
         return stringToEnum(getString(path, def == null ? null : def.name()), def, clazz, path);
+    }
+
+    /**
+     * assumes that enum constants are all uppercase null enum values contained in
+     * def might be lost
+     *
+     * @param <T>   class of enum
+     * @param path  yaml path on file
+     * @param clazz class of enum
+     * @param def   default value
+     * @return the value found or default if none
+     */
+    public @NotNull <T extends Enum<T>> List<T> loadEnumList(@NotNull String path, @Nullable Collection<T> def,
+                                                             @NotNull Class<T> clazz) {
+        return stringListToEnumCollection(new ArrayList<>(),
+                loadMultiMessage(path, enumCollectionToStringList(def), false), clazz, path);
+    }
+
+    public @NotNull <T extends Enum<T>> EnumSet<T> loadEnumSet(@NotNull String path, @Nullable Collection<T> def,
+                                                               @NotNull Class<T> clazz) {
+        return stringListToEnumCollection(EnumSet.noneOf(clazz),
+                loadMultiMessage(path, enumCollectionToStringList(def), false), clazz, path);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Contract("_, !null -> !null")
+    public @Nullable <T> Map<String, T> loadMap(@NotNull String path, @Nullable Map<String, T> def) {
+        try {
+            if (!this.contains(path)) {
+                this.set(path, def);
+                save();
+                return def;
+            }
+
+            Map<String, Object> subMap = ((ConfigurationSection) this.get(path)).getValues(true);
+            try {
+                return (Map<String, T>) subMap;
+            } catch (Exception ignored) {
+            }
+
+            Map<String, T> result = new LinkedHashMap<>();
+            for (String key : subMap.keySet()) {
+                try {
+                    result.put(key, (T) subMap.get(key));
+                } catch (Exception e) {
+                    log.warn(e.getMessage(), e);
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            log.warn(e.getMessage(), e);
+            return def;
+        }
+    }
+
+    @Contract("_, !null -> !null")
+    public @Nullable Material loadMaterial(@NotNull String path, @Nullable Material def) {
+        return loadEnum(path, def, Material.class);
+    }
+
+    public @NotNull List<Material> loadMaterialList(@NotNull String path, @Nullable Collection<Material> def) {
+        return loadEnumList(path, def, Material.class);
+    }
+
+    public @NotNull EnumSet<Material> loadMaterialSet(@NotNull String path, @Nullable Collection<Material> def) {
+        return loadEnumSet(path, def, Material.class);
+    }
+
+    public @NotNull ItemFlag[] loadItemFlags(@NotNull String path, ItemFlag[] def) {
+        return loadEnumSet(path, def == null ? null : Arrays.asList(def), ItemFlag.class).toArray(new ItemFlag[0]);
+    }
+
+
+    @Contract("_, !null -> !null")
+    @Nullable
+    public Object get(@NotNull String path, @Nullable Object def) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                return super.get(path, def);
+            }
+        }
+        return super.get(path, def);
+    }
+
+    public void set(@NotNull String path, @Nullable Object value) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                super.set(path, value);
+                return;
+            }
+        }
+        super.set(path, value);
+    }
+
+    @NotNull
+    public ConfigurationSection createSection(@NotNull String path) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                return super.createSection(path);
+            }
+        }
+        return super.createSection(path);
+    }
+
+    @NotNull
+    public List<String> getComments(@NotNull String path) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                return super.getComments(path);
+            }
+        }
+        return super.getComments(path);
+    }
+
+    @NotNull
+    public List<String> getInlineComments(@NotNull String path) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                return super.getInlineComments(path);
+            }
+        }
+        return super.getInlineComments(path);
+    }
+
+    public void setComments(@NotNull String path, @Nullable List<String> comments) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                super.setComments(path, comments);
+                return;
+            }
+        }
+        super.setComments(path, comments);
+    }
+
+    public void setInlineComments(@NotNull String path, @Nullable List<String> comments) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                super.setInlineComments(path, comments);
+                return;
+            }
+        }
+        super.setInlineComments(path, comments);
+    }
+
+    protected void mapChildrenKeys(@NotNull Set<String> output, @NotNull ConfigurationSection section, boolean deep) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                super.mapChildrenKeys(output, section, deep);
+                return;
+            }
+        }
+        super.mapChildrenKeys(output, section, deep);
+    }
+
+    protected void mapChildrenValues(@NotNull Map<String, Object> output, @NotNull ConfigurationSection section, boolean deep) {
+        if (multiThreadSupport) {
+            synchronized (this) {
+                super.mapChildrenValues(output, section, deep);
+                return;
+            }
+        }
+        super.mapChildrenValues(output, section, deep);
+    }
+
+    private void setComments(@NotNull String path, String[] args) {
+        if (args.length > 0) {
+            if (getComments(path).isEmpty()) {
+                StringBuilder build = new StringBuilder();
+                for (int i = 0; i < args.length; i += 2)
+                    build.append(args[i]).append(" ");
+                this.setComments(path, Collections.singletonList(build.substring(0, build.length() - 1)));
+            }
+        }
     }
 
     @Contract("_, !null, _, _ -> !null")
@@ -566,36 +693,11 @@ public class YMLConfig extends YamlConfiguration {
             try {
                 return Enum.valueOf(clazz, value.toUpperCase());
             } catch (IllegalArgumentException e2) {
-                e2.printStackTrace();
-                new IllegalArgumentException(getError(errorPath) + "; can't find value for '" + value + "' from enum '"
-                        + clazz.getName() + "' using default").printStackTrace();
+                log.warn("{}; can't find value for '{}' from enum '{}', using default",
+                        getError(errorPath), value, clazz.getName(), e2);
             }
         }
         return def;
-    }
-
-    /**
-     * assumes that enum constants are all uppercase null enum values contained in
-     * def might be lost
-     *
-     * @param <T>   class of enum
-     * @param path  yaml path on file
-     * @param clazz class of enum
-     * @param def   default value
-     * @return the value found or default if none
-     */
-    @NotNull
-    public <T extends Enum<T>> List<T> loadEnumList(@NotNull String path, @Nullable Collection<T> def,
-                                                    @NotNull Class<T> clazz) {
-        return stringListToEnumCollection(new ArrayList<>(),
-                loadMultiMessage(path, enumCollectionToStringList(def), false), clazz, path);
-    }
-
-    @NotNull
-    public <T extends Enum<T>> EnumSet<T> loadEnumSet(@NotNull String path, @Nullable Collection<T> def,
-                                                      @NotNull Class<T> clazz) {
-        return stringListToEnumCollection(EnumSet.noneOf(clazz),
-                loadMultiMessage(path, enumCollectionToStringList(def), false), clazz, path);
     }
 
     @Contract("!null -> !null; null -> null")
@@ -620,61 +722,7 @@ public class YMLConfig extends YamlConfiguration {
         return destination;
     }
 
-    @SuppressWarnings("unchecked")
-    @Contract("_, !null -> !null")
-    @Nullable
-    public <T> Map<String, T> loadMap(@NotNull String path, @Nullable Map<String, T> def) {
-        try {
-            if (!this.contains(path)) {
-                this.set(path, def);
-                save();
-                return def;
-            }
-
-            Map<String, Object> subMap = ((ConfigurationSection) this.get(path)).getValues(true);
-            try {
-                return (Map<String, T>) subMap;
-            } catch (Exception ignored) {
-            }
-
-            Map<String, T> result = new LinkedHashMap<>();
-            for (String key : subMap.keySet()) {
-                try {
-                    result.put(key, (T) subMap.get(key));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return def;
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    @Nullable
-    public Material loadMaterial(@NotNull String path, @Nullable Material def) {
-        return loadEnum(path, def, Material.class);
-    }
-
-    @NotNull
-    public List<Material> loadMaterialList(@NotNull String path, @Nullable Collection<Material> def) {
-        return loadEnumList(path, def, Material.class);
-    }
-
-    @NotNull
-    public EnumSet<Material> loadMaterialSet(@NotNull String path, @Nullable Collection<Material> def) {
-        return loadEnumSet(path, def, Material.class);
-    }
-
-    @NotNull
-    public ItemFlag[] loadItemFlags(@NotNull String path, ItemFlag[] def) {
-        return loadEnumSet(path, def == null ? null : Arrays.asList(def), ItemFlag.class).toArray(new ItemFlag[0]);
-    }
-
-    @NotNull
-    private String getError(String path) {
+    private @NotNull String getError(String path) {
         return "Value has wrong type or wrong value at '" + path + ":' on file " + file.getName();
     }
 }

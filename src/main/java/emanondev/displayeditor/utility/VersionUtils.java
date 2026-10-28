@@ -8,22 +8,20 @@ import org.bukkit.Bukkit;
  */
 public final class VersionUtils {
 
-    private static final String[] VERSION_PARTS = safeSplitVersion();
-
     /**
      * The major version of the game (e.g., the first number in the version string).
      */
-    public static final int GAME_MAIN_VERSION = Integer.parseInt(VERSION_PARTS[0]);
+    public static final int GAME_MAIN_VERSION = initVersion(0);
 
     /**
      * The minor version of the game (e.g., the second number in the version string).
      */
-    public static final int GAME_VERSION = Integer.parseInt(VERSION_PARTS[1]);
+    public static final int GAME_VERSION = initVersion(1);
 
     /**
      * The patch version of the game, or 0 if the version string has fewer than three parts.
      */
-    public static final int GAME_SUB_VERSION = VERSION_PARTS.length < 3 ? 0 : Integer.parseInt(VERSION_PARTS[2]);
+    public static final int GAME_SUB_VERSION = initVersion(2);
 
     private static final boolean HAS_PAPER = ReflectionUtils
             .isClassPresent("com.destroystokyo.paper.VersionHistoryManager$VersionData");
@@ -65,11 +63,20 @@ public final class VersionUtils {
         return getVersionType() + " " + getVersionNumber();
     }
 
-    private static String[] safeSplitVersion() {
+    private static int initVersion(int slot) {
+        String[] versionParts;
         try {
-            return Bukkit.getBukkitVersion().split("-")[0].split("\\.");
+            versionParts = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
         } catch (Exception e) {
-            throw new IllegalStateException("Invalid Bukkit version format: " + Bukkit.getBukkitVersion(), e);
+            return 100;
+        }
+        try {
+            if (versionParts.length <= slot || "build".equals(versionParts[slot])) {
+                return 0;
+            }
+            return Integer.parseInt(versionParts[slot]);
+        } catch (Exception ignored) {
+            return 100;
         }
     }
 
@@ -78,7 +85,7 @@ public final class VersionUtils {
      * Inclusive comparison.
      *
      * @param major the main version (e.g., 1 in 1.9.4).
-     * @param minor     the minor version (e.g., 9 in 1.9.4).
+     * @param minor the minor version (e.g., 9 in 1.9.4).
      * @return true if the current version is up to the specified version.
      */
     public static boolean isVersionUpTo(int major,
@@ -86,13 +93,21 @@ public final class VersionUtils {
         return isVersionUpTo(major, minor, 99);
     }
 
+    public static boolean isUpTo(int major, int minor) {
+        return isVersionUpTo(major, minor);
+    }
+
+    public static boolean isUpTo(int major, int minor, int patch) {
+        return isVersionUpTo(major, minor, patch);
+    }
+
     /**
      * Checks if the current version is up to (or equal to) the specified version.
      * Inclusive comparison.
      *
      * @param major the main version.
-     * @param minor     the minor version.
-     * @param patch  the sub version.
+     * @param minor the minor version.
+     * @param patch the sub version.
      * @return true if the current version is up to the specified version.
      */
     public static boolean isVersionUpTo(int major,
@@ -110,7 +125,7 @@ public final class VersionUtils {
      * Inclusive comparison.
      *
      * @param major the main version.
-     * @param minor     the minor version.
+     * @param minor the minor version.
      * @return true if the current version is after the specified version.
      */
     public static boolean isVersionAfter(int major,
@@ -118,13 +133,21 @@ public final class VersionUtils {
         return isVersionAfter(major, minor, 0);
     }
 
+    public static boolean isAfter(int major, int minor) {
+        return isVersionAfter(major, minor);
+    }
+
+    public static boolean isAfter(int major, int minor, int patch) {
+        return isVersionAfter(major, minor, patch);
+    }
+
     /**
      * Checks if the current version is after (or equal to) the specified version.
      * Inclusive comparison.
      *
      * @param major the main version.
-     * @param minor     the minor version.
-     * @param patch  the sub version.
+     * @param minor the minor version.
+     * @param patch the sub version.
      * @return true if the current version is after the specified version.
      */
     public static boolean isVersionAfter(int major,
@@ -142,9 +165,9 @@ public final class VersionUtils {
      * Inclusive comparison.
      *
      * @param majorMin the minimum main version.
-     * @param minorMin     the minimum minor version.
+     * @param minorMin the minimum minor version.
      * @param majorMax the maximum main version.
-     * @param minorMax     the maximum minor version.
+     * @param minorMax the maximum minor version.
      * @return true if the current version is within the range.
      */
     public static boolean isVersionInRange(int majorMin,
@@ -154,16 +177,25 @@ public final class VersionUtils {
         return isVersionInRange(majorMin, minorMin, 0, majorMax, minorMax, 99);
     }
 
+    public static boolean isInRange(int majorMin, int minorMin, int majorMax, int minorMax) {
+        return isVersionInRange(majorMin, minorMin, majorMax, minorMax);
+    }
+
+    public static boolean isInRange(int majorMin, int minorMin, int patchMin,
+                                    int majorMax, int minorMax, int patchMax) {
+        return isVersionInRange(majorMin, minorMin, patchMin, majorMax, minorMax, patchMax);
+    }
+
     /**
      * Checks if the current version is within the specified range.
      * Inclusive comparison.
      *
      * @param majorMin the minimum main version.
-     * @param minorMin     the minimum minor version.
-     * @param patchMin  the minimum sub version.
+     * @param minorMin the minimum minor version.
+     * @param patchMin the minimum sub version.
      * @param majorMax the maximum main version.
-     * @param minorMax     the maximum minor version.
-     * @param patchMax  the maximum sub version.
+     * @param minorMax the maximum minor version.
+     * @param patchMax the maximum sub version.
      * @return true if the current version is within the range.
      */
     public static boolean isVersionInRange(int majorMin,

@@ -1,14 +1,11 @@
 package emanondev.displayeditor.properties;
 
 import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import static emanondev.displayeditor.properties.EntityProperties.*;
 
@@ -276,7 +273,7 @@ public class Registries {
             if (properties.containsKey(property.getKey()))
                 throw new IllegalArgumentException("duplicated key " + property.getKey());
             properties.put(property.getKey(), property);
-            propertiesByEntityTypeCache.forEach((clazz,list)->{
+            propertiesByEntityTypeCache.forEach((clazz, list) -> {
                 if (property.getEntityClass().isAssignableFrom(clazz))
                     list.add(property);
             });

@@ -30,8 +30,8 @@ public class AttributeBaseValueProperty extends NumberProperty<Attributable, Dou
 
     @Override
     public PropertyEditor getPropertyEditor(Attributable entity, Player player) {
-        if (entity.getAttribute(attribute)==null)
+        if (entity.getAttribute(attribute) == null)
             return null;
-        return super.getPropertyEditor(entity,player);
+        return super.getPropertyEditor(entity, player);
     }
 }

@@ -158,12 +158,12 @@ public class NumberProperty<E, V extends Number> implements Property<E, V> {
     }
 
     @NotNull
-    public Class<V> getValueClass(){
+    public Class<V> getValueClass() {
         return valueClass;
     }
 
     @NotNull
-    public Class<E> getEntityClass(){
+    public Class<E> getEntityClass() {
         return entityClass;
     }
 }

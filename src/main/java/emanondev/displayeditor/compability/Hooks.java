@@ -1,6 +1,5 @@
 package emanondev.displayeditor.compability;
 
-import emanondev.displayeditor.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;

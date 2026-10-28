@@ -1,62 +1,108 @@
 package emanondev.displayeditor;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import emanondev.displayeditor.utility.SchedulerUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.util.concurrent.Callable;
 
+@Slf4j
 public class UpdateChecker {
-    private final int project;
-    private final JavaPlugin plugin;
-    private URL checkURL;
+    private final APlugin plugin;
     private String newVersion;
+    private Boolean isUpdated = null;
 
-    public UpdateChecker(JavaPlugin plugin, int projectID) {
+    public UpdateChecker(@NotNull APlugin plugin) {
         this.plugin = plugin;
-        project = projectID;
-        newVersion = plugin.getDescription().getVersion();
-        try {
-            checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + projectID);
-        } catch (MalformedURLException e) {
-            Bukkit.getLogger().warning("§4Could not connect to Spigot, plugin disabled!");
-            Bukkit.getPluginManager().disablePlugin(plugin);
+        this.newVersion = plugin.getDescription().getVersion();
+    }
+
+    public @NotNull String getResourceDownloadUrl() {
+        if (plugin.getPluginAdditionalInfo().getModrinthProjectName() != null) {
+            return "https://modrinth.com/plugin/" + plugin.getPluginAdditionalInfo().getModrinthProjectName() + "/version/latest";
         }
-    }
-
-    public String getResourceUrl() {
-        return "https://spigotmc.org/resources/" + project;
-    }
-
-    /**
-     *
-     */
-    private boolean checkForUpdates() throws Exception {
-        URLConnection con = checkURL.openConnection();
-        newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-        return !plugin.getDescription().getVersion().equals(newVersion);
-
+        return "https://spigotmc.org/resources/" + plugin.getPluginAdditionalInfo().getSpigotResourceId();
     }
 
     public void logUpdates() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            try {
-                if (checkForUpdates()) {
-                    Bukkit.getConsoleSender()
-                            .sendMessage("[" + plugin.getName() + "] New Update at " + getResourceUrl());
-
-                }
-            } catch (FileNotFoundException | UnknownHostException e) {
-                Bukkit.getConsoleSender().sendMessage(
-                        "[" + plugin.getName() + "] Unable to check for new updates at " + getResourceUrl());
-            } catch (Exception e) {
-                e.printStackTrace();
+        SchedulerUtils.runAsync(plugin, () -> {
+            if (loadLatestVersion()) {
+                isUpdated = newVersion.equals(plugin.getDescription().getVersion());
+            }
+            if (isUpdated != null && !isUpdated) {
+                plugin.log("<aqua>NEW UPDATE<white> (<gold>" + plugin.getDescription().getVersion() + "<white> -> <green>" + newVersion + "<white>) available at <aqua>" + getResourceDownloadUrl());
             }
         });
+    }
+
+    private boolean loadLatestVersion() {
+        return attemptUpdateCheck("Modrinth", this::loadLatestVersionModrinth)
+                || attemptUpdateCheck("Spigot", this::loadLatestVersionSpigot);
+    }
+
+    private boolean attemptUpdateCheck(String sourceName, Callable<Boolean> checkMethod) {
+        try {
+            return checkMethod.call();
+        } catch (MalformedURLException e) {
+            plugin.log("<red>Invalid URL while checking for updates on " + sourceName + ".");
+        } catch (FileNotFoundException e) {
+            plugin.log("<red>Update file not found on " + sourceName + ".");
+        } catch (UnknownHostException e) {
+            plugin.log("<red>Cannot reach " + sourceName + " server. Check your network.");
+        } catch (IOException e) {
+            plugin.log("<red>I/O error while checking " + sourceName + ": " + e.getMessage());
+        } catch (Exception e) {
+            plugin.log("<red>Unexpected error on " + sourceName + ".");
+            log.warn(e.getMessage(), e);
+        }
+        return false;
+    }
+
+    private Boolean loadLatestVersionSpigot() throws Exception {
+        if (plugin.getPluginAdditionalInfo().getSpigotResourceId() == null) {
+            return false;
+        }
+        URL checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + plugin.getPluginAdditionalInfo().getSpigotResourceId());
+        URLConnection con = checkURL.openConnection();
+        newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+        return true;
+    }
+
+    private Boolean loadLatestVersionModrinth() throws Exception {
+        if (plugin.getPluginAdditionalInfo().getModrinthProjectId() == null) {
+            return false;
+        }
+        URL checkURL = new URL("https://api.modrinth.com/v2/project/" + plugin.getPluginAdditionalInfo().getModrinthProjectId() + "/version");
+        URLConnection con = checkURL.openConnection();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+            String json = reader.readLine();
+            try {
+                newVersion = JsonParser.parseString(json)
+                        .getAsJsonArray()
+                        .get(0)
+                        .getAsJsonObject()
+                        .get("version_number")
+                        .getAsString();
+            } catch (NoSuchMethodError e) {
+                JsonElement element = JsonParser.parseString(json);
+                newVersion = element
+                        .getAsJsonArray()
+                        .get(0)
+                        .getAsJsonObject()
+                        .get("version_number")
+                        .getAsString();
+            }
+        }
+        return true;
     }
 }

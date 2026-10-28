@@ -2,7 +2,6 @@ package emanondev.displayeditor.properties.impl;
 
 import emanondev.displayeditor.properties.Context;
 import emanondev.displayeditor.properties.Property;
-import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

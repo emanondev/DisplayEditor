@@ -2,9 +2,10 @@ package emanondev.displayeditor.selection;
 
 import emanondev.displayeditor.C;
 import emanondev.displayeditor.DisplayEditor;
-import emanondev.displayeditor.Util;
 import emanondev.displayeditor.selection.blockdata.BlockDataInteractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
+import emanondev.displayeditor.utility.ItemBuilder;
+import emanondev.displayeditor.utility.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -189,14 +190,14 @@ public enum EditorMode {
                         int val = (int) Math.pow(10, 2 * (i - 1));
                         inv.setItem(1 + i, setDesc(craftItem(Material.PAINTING, i * 2 - 1), player,
                                 "editor.entity_specific.item_modeldata", "%value%", format.format(val)
-                                , "%shift-value%", format.format((int) val * 10), "%current%", format.format(current)));
+                                , "%shift-value%", format.format((int) val * 10L), "%current%", format.format(current)));
                     }
                     return;
                 }
             }
             case COPY_PASTE -> {
                 inv.setItem(0, setDesc(craftItem(Material.STRUCTURE_VOID), player, "editor.copy_paste.select"));
-                if (Util.isVersionAfter(1, 20, 2)) {
+                if (VersionUtils.isVersionAfter(1, 20, 2)) {
                     CopyPasteOption option = SelectionManager.getCopyPasteOption(player);
                     inv.setItem(1, setDesc(craftItem(Material.BUCKET), player, "editor.copy_paste.copy"));
                     inv.setItem(2, setDesc(craftItem(Material.BUCKET, 2), player, "editor.copy_paste.copyrange",
@@ -217,24 +218,10 @@ public enum EditorMode {
     private ItemStack setDesc(@Nullable ItemStack item, Player target, @NotNull String fullPath, String... holders) {
         if (item == null) {
             return null;
-        } else {
-            item.setItemMeta(this.setDesc(item.getItemMeta(), target, fullPath, holders));
-            return item;
         }
-    }
-
-    @Contract("null,_,_,_->null;!null,_,_,_->!null")
-    private ItemMeta setDesc(@Nullable ItemMeta meta, Player target, @NotNull String fullPath, String... holders) {
-        if (meta == null) {
-            return null;
-        } else {
-            List<String> list = DisplayEditor.get().getLanguageConfig(target).loadMultiMessage(fullPath, null, target, true, holders);
-            meta.setDisplayName(list != null && !list.isEmpty() ? list.get(0) : " ");
-            if (list != null && !list.isEmpty()) {
-                meta.setLore(list.subList(1, list.size()));
-            }
-            return meta;
-        }
+        return new ItemBuilder(item)
+                .setGuiDescription(DisplayEditor.get().getTranslator().translateList(target, fullPath, holders))
+                .build();
     }
 
     private ItemStack craftItem(Material mat) {
@@ -242,7 +229,7 @@ public enum EditorMode {
     }
 
     private ItemStack craftItem(Material mat, int amount) {
-        ItemStack item = new ItemStack(mat, Math.max(1, Math.min(127, amount)));
+        ItemStack item = new ItemStack(mat, Math.clamp(amount, 1, 127));
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.addItemFlags(ItemFlag.values());

@@ -4,6 +4,7 @@ import emanondev.displayeditor.UtilsString;
 import emanondev.displayeditor.command.AbstractCommand;
 import emanondev.displayeditor.command.SubCmd;
 import emanondev.displayeditor.selection.SelectionManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
@@ -23,20 +24,20 @@ public class Settext extends SubCmd {
     public void onCommand(CommandSender sender, String alias, String[] args) {
         Display sel = SelectionManager.getSelection((Player) sender);
         if (sel == null) {
-            sendLanguageString("none-selected", null, sender);
+            sendLanguageString("none-selected", sender);
             return;
         }
         if (!(sel instanceof TextDisplay)) {
-            sendLanguageString("wrong-type", null, sender);
+            sendLanguageString("wrong-type", sender);
             return;
         }
         String text = "";
         if (args.length > 1) {
             text = String.join(" ", Arrays.asList(args).subList(1, args.length));
         }
-        text = UtilsString.fix(text, null, true);
-        ((TextDisplay) sel).setText(text);
-        sendLanguageString("success", null, sender);
+        Component component = UtilsString.fix(text, null, true);
+        ((TextDisplay) sel).text(component);
+        sendLanguageString("success", sender);
     }
 
     @Override

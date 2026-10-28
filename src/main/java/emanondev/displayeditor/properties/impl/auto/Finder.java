@@ -124,10 +124,10 @@ public class Finder {
                 return new NumberProperty<>(key, iface, Short.class,
                         getter, setter, paramType.getName().equals("short"),
                         DisplayEditor.get().getConfig("properties.yml"),
-                        (c,p,v)-> {
+                        (c, p, v) -> {
                             Integer r =
                                     c.loadInteger(p, v == null ? null : v.intValue());
-                            return r==null? null :r.shortValue();
+                            return r == null ? null : r.shortValue();
                         },
                         Short.MIN_VALUE, Short.MAX_VALUE, (short) 0);
             }
@@ -135,10 +135,10 @@ public class Finder {
                 return new NumberProperty<>(key, iface, Byte.class,
                         getter, setter, paramType.getName().equals("byte"),
                         DisplayEditor.get().getConfig("properties.yml"),
-                        (c,p,v)-> {
+                        (c, p, v) -> {
                             Integer r =
                                     c.loadInteger(p, v == null ? null : v.intValue());
-                            return r==null? null :r.byteValue();
+                            return r == null ? null : r.byteValue();
                         },
                         Byte.MIN_VALUE, Byte.MAX_VALUE, (byte) 0);
             }
@@ -146,10 +146,10 @@ public class Finder {
                 return new NumberProperty<>(key, iface, Float.class,
                         getter, setter, paramType.getName().equals("float"),
                         DisplayEditor.get().getConfig("properties.yml"),
-                        (c,p,v)-> {
+                        (c, p, v) -> {
                             Double r =
                                     c.loadDouble(p, v == null ? null : v.doubleValue());
-                            return r==null? null :r.floatValue();
+                            return r == null ? null : r.floatValue();
                         },
                         Float.MIN_VALUE, Float.MAX_VALUE, (float) 0);
             }

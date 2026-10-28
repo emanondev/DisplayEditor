@@ -6,6 +6,7 @@ import emanondev.displayeditor.Util;
 import emanondev.displayeditor.gui.SelectMobGui;
 import emanondev.displayeditor.selection.blockdata.BlockDataInteractor;
 import emanondev.displayeditor.selection.blockdata.BlockDataUtil;
+import emanondev.displayeditor.utility.VersionUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -187,7 +188,7 @@ public class EditorModeListener implements Listener {
             }
             return;
         }
-        if (!Util.isVersionAfter(1, 20, 2))
+        if (!VersionUtils.isVersionAfter(1, 20, 2))
             return;
         CopyPasteOption option = SelectionManager.getCopyPasteOption(player);
         switch (slot) {
@@ -213,11 +214,10 @@ public class EditorModeListener implements Listener {
                     SoundUtil.playSoundUIClick(player);
                     editorMode.setup(player);
                     Util.flashEntities(player, list);
-                }
-                else {
+                } else {
                     BoundingBox box = new BoundingBox().shift(player.getLocation()).expand(option.getCopyRadius());
                     Collection<Entity> list = player.getWorld().getNearbyEntities(box, (en) -> !(en instanceof Player));
-                    player.openInventory(new SelectMobGui(player,list,true).getInventory());
+                    player.openInventory(new SelectMobGui(player, list, true).getInventory());
                     //TODO
                 }
             }

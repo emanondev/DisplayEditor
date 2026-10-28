@@ -29,9 +29,9 @@ public class Delete extends SubCmd {
             EditorMode mode = SelectionManager.getEditorMode(player);
             if (mode != null)
                 mode.setup((Player) sender);
-            sendLanguageString("success", null, player);
+            sendLanguageString("success", player);
         } else
-            sendLanguageString("none-selected", null, player);
+            sendLanguageString("none-selected", player);
     }
 
     @Override

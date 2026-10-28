@@ -1,23 +1,25 @@
 package emanondev.displayeditor.properties.editors;
 
-import emanondev.displayeditor.DMessage;
 import emanondev.displayeditor.DisplayEditor;
-import emanondev.displayeditor.ItemBuilder;
 import emanondev.displayeditor.properties.Property;
 import emanondev.displayeditor.properties.PropertyEditor;
-import emanondev.displayeditor.properties.impl.BooleanProperty;
+import emanondev.displayeditor.utility.ItemBuilder;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class APropertyEditor<E,S> implements PropertyEditor {
+import java.util.List;
 
-    protected final Property<E,S> property;
+public abstract class APropertyEditor<E, S> implements PropertyEditor {
+
+    protected final Property<E, S> property;
     protected final Player player;
     protected final E entity;
 
-    protected APropertyEditor(Property<E, S> property, Player player, E entity){
+    protected APropertyEditor(Property<E, S> property, Player player, E entity) {
         this.property = property;
         this.player = player;
         this.entity = entity;
@@ -29,17 +31,20 @@ public abstract class APropertyEditor<E,S> implements PropertyEditor {
     }
 
     @Override
-    public ItemStack getEditorButton() {
-        return new ItemBuilder(getMaterial()).setGuiProperty().glow(getGlow()).setCustomModelData(getModelData()).setDescription(
-                getDescription()).build();
+    public ItemStack getEditorButton(Player player) {
+        return new ItemBuilder(getMaterial())
+                .setItemFlags(ItemFlag.values(), true)
+                .setCustomModelData(getModelData())
+                .setGuiDescription(getDescription(player))
+                .build();
     }
 
-    protected String getPath(){
+    protected String getPath() {
         return "property." + property.getKey().getKey();
     }
 
-    protected DMessage getDescription() {
-        return new DMessage(DisplayEditor.get(),player).appendLang(
+    protected List<Component> getDescription(Player player) {
+        return DisplayEditor.get().getTranslator().translateList(player,
                 getPath() + ".description", getPlaceholders());
     }
 
