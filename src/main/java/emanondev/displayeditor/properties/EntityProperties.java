@@ -601,7 +601,7 @@ public class EntityProperties {
             LivingEntity::isGliding, LivingEntity::setGliding, () -> false);
     public static final Property<LivingEntity, Integer> ITEM_IN_USE_TICKS = NumberProperty.fromInt(
             "ITEM_IN_USE_TICKS", LivingEntity.class,
-            LivingEntity::getItemInUseTicks, LivingEntity::setItemInUseTicks, () -> 0);
+            LivingEntity::getActiveItemRemainingTime, LivingEntity::setActiveItemRemainingTime, () -> 0);
     public static final Property<LivingEntity, Integer> MAXIMUM_AIR = NumberProperty.fromInt(
             "MAXIMUM_AIR", LivingEntity.class,
             LivingEntity::getMaximumAir, LivingEntity::setMaximumAir, () -> 300);

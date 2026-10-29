@@ -215,7 +215,7 @@ public abstract class APlugin extends JavaPlugin {
             log(ChatColor.GREEN, "#", "Enabled (took <yellow>" + (System.currentTimeMillis() - now) + "<white> ms)");
 
         } catch (Throwable e) {
-            this.log(ChatColor.RED + "Error while loading " + this.getName() + ", disabling it");
+            this.log("<red>Error while loading " + this.getName() + ", disabling it");
             log.warn(e.getMessage(), e);
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
@@ -309,7 +309,7 @@ public abstract class APlugin extends JavaPlugin {
         for (String command : this.getDescription().getCommands().keySet()) {
             registerCommand(command, exec, null);
         }
-        log(ChatColor.RED + error);
+        log("<red>" + error);
     }
 
     private void registerCommand(@NotNull PluginCommand command,

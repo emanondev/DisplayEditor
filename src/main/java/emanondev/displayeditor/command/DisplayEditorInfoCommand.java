@@ -95,7 +95,7 @@ public class DisplayEditorInfoCommand implements TabExecutor {
         try {
             plugin.registerCommand(plugin.getName().toLowerCase(Locale.ENGLISH) + "info", this, null);
         } catch (Exception e) {
-            plugin.log("Unable to register command " + ChatColor.YELLOW + plugin.getName().toLowerCase(Locale.ENGLISH) + "info");
+            plugin.log("Unable to register command <yellow>" + plugin.getName().toLowerCase(Locale.ENGLISH) + "info");
             e.printStackTrace();
         }
     }

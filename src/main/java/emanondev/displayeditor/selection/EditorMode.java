@@ -168,7 +168,7 @@ public enum EditorMode {
 
                     }
                     if (datas.size() > 6)
-                        DisplayEditor.get().log("BlockData require more than 6 slots, report this message to the developer &e" + ((BlockDisplay) display).getBlock().getAsString(false));
+                        DisplayEditor.get().log("BlockData require more than 6 slots, report this message to the developer <yellow>" + ((BlockDisplay) display).getBlock().getAsString(false));
                     return;
                 }
                 if (display instanceof ItemDisplay itemDisplay) {
